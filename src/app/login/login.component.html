@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <form name="form">
+    <div class="alert alert-warning" *ngIf="invalidLogin">
+      {{ errorMessage }}
+    </div>
+    <div>
+      <div>
+        Username :
+        <input type="text" name="username" [(ngModel)]="username" /><br />
+      </div>
+      <div>
+        Password :
+        <input type="password" name="password" [(ngModel)]="password" />
+      </div>
+    </div>
+    <div>
+      <button type="submit" (click)="checkLogin()" class="btn btn-success">
+        Login
+      </button>
+    </div>
+  </form>
+</div>

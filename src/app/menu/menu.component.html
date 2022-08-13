@@ -1,0 +1,15 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="navbar-brand">
+            <h3>ATM Issue Logger App</h3>
+        </div>
+        <ul class="navbar-nav">
+            <li><a *ngIf="auth.isUserLoggedIn()" routerLink="/atm" class="nav-link">Home</a></li>
+        </ul>
+        <ul class="navbar-nav navbar-collapse justify-content-end">
+            <li><a *ngIf="!auth.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
+            <li><a *ngIf="auth.isUserLoggedIn()" routerLink="/logout" class="nav-link">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+

@@ -1,0 +1,32 @@
+.from {
+    width: 40%;
+}
+
+.to {
+    width: 40%;
+}
+
+.cc {
+    width: 40%;
+}
+
+.subject {
+    width: 80%;
+}
+
+.mIntro {
+    width: 40%;
+}
+
+.mEnd {
+    width: 10%;
+}
+
+.tableMBody{
+    height: 3rem;
+}
+
+.mBody {
+    height: 100%;
+    width: 100%;
+}
