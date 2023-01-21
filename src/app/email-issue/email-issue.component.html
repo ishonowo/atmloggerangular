@@ -1,56 +1,82 @@
-<html><head><style> table, th, td {border: 1px solid black; border-collapse: collapse;}</style></head>
-<body>
-<div class="container" *ngIf="emailIssue">
-        <div>
-                <label fromEmail="from" ><b>From</b>: </label>
-                <input class="from" type="text" [(ngModel)]="emailIssue.fromEmail" />
-        </div>
-        <div>
-                <label toEmail="to" ><b>To</b>: </label>
-                <input class="to" type="text" *ngFor="let te of emailIssue.toEmail" 
-                [(ngModel)]="te" />
-                                
-        </div>
-        <div>
-                <label cc="cc"><b>Cc</b>: </label>
-                <input class="cc" type="text" *ngFor="let ce of emailIssue.cc" 
-                [(ngModel)]="ce" />
-        </div>
-        <div>
-                <label subject="subject"><b>Subject</b>: </label>
-                <input class="subject" type="text" [(ngModel)]="emailIssue.subject" />
-        </div>        
-        <div>
-                <label body="body"><u><b>Message</b></u>: -</label>
-                <p><input class="mIntro" type="text" [(ngModel)]="emailIssue.mIntro" /></p>
-                <table>
-                        <thead>
-                          <tr> 
-                             <th *ngFor="let m of emailIssue.mHeader">{{m}}</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr> 
-                              <td *ngFor="let mb of emailIssue.mBody" class="tableMBody">
-                                <textarea class="mBody" type="textarea" rows="5" cols="12"
-                                [(ngModel)]="mb" ></textarea>
-                              </td> 
-                           </tr>
-                        </tbody>
-                </table>
-                <br/>
-                <p><input class="mEnd" type="text" [(ngModel)]="emailIssue.mEnd" /></p>
-        </div>
-        <div>
-                <button [disabled]="isClicked" type="submit" (click)="sendFeedback()" class="btn btn-success pull-left">
-                        <i class="fa fa-envelope-o"></i> 
-                        <span>Send Email</span>
-                </button>
-                <button [disabled]="isClicked" type="submit" (click)="deleteIssueLogged()" class="btn btn-danger pull-right text-danger" >
-                        <i class="fa fa-trash-o"></i>
-                        <span>Delete Log</span>
-                </button> 
-         </div>
-</div>
-</body>
+<html>
+  <head>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" *ngIf="emailIssue">
+      <div>
+        <label fromEmail="from"><b>From</b>: </label>
+        <input class="from" type="text" [(ngModel)]="emailIssue.fromEmail" />
+      </div>
+      <div>
+        <label toEmail="to"><b>To</b>: </label>
+        <input class="to" type="text" *ngFor="let te of emailIssue.toEmail" />
+      </div>
+      <div>
+        <label cc="cc"><b>Cc</b>: </label>
+        <input class="cc" type="text" *ngFor="let ce of emailIssue.cc" />
+      </div>
+      <div>
+        <label subject="subject"><b>Subject</b>: </label>
+        <input class="subject" type="text" [(ngModel)]="emailIssue.subject" />
+      </div>
+      <div>
+        <label body="body"
+          ><u><b>Message</b></u
+          >: -</label
+        >
+        <p>
+          <input class="mIntro" type="text" [(ngModel)]="emailIssue.mIntro" />
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th *ngFor="let m of emailIssue.mHeader">{{ m }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td *ngFor="let mb of emailIssue.mBody" class="tableMBody">
+                <textarea
+                  class="mBody"
+                  type="textarea"
+                  rows="5"
+                  cols="12"
+                ></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br />
+        <p><input class="mEnd" type="text" [(ngModel)]="emailIssue.mEnd" /></p>
+      </div>
+      <div>
+        <button
+          [disabled]="isClicked"
+          type="submit"
+          (click)="sendFeedback()"
+          class="btn btn-success pull-left"
+        >
+          <i class="fa fa-envelope-o"></i>
+          <span>Send Email</span>
+        </button>
+        <button
+          [disabled]="isClicked"
+          type="submit"
+          (click)="deleteIssueLogged()"
+          class="btn btn-danger pull-right text-danger"
+        >
+          <i class="fa fa-trash-o"></i>
+          <span>Delete Log</span>
+        </button>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,15 +1,32 @@
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="navbar-brand">
-            <h3>ATM Issue Logger App</h3>
-        </div>
-        <ul class="navbar-nav">
-            <li><a *ngIf="auth.isUserLoggedIn()" routerLink="/atm" class="nav-link">Home</a></li>
-        </ul>
-        <ul class="navbar-nav navbar-collapse justify-content-end">
-            <li><a *ngIf="!auth.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
-            <li><a *ngIf="auth.isUserLoggedIn()" routerLink="/logout" class="nav-link">Logout</a></li>
-        </ul>
-    </nav>
-</header>
-
+<div>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-brand">
+      <h3>ATM Issue Logger App</h3>
+    </div>
+    <div class="navbar-nav">
+      <div>
+        <a *ngIf="!isLoggedIn()" routerLink="atm" class="nav-link">Home</a>
+      </div>
+    </div>
+    <div class="navbar-nav navbar-collapse justify-content-end">
+      <div>
+        <a
+          (click)="login()"
+          *ngIf="!isLoggedIn()"
+          routerLink="/issue-log"
+          class="nav-link"
+          >Login</a
+        >
+      </div>
+      <div>
+        <a
+          (click)="logout()"
+          *ngIf="isLoggedIn()"
+          routerLink="/logout"
+          class="nav-link"
+          >Logout</a
+        >
+      </div>
+    </div>
+  </nav>
+</div>

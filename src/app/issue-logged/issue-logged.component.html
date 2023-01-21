@@ -2,7 +2,6 @@
   <div class="row">
     <div class="offset-3"></div>
     <div class="col-md-6">
-      <h2>Good day {{ username }}, kindly log the issue.</h2>
       <form
         name="form"
         (ngSubmit)="f.form.valid && submitLoggedIssue()"
@@ -29,13 +28,13 @@
           <!-- Input validation for terminal ID attribute-->
           <div *ngIf="terminalId.errors && terminalId.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="terminalId.errors.required"
+            <small class="text-danger" *ngIf="terminalId.errors?.['required']"
               >The terminal ID is a required field.</small
             >
-            <small class="text-danger" *ngIf="terminalId.errors.minlength"
+            <small class="text-danger" *ngIf="terminalId.errors?.['minlength']"
               >The terminal ID entered must be at least 8 characters.</small
             >
-            <small class="text-danger" *ngIf="terminalId.errors.maxlength"
+            <small class="text-danger" *ngIf="terminalId.errors?.['maxlength']"
               >The terminal ID entered must be at most 8 characters.</small
             >
           </div>
@@ -58,10 +57,10 @@
           <!-- Input validation for terminal ID attribute-->
           <div *ngIf="issueDesc.errors && issueDesc.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="issueDesc.errors.required"
+            <small class="text-danger" *ngIf="issueDesc.errors?.['required']"
               >The issue description is a required field.</small
             >
-            <small class="text-danger" *ngIf="issueDesc.errors.minlength"
+            <small class="text-danger" *ngIf="issueDesc.errors?.['minlength']"
               >The issue description entered must be at least 10
               characters.</small
             >
@@ -84,7 +83,7 @@
           <!-- Input validation for terminal ID attribute-->
           <div *ngIf="branchLogger.errors && branchLogger.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="branchLogger.errors.required"
+            <small class="text-danger" *ngIf="branchLogger.errors?.['required']"
               >The branch logger is a required field.</small
             >
           </div>
@@ -107,10 +106,10 @@
           <!-- Input validation for terminal ID attribute-->
           <div *ngIf="loggerEmail.errors && loggerEmail.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="loggerEmail.errors.required"
+            <small class="text-danger" *ngIf="loggerEmail.errors?.['required']"
               >The email for the logger is a required field.</small
             >
-            <small class="text-danger" *ngIf="loggerEmail.errors.email"
+            <small class="text-danger" *ngIf="loggerEmail.errors?.['email']"
               >The email entered is invalid.</small
             >
           </div>
@@ -134,13 +133,19 @@
           <!-- Input validation for terminal ID attribute-->
           <div *ngIf="loggerPhoneNo.errors && loggerPhoneNo.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="loggerPhoneNo.errors.required"
+            <small
+              class="text-danger"
+              *ngIf="loggerPhoneNo.errors?.['required']"
               >The logger's phone number is a required field.</small
             >
-            <small class="text-danger" *ngIf="loggerPhoneNo.errors.minlength"
+            <small
+              class="text-danger"
+              *ngIf="loggerPhoneNo.errors?.['minlength']"
               >The phone number entered must be at least 11 characters.</small
             >
-            <small class="text-danger" *ngIf="loggerPhoneNo.errors.maxlength"
+            <small
+              class="text-danger"
+              *ngIf="loggerPhoneNo.errors?.['maxlength']"
               >The phone number entered must be at least 14 characters.</small
             >
           </div>
@@ -152,7 +157,7 @@
           class="btn btn-success pull-right"
         >
           <i class="fa fa-envelope-o"></i>
-          <span> Submit this logged issue</span>
+          <span> Log this issue</span>
         </button>
       </form>
     </div>

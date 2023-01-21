@@ -1,14 +1,14 @@
 
 {
-    "/atm":{
-        "target":"http://localhost:9443/atm",
+    "/atm/*":{
+        "target":"http://localhost:9442",
         "secure": false,
         "changeOrigin": true,
         "logLevel": "debug"
     },
 
-    "/email":{
-        "target":"http://localhost:944/email",
+    "/email/*":{
+        "target":"http://localhost:9442",
         "secure":false,
         "changeOrigin": true,
         "logLevel": "debug"

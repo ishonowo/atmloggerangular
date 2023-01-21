@@ -71,7 +71,8 @@
               "browserTarget": "atm-issue-resolver-app:build:production"
             },
             "development": {
-              "browserTarget": "atm-issue-resolver-app:build:development"
+              "browserTarget": "atm-issue-resolver-app:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -101,6 +102,5 @@
         }
       }
     }
-  },
-  "defaultProject": "atm-issue-resolver-app"
+  }
 }

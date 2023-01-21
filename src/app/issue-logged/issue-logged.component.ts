@@ -3,36 +3,38 @@ import { AtmService } from '../shared/atm.service';
 import { IssueLogged } from '../model/issuelogged';
 import { AtmIssue } from '../model/atmissue';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-issue-logged',
   templateUrl: './issue-logged.component.html',
-  styleUrls: ['./issue-logged.component.css']
+  styleUrls: ['./issue-logged.component.css'],
 })
 export class IssueLoggedComponent implements OnInit {
-  model:IssueLogged={
-    userEmail:'',
-    terminalId:'1070',
-    issueDesc:'',
-	  branchLogger:'',
-	  loggerEmail:'@fidelitybank.ng',
-	  loggerPhoneNo:'08'
+  model: IssueLogged = {
+    username: '',
+    terminalId: '1070',
+    issueDesc: '',
+    branchLogger: '',
+    loggerEmail: '@fidelitybank.ng',
+    loggerPhoneNo: '08',
   };
 
-  atmIssue: AtmIssue;
-  private isClicked = false;
-  username: string;
-  //private userEmail: string;
-  
+  atmIssue!: AtmIssue;
+  protected isClicked: boolean = false;
+  //username!: any;
+  /*private userEmail!: string;*/
 
-  constructor(private atmService:AtmService,
-              private router: Router, private aRoute: ActivatedRoute) { }
+  constructor(
+    private atmService: AtmService,
+    private router: Router,
+    private aRoute: ActivatedRoute,
+    private msalService: MsalService
+  ) {}
 
   ngOnInit() {
     //console.log(this.aRoute.snapshot.params['username']);
     //this.model.userEmail=this.aRoute.snapshot.params['username']+'@fidelitybank.ng';
-
     /*this.aRoute.paramMap.subscribe(paramMap => {
       if (!paramMap.has('username')) {
         this.router.navigate(['/login']);
@@ -40,39 +42,44 @@ export class IssueLoggedComponent implements OnInit {
       }
       this.model.userEmail = paramMap.get('username')+'@fidelitybank.ng';
     });*/
-    this.entryMethod();
+    //this.entryMethod();
   }
 
-  entryMethod() {
-    this.aRoute.paramMap.subscribe(paramMap => {
-      if(!paramMap.get('username')) {
-        return this.router.navigate(['login'])
-      }
-      this.username = paramMap.get('username');
-    })
-  }
-
-   submitLoggedIssue() {
-    this.isClicked=true;
-    console.log(this.aRoute.snapshot.params['username']);
-    this.model.userEmail=this.aRoute.snapshot.params['username']+'@fidelitybank.ng';
-    // //this.model.userEmail=this.userEmail;
+  submitLoggedIssue() {
+    this.isClicked = true;
+    let sName = this.msalService.instance.getActiveAccount()?.username;
+    if (sName) {
+      this.model.username = sName;
+    } else {
+      this.model.username = 'ATMSupport';
+    }
     this.atmService.postIssueLogged(this.model).subscribe(
-      async res=>{
-        //alert("The issue has been successfully logged.");
+      {
+        next: (res) => {
+          alert('The issue has been successfully logged.');
+          this.atmIssue = res;
+          this.atmService.atmIssue = this.atmIssue;
+          console.log(this.atmIssue);
+          //await this.router.navigate(['email']);
+        },
+        error: (err) => {
+          this.isClicked = false;
+          alert('An error has occurred while logging the issue.');
+          console.log(err);
+        },
+        complete: () => this.router.navigate(['email']),
+      }
+      /*async (res) => {
+        alert('The issue has been successfully logged.');
         this.atmIssue = res;
         this.atmService.atmIssue = this.atmIssue;
         console.log(this.atmIssue);
         await this.router.navigate(['email']);
       },
-      err=>{
-        this.isClicked=false;
-        alert("An error has occurred while logging the issue.")
-      }
+      (err) => {
+        this.isClicked = false;
+        alert('An error has occurred while logging the issue.');
+      }*/
     );
-    
   }
-
 }
-
-
