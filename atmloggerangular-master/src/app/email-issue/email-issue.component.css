@@ -1,0 +1,39 @@
+
+
+.from {
+    width: 300%;
+    size: 50;
+}
+
+.to {
+    width: 300%;
+}
+
+.cc {
+    width: 300%;
+}
+
+.subject {
+    width: 300%;
+}
+
+.mIntro {
+    width: 300%;
+}
+
+.mEnd {
+    width: 300%;
+}
+
+.tableMBody{
+    height: 3rem;
+}
+
+.tableMHeader{
+    height: 3rem;
+}
+
+.mBody {
+    height: 300%;
+    width: 300%;
+}

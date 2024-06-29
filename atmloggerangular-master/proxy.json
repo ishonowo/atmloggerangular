@@ -1,0 +1,12 @@
+{
+    "/api": {
+      "target": "http://localhost:9442/atm/",
+      "secure": false,
+      "pathRewrite": {
+        "^/api": ""
+      },
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+
+}

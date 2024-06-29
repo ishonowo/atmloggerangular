@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <form
+        name="emailForm"
+        [formGroup]="emailForm"
+      >
+        <div *ngIf="isLoading">
+          <p>This page is still loading...</p>
+        </div>
+        <div *ngIf="emailIssue && !isLoading">
+          <div class="from">
+            <label for="fromEmail"><b>From</b>: </label>
+            <input
+              id="fromEmail"
+              formControlName="fromEmail"
+              type="text"
+              placeholder="Enter sender email"
+              title="From Email"
+            />
+          </div>
+          <div class="to">
+            <label for="toEmail"><b>To</b>: </label>
+            <input
+              id="toEmail"
+              formControlName="toEmail"
+              type="text"
+              placeholder="Enter recipient email"
+              title="To Email"
+            />
+          </div>
+
+          <!-- Cc FormArray -->
+          <div class="cc">
+            <label for="ccEmail"><b>Cc</b>: </label>
+
+            <input
+              id="cc"
+              formControlName="cc"
+              type="text"
+              placeholder="Enter CC email"
+              title="cc Email"
+            />
+          </div>
+          <div>
+            <label for="subject"><b>Subject</b>: </label>
+            <input
+              id="subject"
+              formControlName="subject"
+              type="text"
+              placeholder="Enter email subject"
+            />
+          </div>
+          <div>
+            <label for="mIntro"><b>Message</b>: </label>
+            <input
+              id="mIntro"
+              formControlName="mIntro"
+              type="text"
+              placeholder="Enter message introduction"
+              title="Message Introduction"
+            />
+          </div>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th
+                    id="mHeader"
+                    class="tableMHeader"
+                    *ngFor="let m of emailIssue?.mHeader"
+                  >
+                    {{ m }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    id="mBody"
+                    class="tableMBody"
+                    *ngFor="let message of emailIssue?.mBody"
+                  >
+                    <textarea
+                      [value]="message"
+                      rows="5"
+                      cols="12"
+                      placeholder="Enter message body"
+                      readonly
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <input
+              id="mEnd"
+              formControlName="mEnd"
+              type="text"
+              placeholder="Enter message end"
+              title="Message End"
+            />
+          </div>
+          <div>
+            <button
+            [disabled]="emailForm.invalid || isClicked"
+              type="submit"
+              class="btn btn-success pull-left"
+              (click)="sendFeedback()"
+            >
+              <i class="fa fa-envelope-o"></i>
+              <span>Send Email</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
