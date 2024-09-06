@@ -23,12 +23,15 @@ export class EmailIssueService {
     return this.http.post(this.SEND_EMAIL_URL, emailIssue);
   }
 
+
+
+  
   generateEmailIssue(atmIssue: AtmIssue): EmailIssue {
     let emailIssue: EmailIssue = {
-      fromEmail: atmIssue?.supportEmail || this.groupSupportEmail,
+      fromEmail: atmIssue?.userEmail,
       toEmail: atmIssue?.contact,//.split(';').map(String),
       cc: 
-        atmIssue.supportEmail || this.groupSupportEmail +';'+
+        atmIssue.supportEmail +';'+
         atmIssue.loggerEmail + ';'+
         atmIssue.branchEmail ,
       subject:
@@ -53,7 +56,7 @@ export class EmailIssueService {
         atmIssue.issueDesc + '',
         atmIssue.branchLogger + '',
         atmIssue.loggerPhoneNo + '',
-        formatDate(atmIssue?.logDate + '', 'medium', 'en_UK'),
+        formatDate(atmIssue?.logDate, 'medium', 'en-GB', 'GMT+1'),
       ],
       mEnd: 'Thanks.',
     };

@@ -4,6 +4,7 @@ import { IssueLogged } from '../model/issuelogged';
 import { AtmIssue } from '../model/atmissue';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
+//import { sName} from '../login/login.component';
 
 @Component({
   selector: 'app-issue-logged',
@@ -11,17 +12,19 @@ import { MsalService } from '@azure/msal-angular';
   styleUrls: ['./issue-logged.component.css'],
 })
 export class IssueLoggedComponent implements OnInit {
+  atmIssue!: AtmIssue;
+  protected isClicked: boolean = false;
+  protected sName: string|undefined=this.msalService.instance.getActiveAccount()?.username;;
+
   model: IssueLogged = {
-    username: '',
-    terminalId: '10702343',
+    userEmail: this.sName as string,
+    terminalId: '10701264',
     issueDesc: 'The ATM has a cash jam.',
     branchLogger: 'Ahmed Atere',
     loggerEmail: 'aa@fidelitybank.ng',
     loggerPhoneNo: '08012345678',
   };
 
-  atmIssue!: AtmIssue;
-  protected isClicked: boolean = false;
   //username!: any;
   /*private userEmail!: string;*/
 
@@ -47,25 +50,20 @@ export class IssueLoggedComponent implements OnInit {
 
   submitLoggedIssue() {
     this.isClicked = true;
-    let sName = this.msalService.instance.getActiveAccount()?.username;
-    if (sName) {
-      this.model.username = sName;
-    } else {
-      this.model.username = 'ATMSupport';
-    }
     this.atmService.postIssueLogged(this.model).subscribe(
       {
         next: async (res) => {
           alert('The issue has been successfully logged.');
           this.atmIssue = res;
+          //if (this.sName){this.atmIssue.userEmail=this.sName;}
           this.atmService.atmIssue = this.atmIssue;
-          //console.log(this.atmIssue);
+          console.log(this.atmIssue);
           await this.router.navigate(['email']);
         },
         error: (err) => {
           this.isClicked = false;
           alert('An error has occurred while logging the issue.');
-          console.log(err);
+          console.error(err);
         }//,
         //complete: () => this.router.navigate(['email']),
       }

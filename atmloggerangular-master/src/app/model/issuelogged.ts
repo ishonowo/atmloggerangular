@@ -1,5 +1,5 @@
 export interface IssueLogged {
-  username: string;
+  userEmail: string;
   terminalId: string;
   issueDesc: string;
   branchLogger: string;

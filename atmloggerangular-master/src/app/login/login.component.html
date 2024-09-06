@@ -1,7 +1,23 @@
-<h2>Welcome {{ getName() }} to the ATM Issue Logger</h2>
-<div>
-  <h2>
+<!--<div *ngIf="isUserLoggedIn">
+   Login information content 
+  <h2>Welcome, {{ getName() }}</h2>
+  <p>You are logged in.</p>
+  <p>
     Click <a routerLink="/issue-log" class="nav-link">here</a> to log an ATM
     issue.
-  </h2>
+  </p>
+</div>
+
+<div *ngIf="!isUserLoggedIn">
+   Proceed page content 
+  <h3>Please click login on the navigation bar on top to continue</h3>
+</div>-->
+
+
+<h2>Welcome {{ getName() }} to the ATM Issue Logger</h2>
+<div>
+  <p>
+    Click <a routerLink="/issue-log" class="nav-link">here</a> to log an ATM
+    issue.
+  </p>
 </div>

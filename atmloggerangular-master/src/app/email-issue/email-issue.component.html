@@ -16,55 +16,88 @@
       <form
         name="emailForm"
         [formGroup]="emailForm"
+        (ngSubmit)="sendFeedback()"
       >
         <div *ngIf="isLoading">
           <p>This page is still loading...</p>
         </div>
         <div *ngIf="emailIssue && !isLoading">
-          <div class="from">
-            <label for="fromEmail"><b>From</b>: </label>
-            <input
-              id="fromEmail"
-              formControlName="fromEmail"
-              type="text"
-              placeholder="Enter sender email"
-              title="From Email"
-            />
-          </div>
-          <div class="to">
-            <label for="toEmail"><b>To</b>: </label>
-            <input
-              id="toEmail"
-              formControlName="toEmail"
-              type="text"
-              placeholder="Enter recipient email"
-              title="To Email"
-            />
-          </div>
-
-          <!-- Cc FormArray -->
-          <div class="cc">
-            <label for="ccEmail"><b>Cc</b>: </label>
-
-            <input
-              id="cc"
-              formControlName="cc"
-              type="text"
-              placeholder="Enter CC email"
-              title="cc Email"
-            />
-          </div>
           <div>
-            <label for="subject"><b>Subject</b>: </label>
-            <input
+            <div class="from">
+              <label for="fromEmail"><b>From: </b></label>
+              <input
+                id="fromEmail"
+                formControlName="fromEmail"
+                placeholder="Enter sender email"
+                title="From Email"
+                type="text"
+              />
+              <small
+                *ngIf="
+                  emailForm.get('fromEmail')?.invalid &&
+                  emailForm.get('fromEmail')?.touched
+                "
+                >*The Sender's email is required.</small
+              >
+            </div>
+            <br />
+            <div class="to">
+              <label for="toEmail"><b>To:</b></label>
+              <textarea
+                id="toEmail"
+                formControlName="toEmail"
+                placeholder="Enter recipient email"
+                title="To Email"
+                rows="2"
+              ></textarea>
+              <small
+                *ngIf="
+                  emailForm.get('toEmail')?.invalid &&
+                  emailForm.get('toEmail')?.touched
+                "
+                >*The Recipient's email is required.</small
+              >
+            </div>
+            <br />
+            <!-- Cc FormArray -->
+            <div class="cc">
+              <label for="ccEmail"><b>Cc:</b> </label>
+              <textarea
+                id="cc"
+                formControlName="cc"
+                placeholder="Enter CC email"
+                title="cc Email"
+                rows="2"
+              ></textarea>
+              <small
+                *ngIf="
+                  emailForm.get('cc')?.invalid && emailForm.get('cc')?.touched
+                "
+                >*The Carbon copy email is required.</small
+              >
+            </div>
+          </div>
+          <br />
+          <div class="subject">
+            <label for="subject"><b>Subject:</b></label>
+            <textarea
               id="subject"
               formControlName="subject"
-              type="text"
               placeholder="Enter email subject"
-            />
+              title="Subject"
+              rows="3"
+            ></textarea>
+            <small
+              *ngIf="
+                emailForm.get('subject')?.invalid &&
+                emailForm.get('subject')?.touched
+              "
+              >*The Subject is required.</small
+            >
           </div>
-          <div>
-            <label for="mIntro"><b>Message</b>: </label>
+          <br />
+          <div class="mIntro">
+            <label for="mIntro"><b>Message:</b></label>
             <input
               id="mIntro"
               formControlName="mIntro"
@@ -72,14 +105,21 @@
               placeholder="Enter message introduction"
               title="Message Introduction"
             />
+            <small
+              *ngIf="
+                emailForm.get('mIntro')?.invalid &&
+                emailForm.get('mIntro')?.touched
+              "
+              >*The introductory message is required.</small
+            >
           </div>
+          <br />
           <div>
             <table>
               <thead>
                 <tr>
-                  <th
-                    id="mHeader"
-                    class="tableMHeader"
+                  <th id="mHeader"
+                  class="tableMHeader"
                     *ngFor="let m of emailIssue?.mHeader"
                   >
                     {{ m }}
@@ -87,18 +127,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td
-                    id="mBody"
-                    class="tableMBody"
-                    *ngFor="let message of emailIssue?.mBody"
-                  >
+                <tr id="mBody" class="tableMBody" formArrayName="mBody">
+                  <td *ngFor="let control of mBody.controls; let i = index">
                     <textarea
-                      [value]="message"
+                      [formControlName]="i"
+                      (ngModelChange)="onMessageChange(i, $event)"
                       rows="5"
-                      cols="12"
-                      placeholder="Enter message body"
-                      readonly
+                      cols="20"
+                      placeholder="Enter a valid value."
                     ></textarea>
                   </td>
                 </tr>
@@ -112,16 +148,25 @@
               placeholder="Enter message end"
               title="Message End"
             />
+            <small
+              *ngIf="
+                emailForm.get('mEnd')?.invalid && emailForm.get('mEnd')?.touched
+              "
+              >*The message ending is required.</small
+            >
           </div>
-          <div>
+          <br />
+          <div class="display">
             <button
-            [disabled]="emailForm.invalid || isClicked"
+              [disabled]="emailForm.invalid || isClicked"
               type="submit"
               class="btn btn-success pull-left"
-              (click)="sendFeedback()"
             >
               <i class="fa fa-envelope-o"></i>
               <span>Send Email</span>
+            </button>
+            <button class="btn btn-danger pull-right" routerLink="/issue-log">
+              Re-log issue
             </button>
           </div>
         </div>

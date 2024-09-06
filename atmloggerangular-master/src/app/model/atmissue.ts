@@ -13,4 +13,5 @@ export interface AtmIssue {
   atmName: string;
   physicalAddress: string;
   vendorName: string;
+  userEmail: string;
 }

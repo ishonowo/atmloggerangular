@@ -1,25 +1,78 @@
 
 
 .from {
-    width: 300%;
-    size: 50;
+  resize: both;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .from label {
+    flex-shrink: 0;
+    margin-right: 5px;
+  }
+  
+  .from input {
+    flex-grow: 1;
+    min-width: 20px;
+    width: auto;
+  }
+
+.to textarea {
+    resize: both;  /* Allow both horizontal and vertical resizing */
+    white-space: normal;  /* Allow text to wrap */
+    overflow-x: hidden;  /* Hide horizontal scrollbar */
+    overflow-y: auto;  /* Show vertical scrollbar when needed */
+    min-width: 800px;  /* Adjust as needed */
+    max-width: 100%;
+    min-height: 4em;  /* Use min-height instead of height */
+    vertical-align: middle;
+    line-height: 1.5;  /* Improve readability */
+    padding: 5px;  /* Add some padding for better appearance */
+  }
+
+.cc textarea {
+    resize: both;  /* Allow both horizontal and vertical resizing */
+    white-space: normal;  /* Allow text to wrap */
+    overflow-x: hidden;  /* Hide horizontal scrollbar */
+    overflow-y: auto;  /* Show vertical scrollbar when needed */
+    min-width: 800px;  /* Adjust as needed */
+    max-width: 100%;
+    min-height: 4em;  /* Use min-height instead of height */
+    vertical-align: middle;
+    line-height: 1.5;  /* Improve readability */
+    padding: 5px;  /* Add some padding for better appearance */
 }
 
-.to {
-    width: 300%;
-}
-
-.cc {
-    width: 300%;
-}
-
-.subject {
-    width: 300%;
+.subject textarea{
+    resize: both;  /* Allow both horizontal and vertical resizing */
+    white-space: normal;  /* Allow text to wrap */
+    overflow-x: hidden;  /* Hide horizontal scrollbar */
+    overflow-y: auto;  /* Show vertical scrollbar when needed */
+    min-width: 800px;  /* Adjust as needed */
+    max-width: 100%;
+    min-height: 4em;  /* Use min-height instead of height */
+    vertical-align: middle;
+    line-height: 1.5;  /* Improve readability */
+    padding: 5px;  /* Add some padding for better appearance */
 }
 
 .mIntro {
-    width: 300%;
-}
+    display: flex;
+    align-items: center;
+    width: 50%;
+  }
+  
+  .mIntro label {
+    flex-shrink: 0;
+    margin-right: 5px;
+  }
+  
+  .mIntro input {
+    flex-grow: 1;
+    min-width: 20px;
+    width: auto;
+  }
 
 .mEnd {
     width: 300%;
@@ -36,4 +89,18 @@
 .mBody {
     height: 300%;
     width: 300%;
+}
+
+.display {
+    display: flex; 
+    justify-content: space-between
+}
+
+.invalid-input{
+  color: red;
+}
+
+small{
+  color: red;
+  font-weight: bold;
 }

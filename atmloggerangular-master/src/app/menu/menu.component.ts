@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-//import { AuthenticationService } from '../shared/authentication.service';
-//import { BasicAuthenticationService } from '../shared/basic-authentication.service';
 import { MsalService } from '@azure/msal-angular';
 
 @Component({
@@ -9,7 +7,8 @@ import { MsalService } from '@azure/msal-angular';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  constructor(private msalService: MsalService) {}
+  constructor(private msalService: MsalService
+  ) {}
 
   ngOnInit() {
     this.msalService.instance.handleRedirectPromise().then((result) => {
