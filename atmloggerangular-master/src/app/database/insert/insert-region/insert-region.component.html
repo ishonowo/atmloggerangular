@@ -1,0 +1,125 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Insert Region</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <form
+        name="regionInsertForm"
+        [formGroup]="regionInsertForm"
+        (ngSubmit)="regionInsert()"
+      >
+        <div>
+          <!--<div class="id">
+            <label for="id"><b>Region ID: </b></label>
+            <input
+              id="id"
+              formControlName="id"
+              placeholder="Enter the region id."
+              title="regionId"
+              type="text"
+            />
+            <ng-container
+              *ngIf="
+                regionInsertForm.get('id')?.invalid &&
+                (regionInsertForm.get('id')?.touched ||
+                  regionInsertForm.get('id')?.dirty)
+              "
+            >
+              <small *ngIf=" regionInsertForm.get('id')?.errors?.['required']">
+                *The Region ID is required.</small
+              >
+              <small
+                *ngIf="regionInsertForm.get('id')?.errors?.['regionFound']"
+              >
+                *The Region ID entered already exists.</small
+              >
+            </ng-container>
+          </div> -->
+          <br />
+          <div class="input">
+            <label for="regionName"><b>Name: </b></label>
+            <input
+              id="regionName"
+              formControlName="regionName"
+              placeholder="Enter the name of the new region."
+              title="regionName"
+              type="text"
+            />
+            <ng-container
+              *ngIf="
+                regionInsertForm.get('regionName')?.invalid &&
+                (regionInsertForm.get('regionName')?.touched ||
+                  regionInsertForm.get('regionName')?.dirty)
+              "
+            >
+              <small
+                *ngIf=" regionInsertForm.get('regionName')?.errors?.['required']"
+              >
+                *The region name is required.</small
+              >
+            </ng-container>
+          </div>
+          <br />
+        </div>
+        <div class="display">
+          <button type="submit" class="btn btn-success pull-left">
+            <span>Submit Form</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <br />
+    <br />
+    <!-- region-list.component.html -->
+    <div class="container mt-4">
+      <h2>Regions List</h2>
+
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <!-- Data table -->
+      <div *ngIf="!loading && !error" class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Region Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let region of regions">
+              <td>{{ region.id }}</td>
+              <td>{{ region.regionName }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- No data message -->
+        <div *ngIf="regions.length === 0" class="alert alert-info">
+          No regions found.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

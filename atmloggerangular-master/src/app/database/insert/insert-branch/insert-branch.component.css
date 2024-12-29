@@ -1,0 +1,15 @@
+input {
+    resize: both;
+    display: flex;
+    align-items: center;
+    min-width: 500px;
+    max-width: 100%;
+  }
+
+#solId {
+    resize: both;
+    display: flex;
+    align-items: center;
+    min-width: 50px;
+    max-width: 100%;
+}

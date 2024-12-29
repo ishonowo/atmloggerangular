@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IssueLoggedComponent } from './issue-logged/issue-logged.component';
+import { DbUpdateComponent } from './database/update/db-update/db-update.component';
 import { Router, Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,6 +21,13 @@ import {
   IPublicClientApplication,
   PublicClientApplication,
 } from '@azure/msal-browser';
+import { DbInsertComponent } from './database/insert/db-insert.component';
+import { DatabaseComponent } from './database/database.component';
+import { InsertBranchComponent } from './database/insert/insert-branch/insert-branch.component';
+import { InsertVendorComponent } from './database/insert/insert-vendor/insert-vendor.component';
+import { InsertRegionComponent } from './database/insert/insert-region/insert-region.component';
+import { InsertTerminalComponent } from './database/insert/insert-terminal/insert-terminal.component';
+import { InsertContactComponent } from './database/insert/insert-contact/insert-contact.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -35,6 +43,38 @@ const appRoutes: Routes = [
   {
     path: 'issue-log',
     component: IssueLoggedComponent,
+  },
+  {
+    path: 'database',
+    component: DatabaseComponent,
+  },
+  {
+    path: 'db-insert',
+    component: DbInsertComponent,
+  },
+  {
+    path: 'insert-branch',
+    component: InsertBranchComponent,
+  },
+  {
+    path: 'insert-contact',
+    component: InsertContactComponent,
+  },
+  {
+    path: 'insert-region',
+    component: InsertRegionComponent,
+  },
+  {
+    path: 'insert-terminal',
+    component: InsertTerminalComponent,
+  },
+  {
+    path: 'insert-vendor',
+    component: InsertVendorComponent,
+  },
+  {
+    path: 'db-update',
+    component: DbUpdateComponent,
   },
   {
     path: '',
@@ -59,6 +99,14 @@ const appRoutes: Routes = [
     ErrorComponent,
     MenuComponent,
     FooterComponent,
+    DbUpdateComponent,
+    DbInsertComponent,
+    DatabaseComponent,
+    InsertBranchComponent,
+    InsertVendorComponent,
+    InsertRegionComponent,
+    InsertTerminalComponent,
+    InsertContactComponent,
   ],
   imports: [
     BrowserModule,

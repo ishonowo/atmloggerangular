@@ -1,0 +1,124 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Insert Vendor</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <form
+        name="vendorInsertForm"
+        [formGroup]="vendorInsertForm"
+        (ngSubmit)="vendorInsert()"
+      >
+        <div>
+          <div class="input">
+            <label for="vendorName"><b>Vendor Name: </b></label>
+            <input
+              id="vendorName"
+              formControlName="vendorName"
+              placeholder="Enter the name of the new vendor."
+              title="vendorName"
+              type="text"
+            />
+            <ng-container
+              *ngIf="
+                vendorInsertForm.get('vendorName')?.invalid &&
+                (vendorInsertForm.get('vendorName')?.touched ||
+                vendorInsertForm.get('vendorName')?.dirty)
+              "
+            >
+              <small
+                *ngIf=" vendorInsertForm.get('vendorName')?.errors?.['required']"
+              >
+                *The vendor name is required.</small
+              >
+            </ng-container>
+          </div>
+          <br/>
+          <div class="input">
+            <label for="shortName"><b>Vendor's Short Name: </b></label>
+            <input
+              id="shortName"
+              formControlName="shortName"
+              placeholder="Enter the short name of the new vendor."
+              title="shortName"
+              type="text"
+            />
+            <ng-container
+              *ngIf="
+                vendorInsertForm.get('shortName')?.invalid &&
+                (vendorInsertForm.get('shortName')?.touched ||
+                vendorInsertForm.get('shortName')?.dirty)
+              "
+            >
+              <small
+                *ngIf=" vendorInsertForm.get('shortName')?.errors?.['required']"
+              >
+                *The short name is required.</small
+              >
+            </ng-container>
+          </div>
+          
+        </div>
+        <div class="display">
+          <button type="submit" class="btn btn-success pull-left">
+            <span>Submit Form</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <br />
+    <br />
+    <!-- vendor-list.component.html -->
+    <div class="container mt-4">
+      <h2>Vendors List</h2>
+
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <!-- Data table -->
+      <div *ngIf="!loading && !error" class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Vendor Name</th>
+              <th>Short Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vendor of vendors">
+              <td>{{ vendor.id }}</td>
+              <td>{{ vendor.vendorName }}</td>
+              <td>{{ vendor.shortName }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- No data message -->
+        <div *ngIf="vendors.length === 0" class="alert alert-info">
+          No regions found.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

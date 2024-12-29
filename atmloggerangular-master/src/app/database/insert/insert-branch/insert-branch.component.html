@@ -1,0 +1,79 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Insert for Branches</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <form name="branchInsertForm" [formGroup]="branchInsertForm" (ngSubmit)="branchInsert()">
+            <div>
+                <div class="solId">
+                    <label for="solId"><b>Sol ID: </b></label>
+                    <input id="solId" formControlName="solId" placeholder="Enter the branch sol id." title="solId"
+                        type="text" />
+                    <small *ngIf="
+                        branchInsertForm.get('solId')?.invalid &&
+                        branchInsertForm.get('solId')?.touched
+                      ">*The Sol ID is invalid.</small>
+                </div>
+                <br />
+                <div class="input">
+                    <label for="branchEmail"><b>Branch TSD Group Email:</b></label>
+                    <input id="branchEmail" formControlName="branchEmail"
+                        placeholder="Enter the email address for the branch TSD group." title="branchEmail"
+                        type="text" />
+                    <small *ngIf="
+                        branchInsertForm.get('branchEmail')?.invalid &&
+                        branchInsertForm.get('branchEmail')?.touched
+                        ">*The email is not valid.</small>
+
+                </div>
+                <br />
+                <div class="textarea">
+                    <label for="physicalAddress"><b>Branch Address:</b></label>
+                    <textarea id="physicalAddress" formControlName="physicalAddress"
+                        placeholder="Enter the physical address of the branch" title="physicalAddress"
+                        rows="2"></textarea>
+                    <small *ngIf="
+                    branchInsertForm.get('physicalAddress')?.invalid &&
+                    branchInsertForm.get('physicalAddress')?.touched
+                    ">*The address entered is not valid.</small>
+                </div>
+                <br />
+                <div class="input">
+                    <label for="branchName"><b>Branch Name: </b></label>
+                    <input id="branchName" formControlName="branchName" placeholder="Enter the name of the new branch."
+                        title="branchName" type="text" />
+                    <ng-container *ngIf="branchInsertForm.get('branchName')?.invalid && 
+                       (branchInsertForm.get('branchName')?.touched || branchInsertForm.get('branchName')?.dirty)">
+                        <small *ngIf=" branchInsertForm.get('branchName')?.errors?.['required']">
+                        *The branch name is required.</small>
+                        <small *ngIf="branchInsertForm.get('branchName')?.errors?.['branchFound']">
+                            *The branch name entered already exists.</small>
+                    </ng-container>
+                </div>
+                <br />
+
+            </div>
+            <div class="display">
+                <button type="submit" class="btn btn-success pull-left">
+                    <span>Submit Form</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>
