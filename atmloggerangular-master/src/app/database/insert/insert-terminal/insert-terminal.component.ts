@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { Terminal } from 'src/app/model/terminal';
 import { TerminalObj } from 'src/app/model/terminalObj';
 import { TerminalObject } from 'src/app/model/terminalObject';
+import { VNameOption } from 'src/app/model/vnameoption';
 import { TerminalService } from 'src/app/shared/terminal.service';
+import { VendorService } from 'src/app/shared/vendor.service';
 
 @Component({
   selector: 'app-insert-terminal',
@@ -38,14 +40,18 @@ export class InsertTerminalComponent implements OnInit {
   };
 
   terminals: Terminal[] = [];
-  terminalObjects: TerminalObject[]=[];
+  terminalObjects: TerminalObject[] = [];
   loading: boolean = true;
   error: string = '';
+
+  vNameOptions: VNameOption[] = [];
+  // selectedId: number|null = null;
 
   constructor(
     private fb: FormBuilder,
     protected router: Router,
-    private terminalService: TerminalService
+    private terminalService: TerminalService,
+    private vendorService: VendorService
   ) {
     this.terminalInsertForm = this.fb.group({
       // id: [
@@ -53,18 +59,43 @@ export class InsertTerminalComponent implements OnInit {
       //   [Validators.required, CustomValidators.noSpaceAllowed],
       //   [CustomValidators.verifyRegionID(this.regionService)],
       // ],
-      vendorName:['',Validators.required],
+      vendorId: ['', Validators.required],
       terminalId: ['', [Validators.required]],
       atmName: ['', [Validators.required]],
-      offsite:[false,Validators.required]
+      offsite: [false, Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.loadTerminalswNames();
+    this.loadVNameOptions();
   }
 
-/*  loadTerminals(): void {
+  loadVNameOptions() {
+    this.loading = true;
+    this.vendorService.getAllNames().subscribe({
+      next: (vNameOptions) => {
+        this.vNameOptions = vNameOptions;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Error loading names';
+        this.loading = false;
+        console.error('Error:', error);
+      },
+      complete: () => {
+        console.log('Finished fetching name options');
+      },
+    });
+  }
+
+  // onNameSelect(id: string) {
+  //   this.selectedId = parseInt(id);
+  //   console.log('Selected ID:', this.selectedId);
+  //   // Handle the selected ID as needed
+  // }
+
+  /*  loadTerminals(): void {
     this.loading = true;
     this.terminalService.getAllTerminals().subscribe({
       next: (data) => {
@@ -94,9 +125,9 @@ export class InsertTerminalComponent implements OnInit {
         this.loading = false;
         console.error('Error:', error);
       },
-      complete:() => {
+      complete: () => {
         console.log('Finished with all terminals with names.');
-      }
+      },
     });
   }
 
@@ -104,27 +135,26 @@ export class InsertTerminalComponent implements OnInit {
     console.log(this.terminalInsertForm);
     if (this.terminalInsertForm.valid) {
       this.terminalObj = {
-      vendorId : this.terminalInsertForm.get('vendorId')?.value,
-      terminalId : this.terminalInsertForm.get('terminalId')?.value, 
-      atmName : this.terminalInsertForm.get('atmName')?.value,  
-      offsite : this.terminalInsertForm.get('offsite')?.value,
-      }  
-
-        this.terminalService.insertTerminal(this.terminalObj).subscribe({
-          next: (response) => {
-            console.log('Terminal inserted successfully', response);
-            // Reset form after successful submission
-            this.terminalInsertForm.reset();
-            // You can add success message here
-          },
-          error: (error) => {
-            console.error('Error inserting terminal', error);
-            // Handle error (show error message to user)
-          },
-          complete: () => {
-            console.log('Done with terminal insert.');
-          },
-        });
+        vendorId: this.terminalInsertForm.get('vendorId')?.value,
+        terminalId: this.terminalInsertForm.get('terminalId')?.value,
+        atmName: this.terminalInsertForm.get('atmName')?.value,
+        offsite: this.terminalInsertForm.get('offsite')?.value,
+      };
+      this.terminalService.insertTerminal(this.terminalObj).subscribe({
+        next: (response) => {
+          console.log('Terminal inserted successfully', response);
+          // Reset form after successful submission
+          this.terminalInsertForm.reset();
+          // You can add success message here
+        },
+        error: (error) => {
+          console.error('Error inserting terminal', error);
+          // Handle error (show error message to user)
+        },
+        complete: () => {
+          console.log('Done with terminal insert.');
+        },
+      });
     } else {
       // Mark all fields as touched to trigger validation display
       Object.keys(this.terminalInsertForm.controls).forEach((key) => {
@@ -133,5 +163,4 @@ export class InsertTerminalComponent implements OnInit {
       });
     }
   }
-
 }

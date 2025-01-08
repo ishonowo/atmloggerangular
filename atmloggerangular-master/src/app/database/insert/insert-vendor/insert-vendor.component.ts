@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Vendor } from 'src/app/model/vendor';
 import { VendorObj } from 'src/app/model/vendorObj';
+import { VNameOption } from 'src/app/model/vnameoption';
 import { VendorService } from 'src/app/shared/vendor.service';
 
 @Component({
@@ -49,6 +50,8 @@ export class InsertVendorComponent implements OnInit {
     this.loadVendors();
   }
 
+  
+  
   loadVendors(): void {
     this.loading = true;
     this.vendorService.getAllVendors().subscribe({

@@ -22,14 +22,18 @@
       >
         <div>
           <div class="input">
-            <label for="vendorId"><b>Vendor ID: </b></label>
-            <input
+            <label for="vendorId"><b>Vendor: </b></label>
+            <select
               id="vendorId"
               formControlName="vendorId"
-              placeholder="Enter the id of the vendor."
               title="vendorId"
-              type="text"
-            />
+              class="form-select"
+            >
+              <option [ngValue]="''" disabled>Select a vendor</option>
+              <option *ngFor="let vNameOption of vNameOptions" [ngValue]="vNameOption.id">
+                {{vNameOption.vendorName}}
+              </option>
+            </select>
             <ng-container
               *ngIf="
                 terminalInsertForm.get('vendorId')?.invalid &&
@@ -38,10 +42,10 @@
               "
             >
               <small
-                *ngIf=" terminalInsertForm.get('vendorId')?.errors?.['required']"
+                *ngIf="terminalInsertForm.get('vendorId')?.errors?.['required']"
               >
-                *The vendor id is required.</small
-              >
+                *Please select a vendor
+              </small>
             </ng-container>
           </div>
           <br/>
@@ -60,7 +64,7 @@
                 (terminalInsertForm.get('terminalId')?.touched ||
                 terminalInsertForm.get('terminalId')?.dirty)
               "
-            >
+            >  
               <small
                 *ngIf=" terminalInsertForm.get('terminalId')?.errors?.['required']"
               >
@@ -68,6 +72,8 @@
               >
             </ng-container>
           </div>
+          
+          
           <br/>
           <div class="input">
             <label for="atmName"><b>ATM's Name: </b></label>

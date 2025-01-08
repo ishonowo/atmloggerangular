@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Vendor } from '../model/vendor';
 import { Observable } from 'rxjs';
 import { VendorObj } from '../model/vendorObj';
+import { VNameOption } from '../model/vnameoption';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VendorService {
   private baseUrl: string = 'http://localhost:9442/api/vendors';
+  private path: string ='/names'
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +20,10 @@ export class VendorService {
 
   insertVendor(vendorObj: VendorObj): Observable<any> {
     return this.http.post<Vendor>(`${this.baseUrl}`, vendorObj);
+  }
+
+  getAllNames(): Observable<VNameOption[]> {
+    return this.http.get<VNameOption[]>(this.baseUrl);
   }
   
 }

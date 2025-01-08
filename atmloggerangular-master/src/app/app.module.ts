@@ -28,6 +28,12 @@ import { InsertVendorComponent } from './database/insert/insert-vendor/insert-ve
 import { InsertRegionComponent } from './database/insert/insert-region/insert-region.component';
 import { InsertTerminalComponent } from './database/insert/insert-terminal/insert-terminal.component';
 import { InsertContactComponent } from './database/insert/insert-contact/insert-contact.component';
+import { DisplayContactComponent } from './database/display/display-contact/display-contact.component';
+import { DisplayVendorComponent } from './database/display/display-vendor/display-vendor.component';
+import { DisplayTerminalComponent } from './database/display/display-terminal/display-terminal.component';
+import { DisplayBranchInfoComponent } from './database/display/display-branch-info/display-branch-info.component';
+import { DisplayRegionComponent } from './database/display/display-region/display-region.component';
+import { DisplayComponent } from './database/display/display.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -47,6 +53,30 @@ const appRoutes: Routes = [
   {
     path: 'database',
     component: DatabaseComponent,
+  },
+  {
+    path: 'db-display',
+    component: DisplayComponent,
+  },
+  {
+    path: 'display-branch',
+    component: DisplayBranchInfoComponent,
+  },
+  {
+    path: 'display-contact',
+    component: DisplayContactComponent,
+  },
+  {
+    path: 'display-region',
+    component: DisplayRegionComponent,
+  },
+  {
+    path: 'display-terminal',
+    component: DisplayTerminalComponent,
+  },
+  {
+    path: 'display-vendor',
+    component: DisplayVendorComponent,
   },
   {
     path: 'db-insert',
@@ -107,6 +137,12 @@ const appRoutes: Routes = [
     InsertRegionComponent,
     InsertTerminalComponent,
     InsertContactComponent,
+    DisplayContactComponent,
+    DisplayVendorComponent,
+    DisplayTerminalComponent,
+    DisplayBranchInfoComponent,
+    DisplayRegionComponent,
+    DisplayComponent,
   ],
   imports: [
     BrowserModule,
