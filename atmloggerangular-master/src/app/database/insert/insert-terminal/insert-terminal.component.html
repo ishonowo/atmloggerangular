@@ -29,16 +29,21 @@
               title="vendorId"
               class="form-select"
             >
-              <option [ngValue]="''" disabled>Select a vendor</option>
-              <option *ngFor="let vNameOption of vNameOptions" [ngValue]="vNameOption.id">
-                {{vNameOption.vendorName}}
+              <option [ngValue]="null" selected disabled>
+                Select a vendor
+              </option>
+              <option
+                *ngFor="let vNameOption of vNameOptions"
+                [ngValue]="vNameOption.id"
+              >
+                {{ vNameOption.vendorName }}
               </option>
             </select>
             <ng-container
               *ngIf="
                 terminalInsertForm.get('vendorId')?.invalid &&
                 (terminalInsertForm.get('vendorId')?.touched ||
-                terminalInsertForm.get('vendorId')?.dirty)
+                  terminalInsertForm.get('vendorId')?.dirty)
               "
             >
               <small
@@ -48,7 +53,7 @@
               </small>
             </ng-container>
           </div>
-          <br/>
+          <br />
           <div class="input">
             <label for="terminalId"><b>Terminal ID: </b></label>
             <input
@@ -62,9 +67,9 @@
               *ngIf="
                 terminalInsertForm.get('terminalId')?.invalid &&
                 (terminalInsertForm.get('terminalId')?.touched ||
-                terminalInsertForm.get('terminalId')?.dirty)
+                  terminalInsertForm.get('terminalId')?.dirty)
               "
-            >  
+            >
               <small
                 *ngIf=" terminalInsertForm.get('terminalId')?.errors?.['required']"
               >
@@ -72,9 +77,8 @@
               >
             </ng-container>
           </div>
-          
-          
-          <br/>
+
+          <br />
           <div class="input">
             <label for="atmName"><b>ATM's Name: </b></label>
             <input
@@ -88,7 +92,7 @@
               *ngIf="
                 terminalInsertForm.get('atmName')?.invalid &&
                 (terminalInsertForm.get('atmName')?.touched ||
-                terminalInsertForm.get('atmName')?.dirty)
+                  terminalInsertForm.get('atmName')?.dirty)
               "
             >
               <small
@@ -98,7 +102,7 @@
               >
             </ng-container>
           </div>
-          <br/>
+          <br />
           <div class="input">
             <label for="offsite"><b>Is this an offsite ATM?: </b></label>
             <input
@@ -112,7 +116,7 @@
               *ngIf="
                 terminalInsertForm.get('offsite')?.invalid &&
                 (terminalInsertForm.get('offsite')?.touched ||
-                terminalInsertForm.get('offsite')?.dirty)
+                  terminalInsertForm.get('offsite')?.dirty)
               "
             >
               <small
@@ -122,7 +126,6 @@
               >
             </ng-container>
           </div>
-          
         </div>
         <div class="display">
           <button type="submit" class="btn btn-success pull-left">
