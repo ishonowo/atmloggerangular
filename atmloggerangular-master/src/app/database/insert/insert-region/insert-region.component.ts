@@ -11,17 +11,9 @@ import { CustomValidators } from 'src/app/validators/custom.validators';
   templateUrl: './insert-region.component.html',
   styleUrls: ['./insert-region.component.css'],
 })
-export class InsertRegionComponent implements OnInit {
+export class InsertRegionComponent{
   public regionInsertForm!: FormGroup;
-  protected isClicked: boolean = false;
   public regionName: string = '';
-  private region: Region = {
-    id: 0,
-    regionName: '',
-  };
-
-  regions: Region[] = [];
-  loading: boolean = true;
   error: string = '';
 
   constructor(
@@ -39,28 +31,7 @@ export class InsertRegionComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.loadRegions();
-  }
-
-  loadRegions(): void {
-    this.loading = true;
-    this.regionService.getAllRegions().subscribe({
-      next: (data) => {
-        this.regions = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Error loading regions';
-        this.loading = false;
-        console.error('Error:', error);
-      },
-      complete:() => {
-        console.log('Finished with fetching all regions.');
-      }
-    });
-  }
-
+  
   regionInsert(): void {
     console.log(this.regionInsertForm);
     if (this.regionInsertForm.valid) {

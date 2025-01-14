@@ -18,20 +18,6 @@ export class InsertTerminalComponent implements OnInit {
   protected isClicked: boolean = false;
   public vendorName: string = '';
   public shortName: string = '';
-  private terminal: Terminal = {
-    id: 0,
-    vendorId: 0,
-    terminalId: '',
-    atmName: '',
-    offsite: false,
-  };
-  private terminalObject: TerminalObject = {
-    vendorName: '',
-    id: 0,
-    terminalId: '',
-    atmName: '',
-    offsite: false,
-  };
   private terminalObj: TerminalObj = {
     vendorId: 0,
     terminalId: '',
@@ -39,8 +25,6 @@ export class InsertTerminalComponent implements OnInit {
     offsite: false,
   };
 
-  terminals: Terminal[] = [];
-  terminalObjects: TerminalObject[] = [];
   loading: boolean = true;
   error: string = '';
 
@@ -67,7 +51,6 @@ export class InsertTerminalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadTerminalswNames();
     this.loadVNameOptions();
   }
 
@@ -79,7 +62,7 @@ export class InsertTerminalComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.error = 'Error loading names';
+        this.error = 'Error loading names '+error;
         this.loading = false;
         console.error('Error:', error);
       },
@@ -88,49 +71,7 @@ export class InsertTerminalComponent implements OnInit {
       },
     });
   }
-
-  // onNameSelect(id: string) {
-  //   this.selectedId = parseInt(id);
-  //   console.log('Selected ID:', this.selectedId);
-  //   // Handle the selected ID as needed
-  // }
-
-  /*  loadTerminals(): void {
-    this.loading = true;
-    this.terminalService.getAllTerminals().subscribe({
-      next: (data) => {
-        this.terminals = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Error loading terminals';
-        this.loading = false;
-        console.error('Error:', error);
-      },
-      complete:() => {
-        console.log('Finished with all terminals.');
-      }
-    });
-  }*/
-
-  loadTerminalswNames(): void {
-    this.loading = true;
-    this.terminalService.getAllTerminalwNames().subscribe({
-      next: (data) => {
-        this.terminalObjects = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Error loading terminals with names';
-        this.loading = false;
-        console.error('Error:', error);
-      },
-      complete: () => {
-        console.log('Finished with all terminals with names.');
-      },
-    });
-  }
-
+  
   terminalInsert(): void {
     console.log(this.terminalInsertForm);
     if (this.terminalInsertForm.valid) {

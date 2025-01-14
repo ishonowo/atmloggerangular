@@ -44,7 +44,7 @@ const routes: Routes = [
     canActivate: [MsalGuard],
   },
   {
-    path: 'display-branch-info',
+    path: 'display-branch',
     component: DisplayBranchInfoComponent,
     canActivate: [MsalGuard],
   },

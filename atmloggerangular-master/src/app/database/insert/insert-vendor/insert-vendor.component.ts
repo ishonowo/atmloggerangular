@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Vendor } from 'src/app/model/vendor';
 import { VendorObj } from 'src/app/model/vendorObj';
-import { VNameOption } from 'src/app/model/vnameoption';
 import { VendorService } from 'src/app/shared/vendor.service';
 
 @Component({
@@ -11,24 +10,14 @@ import { VendorService } from 'src/app/shared/vendor.service';
   templateUrl: './insert-vendor.component.html',
   styleUrls: ['./insert-vendor.component.css'],
 })
-export class InsertVendorComponent implements OnInit {
+export class InsertVendorComponent {
   public vendorInsertForm!: FormGroup;
   protected isClicked: boolean = false;
-  public vendorName: string = '';
-  public shortName: string = '';
-  private vendor: Vendor = {
-    id: 0,
-    vendorName: '',
-    shortName: '',
+  public vendorObj: VendorObj={
+    vendorName:'',
+    shortName:''
   };
-  private vendorObj: VendorObj = {
-    vendorName: '',
-    shortName: '',
-  };
-
-  vendors: Vendor[] = [];
-  loading: boolean = true;
-  error: string = '';
+  
 
   constructor(
     private fb: FormBuilder,
@@ -46,30 +35,11 @@ export class InsertVendorComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.loadVendors();
-  }
+  
 
   
   
-  loadVendors(): void {
-    this.loading = true;
-    this.vendorService.getAllVendors().subscribe({
-      next: (data) => {
-        this.vendors = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Error loading vendors';
-        this.loading = false;
-        console.error('Error:', error);
-      },
-      complete: () => {
-        console.log('Finished with fetching all vendors.');
-      },
-    });
-  }
-
+  
   vendorInsert(): void {
     console.log(this.vendorInsertForm);
     if (this.vendorInsertForm.valid) {
