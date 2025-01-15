@@ -1,4 +1,4 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, ValidationErrors } from "@angular/forms";
 import { RegionService } from "../shared/region.service";
 import { SolValidationService } from "../shared/sol-validation.service";
 import { catchError, map, Observable, of } from "rxjs";
@@ -22,7 +22,7 @@ export class CustomValidators{
 
     // Async validator using backend validation
     static verifySolID(solValidationService: SolValidationService) {
-        return (control: AbstractControl): Observable<any> => {
+        return (control: AbstractControl): Observable<ValidationErrors | null> => {
             // If no value, return null Observable
             if (!control.value) {
                 return of(null);
@@ -30,7 +30,8 @@ export class CustomValidators{
 
             // Use the validation service to check SOL
             return solValidationService.validateSol(control.value).pipe(
-                map(isValid => isValid ? null : { solFound: true }),
+                map(solExists => {
+                    return solExists ?  { solExists: true } : null;}),
                 catchError(() => of(null))
             );
         };

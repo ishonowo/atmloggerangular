@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Terminal } from 'src/app/model/terminal';
 import { TerminalObj } from 'src/app/model/terminalObj';
 import { TerminalObject } from 'src/app/model/terminalObject';
-import { VNameOption } from 'src/app/model/vnameoption';
+import { VNameOption } from 'src/app/model/vNameOption';
 import { TerminalService } from 'src/app/shared/terminal.service';
 import { VendorService } from 'src/app/shared/vendor.service';
 

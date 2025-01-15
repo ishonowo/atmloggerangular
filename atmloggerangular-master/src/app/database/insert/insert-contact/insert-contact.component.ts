@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ContactObject } from 'src/app/model/contactObject';
-import { VNameOption } from 'src/app/model/vnameoption';
+import { VNameOption } from 'src/app/model/vNameOption';
 import { VendorContactService } from 'src/app/shared/vendor-contact.service';
 import { VendorService } from 'src/app/shared/vendor.service';
 

@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { VendorContactObject } from 'src/app/model/vendorContactObject';
-import { VNameOption } from 'src/app/model/vnameoption';
 import { VendorContactService } from 'src/app/shared/vendor-contact.service';
-import { VendorService } from 'src/app/shared/vendor.service';
 
 @Component({
   selector: 'app-display-contact',

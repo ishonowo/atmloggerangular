@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Vendor } from '../model/vendor';
 import { Observable } from 'rxjs';
 import { VendorObj } from '../model/vendorObj';
-import { VNameOption } from '../model/vnameoption';
+import { VNameOption } from '../model/vNameOption';
 
 @Injectable({
   providedIn: 'root',
