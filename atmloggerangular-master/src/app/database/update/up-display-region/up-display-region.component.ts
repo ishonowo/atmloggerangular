@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { RegionService } from 'src/app/shared/region.service';
-import { Region } from 'src/app/model/region';
+import { RegionService } from '../../../shared/region.service';
+import { Region } from '../../../model/region';
+
 
 @Component({
-  selector: 'app-display-region',
-  templateUrl: './display-region.component.html',
-  styleUrls: ['./display-region.component.css']
+  selector: 'app-up-display-region',
+  templateUrl: './up-display-region.component.html',
+  styleUrls: ['./up-display-region.component.css']
 })
-export class DisplayRegionComponent implements OnInit {
-  protected isClicked: boolean = false;
+export class UpDisplayRegionComponent implements OnInit {
   regions: Region[] = [];
   loading: boolean = true;
   error: string = '';
+  selectedRegion: Region | null = null;
 
   constructor(
     private regionService: RegionService
@@ -32,10 +33,11 @@ export class DisplayRegionComponent implements OnInit {
         this.error = 'Error loading regions';
         this.loading = false;
         console.error('Error:', error);
-      },
-      complete:() => {
-        console.log('Finished with fetching all regions.');
       }
     });
+  }
+
+  onSelect(region: Region): void {
+    this.selectedRegion = region;
   }
 }

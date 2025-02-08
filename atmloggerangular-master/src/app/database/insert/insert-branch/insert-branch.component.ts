@@ -91,6 +91,7 @@ export class InsertBranchComponent {
         },
         complete: () => {
           console.log('Done with branch insert.');
+          this.router.navigate(['/insert-branch']);
         },
       });
     } else {

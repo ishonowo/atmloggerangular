@@ -34,6 +34,9 @@ import { DisplayTerminalComponent } from './database/display/display-terminal/di
 import { DisplayBranchInfoComponent } from './database/display/display-branch-info/display-branch-info.component';
 import { DisplayRegionComponent } from './database/display/display-region/display-region.component';
 import { DisplayComponent } from './database/display/display.component';
+import { RegionItemComponent } from './database/display/display-region/region-item/region-item.component';
+import { UpDisplayRegionComponent } from './database/update/up-display-region/up-display-region.component';
+import { UpdateRegionComponent } from './database/update/up-display-region/update-region/update-region.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -143,6 +146,10 @@ const appRoutes: Routes = [
     DisplayBranchInfoComponent,
     DisplayRegionComponent,
     DisplayComponent,
+    RegionItemComponent,
+    DbUpdateComponent,
+    UpDisplayRegionComponent,
+    UpdateRegionComponent,
   ],
   imports: [
     BrowserModule,

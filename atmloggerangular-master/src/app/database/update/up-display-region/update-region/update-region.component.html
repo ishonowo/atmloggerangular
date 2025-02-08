@@ -1,0 +1,54 @@
+<div class="card">
+    <div class="card-header">
+      <h3>Update Region</h3>
+    </div>
+    <div class="card-body">
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+  
+      <!-- Error message -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+  
+      <!-- Success message -->
+      <div *ngIf="success" class="alert alert-success">
+        {{ success }}
+      </div>
+  
+      <!-- Update form -->
+      <form [formGroup]="regionForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="mb-3">
+          <label for="regionName" class="form-label">Region Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="regionName"
+            formControlName="regionName">
+          
+          <div *ngIf="regionForm.get('regionName')?.invalid && 
+                      (regionForm.get('regionName')?.dirty || 
+                       regionForm.get('regionName')?.touched)" 
+               class="alert alert-danger mt-2">
+            <div *ngIf="regionForm.get('regionName')?.errors?.['required']">
+              Region name is required.
+            </div>
+            <div *ngIf="regionForm.get('regionName')?.errors?.['minlength']">
+              Region name must be at least 2 characters long.
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" 
+                class="btn btn-primary" 
+                [disabled]="!regionForm.valid || loading">
+          Update Region
+        </button>
+      </form>
+    </div>
+  </div>
+  

@@ -13,6 +13,8 @@ export class RegionService {
     private val: string ='validate';
     
     constructor(private http: HttpClient) {}
+
+    
     
     validateRegion(num: number): Observable<{regionFound: boolean} | null> {
         return this.http.get<boolean>(`${this.baseUrl}/${this.val}/${num}`).pipe(
@@ -31,6 +33,10 @@ export class RegionService {
 
     insertRegion(regionName: string): Observable<any> {
         return this.http.post(this.baseUrl, regionName);
+    }
+
+    updateRegion(region: Region):Observable<any>{
+        return this.http.put(this.baseUrl, region);
     }
   
 

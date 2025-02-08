@@ -75,6 +75,7 @@ export class InsertContactComponent implements OnInit{
         },
         complete: () => {
           console.log('Done with contact inserting.');
+          this.router.navigate(['/insert-contact']);
         }
       });
     } else {

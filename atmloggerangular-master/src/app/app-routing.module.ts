@@ -21,6 +21,8 @@ import { DisplayRegionComponent } from './database/display/display-region/displa
 import { DisplayVendorComponent } from './database/display/display-vendor/display-vendor.component';
 import { DisplayBranchInfoComponent } from './database/display/display-branch-info/display-branch-info.component';
 import { DisplayComponent } from './database/display/display.component';
+import { UpdateRegionComponent } from './database/update/up-display-region/update-region/update-region.component';
+import { UpDisplayRegionComponent } from './database/update/up-display-region/up-display-region.component';
 
 const routes: Routes = [
   {
@@ -101,6 +103,31 @@ const routes: Routes = [
   {
     path: 'db-update',
     component: DbUpdateComponent,
+    canActivate: [MsalGuard],
+  },
+  {
+    path: 'update-branch',
+    component: InsertBranchComponent,
+    canActivate: [MsalGuard],
+  },
+  {
+    path: 'update-contact',
+    component: InsertContactComponent,
+    canActivate: [MsalGuard],
+  },
+  {
+    path: 'update-region',
+    component: UpDisplayRegionComponent,
+    canActivate: [MsalGuard],
+  },
+  {
+    path: 'update-terminal',
+    component: InsertTerminalComponent,
+    canActivate: [MsalGuard],
+  },
+  {
+    path: 'update-vendor',
+    component: InsertVendorComponent,
     canActivate: [MsalGuard],
   },
   {

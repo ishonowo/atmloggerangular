@@ -22,11 +22,7 @@ export class InsertRegionComponent{
     private regionService: RegionService
   ) {
     this.regionInsertForm = this.fb.group({
-      // id: [
-      //   '',
-      //   [Validators.required, CustomValidators.noSpaceAllowed],
-      //   [CustomValidators.verifyRegionID(this.regionService)],
-      // ],
+  
       regionName: ['', [Validators.required]],
     });
   }
