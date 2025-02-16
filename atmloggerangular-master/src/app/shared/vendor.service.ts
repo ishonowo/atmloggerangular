@@ -25,5 +25,9 @@ export class VendorService {
   getAllNames(): Observable<VNameOption[]> {
     return this.http.get<VNameOption[]>(this.baseUrl);
   }
+
+  updateVendor(vendor: Vendor): Observable<any> {
+    return this.http.put<Vendor>(this.baseUrl, vendor);
+  }
   
 }

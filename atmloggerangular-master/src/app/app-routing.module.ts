@@ -21,8 +21,9 @@ import { DisplayRegionComponent } from './database/display/display-region/displa
 import { DisplayVendorComponent } from './database/display/display-vendor/display-vendor.component';
 import { DisplayBranchInfoComponent } from './database/display/display-branch-info/display-branch-info.component';
 import { DisplayComponent } from './database/display/display.component';
-import { UpdateRegionComponent } from './database/update/up-display-region/update-region/update-region.component';
 import { UpDisplayRegionComponent } from './database/update/up-display-region/up-display-region.component';
+import { UpDisplayVendorComponent } from './database/update/up-display-vendor/up-display-vendor.component';
+import { UpDisplayContactComponent } from './database/update/up-display-contact/up-display-contact.component';
 
 const routes: Routes = [
   {
@@ -112,7 +113,7 @@ const routes: Routes = [
   },
   {
     path: 'update-contact',
-    component: InsertContactComponent,
+    component: UpDisplayContactComponent,
     canActivate: [MsalGuard],
   },
   {
@@ -127,7 +128,7 @@ const routes: Routes = [
   },
   {
     path: 'update-vendor',
-    component: InsertVendorComponent,
+    component: UpDisplayVendorComponent,
     canActivate: [MsalGuard],
   },
   {

@@ -1,0 +1,87 @@
+<div class="card">
+    <div class="card-header">
+      <h3>Update Vendor Contact</h3>
+    </div>
+    <div class="card-body">
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+  
+      <!-- Error message -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+  
+      <!-- Success message -->
+      <div *ngIf="success" class="alert alert-success">
+        {{ success }}
+      </div>
+  
+      <!-- Update form -->
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="mb-3">
+          <label for="vendorId" class="form-label">Vendor</label>
+          <select
+            class="form-select"
+            id="vendorId"
+            formControlName="vendorId">
+            <option value="">Select Vendor</option>
+            <option *ngFor="let vendor of vendors" [value]="vendor.id">
+              {{ vendor.vendorName }}
+            </option>
+          </select>
+          
+          <div *ngIf="contactForm.get('vendorId')?.invalid && 
+                      (contactForm.get('vendorId')?.dirty || 
+                       contactForm.get('vendorId')?.touched)" 
+               class="alert alert-danger mt-2">
+            <div *ngIf="contactForm.get('vendorId')?.errors?.['required']">
+              Vendor is required.
+            </div>
+          </div>
+        </div>
+  
+        <div class="mb-3">
+          <label for="contact" class="form-label">Contact</label>
+          <input
+            type="text"
+            class="form-control"
+            id="contact"
+            formControlName="contact">
+          
+          <div *ngIf="contactForm.get('contact')?.invalid && 
+                      (contactForm.get('contact')?.dirty || 
+                       contactForm.get('contact')?.touched)" 
+               class="alert alert-danger mt-2">
+            <div *ngIf="contactForm.get('contact')?.errors?.['required']">
+              Contact is required.
+            </div>
+            <div *ngIf="contactForm.get('contact')?.errors?.['maxlength']">
+              Contact cannot exceed 200 characters.
+            </div>
+          </div>
+        </div>
+  
+        <div class="mb-3">
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="status"
+              formControlName="status">
+            <label class="form-check-label" for="status">Active</label>
+          </div>
+        </div>
+        
+        <button type="submit" 
+                class="btn btn-primary" 
+                [disabled]="!contactForm.valid || loading">
+          Update Contact
+        </button>
+      </form>
+    </div>
+  </div>
+  

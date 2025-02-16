@@ -37,6 +37,10 @@ import { DisplayComponent } from './database/display/display.component';
 import { RegionItemComponent } from './database/display/display-region/region-item/region-item.component';
 import { UpDisplayRegionComponent } from './database/update/up-display-region/up-display-region.component';
 import { UpdateRegionComponent } from './database/update/up-display-region/update-region/update-region.component';
+import { UpDisplayVendorComponent } from './database/update/up-display-vendor/up-display-vendor.component';
+import { UpdateVendorComponent } from './database/update/up-display-vendor/update-vendor/update-vendor.component';
+import { UpDisplayContactComponent } from './database/update/up-display-contact/up-display-contact.component';
+import { UpdateVendorContactComponent } from './database/update/up-display-contact/update-vendor-contact/update-vendor-contact.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -150,6 +154,11 @@ const appRoutes: Routes = [
     DbUpdateComponent,
     UpDisplayRegionComponent,
     UpdateRegionComponent,
+    UpDisplayVendorComponent,
+    UpdateVendorComponent,
+    UpDisplayContactComponent,
+    UpdateVendorContactComponent,
+    UpdateVendorContactComponent,
   ],
   imports: [
     BrowserModule,
