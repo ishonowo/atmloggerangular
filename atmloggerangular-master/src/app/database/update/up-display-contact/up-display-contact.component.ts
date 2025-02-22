@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs'; // Add this import
 import { VendorContact } from 'src/app/model/vendorContact';
@@ -45,7 +46,7 @@ export class UpDisplayContactComponent implements OnInit {
     }
   }
 
-  private async loadContacts(): Promise<void> {
+  protected async loadContacts(): Promise<void> {
     try {
       this.contacts = await firstValueFrom(
         this.vendorContactService.getAllContacts()

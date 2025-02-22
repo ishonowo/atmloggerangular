@@ -59,7 +59,7 @@
 
        <!-- Update Form -->
        <div *ngIf="selectedContact" class="col-md-4">
-        <app-update-vendor-contact>
+        <app-update-vendor-contact
           [vendorContact]="selectedContact"
           (updateComplete)="loadContacts()">
         </app-update-vendor-contact>
