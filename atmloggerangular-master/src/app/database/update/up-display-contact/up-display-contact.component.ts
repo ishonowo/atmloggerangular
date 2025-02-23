@@ -1,6 +1,5 @@
-
 import { Component, OnInit } from '@angular/core';
-import { firstValueFrom } from 'rxjs'; // Add this import
+import { firstValueFrom } from 'rxjs';
 import { VendorContact } from 'src/app/model/vendorContact';
 import { VNameOption } from 'src/app/model/vNameOption';
 import { VendorContactService } from 'src/app/shared/vendor-contact.service';
@@ -24,25 +23,60 @@ export class UpDisplayContactComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    await this.initializeComponent();
+  }
+
+  // New method to handle component initialization and refreshes
+  private async initializeComponent(): Promise<void> {
     try {
       this.loading = true;
-      // Wait for both requests to complete
       await Promise.all([
         this.loadVNameOptions(),
         this.loadContacts()
       ]);
-
-      this.contacts = await this.vendorContactService.updateVendorNames(
-        this.contacts,
-        this.vNameOptions
-      );
-      console.log(this.contacts);
-      
+      await this.updateContactsWithVendorNames();
     } catch (error) {
       this.error = 'Error initializing component';
       console.error('Error:', error);
     } finally {
       this.loading = false;
+    }
+  }
+
+    // Enhanced refresh method that handles the complete refresh cycle
+    async refreshContacts(): Promise<void> {
+      try {
+        // Show loading state while refreshing
+        this.loading = true;
+        
+        // Clear any previous errors
+        this.error = '';
+        
+        // Reload all necessary data
+        await this.initializeComponent();
+        
+        console.log('Contacts list refreshed successfully');
+      } catch (error) {
+        this.error = 'Error refreshing contacts';
+        console.error('Error during refresh:', error);
+      } finally {
+        this.loading = false;
+      }
+    }
+
+  // New function to handle updating contacts with vendor names
+  protected async updateContactsWithVendorNames(): Promise<void> {
+    try {
+      // Update contacts array with vendor names from the options
+      this.contacts = await this.vendorContactService.updateVendorNames(
+        this.contacts,
+        this.vNameOptions
+      );
+      console.log('Successfully updated contacts with vendor names');
+    } catch (error) {
+      this.error = 'Error updating vendor names';
+      console.error('Error updating vendor names:', error);
+      throw error;
     }
   }
 
@@ -75,4 +109,12 @@ export class UpDisplayContactComponent implements OnInit {
   onSelect(contact: VendorContact): void {
     this.selectedContact = contact;
   }
+
+  // Handler for when update is complete
+  async onUpdateComplete(): Promise<void> {
+    await this.refreshContacts();
+    this.selectedContact = null; // Close the form
+    console.log('Update complete and contacts refreshed');
+  }
+  
 }

@@ -13,6 +13,7 @@ import { Vendor } from '../../../../model/vendor';
 export class UpdateVendorContactComponent implements OnInit, OnChanges {
   @Input() vendorContact!: VendorContact;
   @Output() updateComplete = new EventEmitter<void>();
+  @Output() closeForm = new EventEmitter<void>(); // Add this new event emitter
 
   contactForm: FormGroup;
   vendors: Vendor[] = [];
@@ -91,6 +92,7 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
           this.success = 'Vendor contact updated successfully';
           this.loading = false;
           this.updateComplete.emit();
+          this.closeForm.emit();
         },
         error: (error) => {
           this.error = 'Error updating vendor contact';

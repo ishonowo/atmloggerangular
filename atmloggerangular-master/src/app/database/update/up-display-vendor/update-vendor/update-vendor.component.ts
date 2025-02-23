@@ -12,6 +12,7 @@ import { Vendor } from '../../../../model/vendor';
 export class UpdateVendorComponent implements OnInit, OnChanges {
   @Input() vendor!: Vendor;
   @Output() updateComplete = new EventEmitter<void>();
+  @Output() closeForm = new EventEmitter<void>();
 
   vendorForm: FormGroup;
   loading = false;
@@ -70,6 +71,7 @@ export class UpdateVendorComponent implements OnInit, OnChanges {
           this.success = 'Vendor updated successfully';
           this.loading = false;
           this.updateComplete.emit();
+          this.closeForm.emit();
         },
         error: (error) => {
           this.error = 'Error updating vendor';

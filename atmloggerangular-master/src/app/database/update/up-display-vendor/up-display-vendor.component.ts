@@ -37,4 +37,10 @@ export class UpDisplayVendorComponent {
     this.selectedVendor = vendor;
   }
 
+  onUpdateComplete(): void {
+    this.loadVendors();
+    this.selectedVendor = null; // Close the form
+    console.log('Update complete and vendors refreshed');
+  }
+
 }

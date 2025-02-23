@@ -11,6 +11,7 @@ import { Region } from '../../../../model/region';
 export class UpdateRegionComponent implements OnInit, OnChanges {
   @Input() region!: Region;
   @Output() updateComplete = new EventEmitter<void>();
+  @Output() closeForm = new EventEmitter<void>(); // Add this new event emitter
 
   regionForm: FormGroup;
   loading = false;
@@ -66,6 +67,7 @@ export class UpdateRegionComponent implements OnInit, OnChanges {
           this.success = 'Region updated successfully';
           this.loading = false;
           this.updateComplete.emit();
+          this.closeForm.emit();
         },
         error: (error) => {
           this.error = 'Error updating region';

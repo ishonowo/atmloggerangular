@@ -1,0 +1,123 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Update Vendor Contact</h3>
+  </div>
+  <div class="card-body">
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <!-- Success message -->
+    <div *ngIf="success" class="alert alert-success">
+      {{ success }}
+    </div>
+
+    <!-- Update form -->
+    <form [formGroup]="terminalForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="vendorId" class="form-label">Vendor</label>
+        <select class="form-select" id="vendorId" formControlName="vendorId">
+          <option [value]="terminal.vendorId">
+            {{ terminal.vendorName }}
+          </option>
+        </select>
+
+        <div
+          *ngIf="
+            terminalForm.get('vendorId')?.invalid &&
+            (terminalForm.get('vendorId')?.dirty ||
+              terminalForm.get('vendorId')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="terminalForm.get('vendorId')?.errors?.['required']">
+            The vendor is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="terminalId" class="form-label">Terminal ID</label>
+        <input
+          type="text"
+          class="form-control"
+          id="terminalId"
+          formControlName="terminalId"
+        />
+
+        <div
+          *ngIf="
+            terminalForm.get('terminalId')?.invalid &&
+            (terminalForm.get('terminalId')?.dirty ||
+              terminalForm.get('terminalId')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="terminalForm.get('terminalId')?.errors?.['required']">
+            The terminal ID is required.
+          </div>
+          <div *ngIf="terminalForm.get('terminalId')?.errors?.['minlength']">
+            Contact cannot be less than 8 characters.
+          </div>
+          <div *ngIf="terminalForm.get('terminalId')?.errors?.['maxlength']">
+            Contact cannot exceed 8 characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="atmName" class="form-label">ATM Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="atmName"
+          formControlName="atmName"
+        />
+
+        <div
+          *ngIf="
+            terminalForm.get('atmName')?.invalid &&
+            (terminalForm.get('atmName')?.dirty ||
+              terminalForm.get('atmName')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="terminalForm.get('atmName')?.errors?.['required']">
+            The terminal ID is required.
+          </div>
+          <div *ngIf="terminalForm.get('atmName')?.errors?.['minlength']">
+            Contact cannot be less than 5 characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="offsite"
+            formControlName="offsite"
+          />
+          <label class="form-check-label" for="offsite">Is this an Offsite ATM?</label>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!terminalForm.valid || loading"
+      >
+        Update Terminal
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="container mt-4">
-  <h2>Contacts List</h2>
+    <h2>Terminal List</h2>
 
-  <!-- Loading spinner -->
+    <!-- Loading spinner -->
   <div *ngIf="loading" class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -15,37 +15,35 @@
 
   <div class="row">
     <!-- Data table -->
-    <div [class]="selectedContact ? 'col-md-8' : 'col-md-12'">
+    <div [class]="selectedTerminal ? 'col-md-8' : 'col-md-12'">
       <div *ngIf="!loading && !error" class="table-responsive">
         <table class="table table-striped table-bordered">
           <thead class="table-dark">
             <tr>
               <th>ID</th>
               <th>Vendor Name</th>
-              <th>Contact</th>
-              <th>Status</th>
+              <th>Terminal ID</th>
+              <th>ATM Name</th>
+              <th>Offsite</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let contact of contacts">
+            <ng-container *ngFor="let terminal of terminals">
               <tr>
-                <td>{{ contact.id }}</td>
-                <td>{{ contact.vendorName }}</td>
-                <td>{{ contact.contact }}</td>
+                <td>{{ terminal.id }}</td>
+                <td>{{ terminal.vendorName }}</td>
+                <td>{{ terminal.terminalId }}</td>
+                <td>{{ terminal.atmName }}</td>
                 <td>
-                  <span
-                    class="badge"
-                    [ngClass]="contact.status ? 'bg-success' : 'bg-danger'"
-                  >
-                    {{ contact.status ? "Active" : "Inactive" }}
-                  </span>
-                </td>
+                    <span class="badge" [ngClass]="terminal.offsite ? 'bg-success' : 'bg-danger'">
+                      {{ terminal.offsite ? 'Active' : 'Inactive' }}
+                    </span>
+                  </td>
                 <td>
-                  <button
+                  <button 
                     class="btn btn-primary btn-sm"
-                    (click)="onSelect(contact)"
-                  >
+                    (click)="onSelect(terminal)">
                     Edit
                   </button>
                 </td>
@@ -55,20 +53,21 @@
         </table>
 
         <!-- No data message -->
-        <div *ngIf="contacts.length === 0" class="alert alert-info">
+        <div *ngIf="terminals.length === 0" class="alert alert-info">
           No vendors found.
         </div>
       </div>
     </div>
 
-    <!-- Update Form -->
-    <div *ngIf="selectedContact" class="col-md-4">
-      <app-update-vendor-contact
-        [vendorContact]="selectedContact"
+       <!-- Update Form -->
+       <div *ngIf="selectedTerminal" class="col-md-4">
+        <app-update-terminal
+        [terminal]="selectedTerminal"
         (updateComplete)="onUpdateComplete()"
-        (closeForm)="selectedContact = null"
-      >
-      </app-update-vendor-contact>
+        (closeForm)="selectedTerminal = null">
+        </app-update-terminal>
+      </div>
     </div>
   </div>
-</div>
+
+  

@@ -1,61 +1,63 @@
 <div class="container mt-4">
-    <h2>Regions List</h2>
-  
-    <!-- Loading spinner -->
-    <div *ngIf="loading" class="d-flex justify-content-center">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  
-    <!-- Error message -->
-    <div *ngIf="error" class="alert alert-danger">
-      {{ error }}
-    </div>
-  
-    <div class="row">
-      <!-- Data table -->
-      <div [class]="selectedRegion ? 'col-md-8' : 'col-md-12'">
-        <div *ngIf="!loading && !error" class="table-responsive">
-          <table class="table table-striped table-bordered">
-            <thead class="table-dark">
-              <tr>
-                <th>ID</th>
-                <th>Region Name</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngFor="let region of regions">
-                <tr>
-                  <td>{{ region.id }}</td>
-                  <td>{{ region.regionName }}</td>
-                  <td>
-                    <button 
-                      class="btn btn-primary btn-sm"
-                      (click)="onSelect(region)">
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              </ng-container>
-            </tbody>
-          </table>
-  
-          <!-- No data message -->
-          <div *ngIf="regions.length === 0" class="alert alert-info">
-            No regions found.
-          </div>
-        </div>
-      </div>
-  
-      <!-- Update Form -->
-      <div *ngIf="selectedRegion" class="col-md-4">
-        <app-update-region 
-          [region]="selectedRegion"
-          (updateComplete)="loadRegions()">
-        </app-update-region>
-      </div>
+  <h2>Regions List</h2>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-  
+
+  <!-- Error message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="row">
+    <!-- Data table -->
+    <div [class]="selectedRegion ? 'col-md-8' : 'col-md-12'">
+      <div *ngIf="!loading && !error" class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Region Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let region of regions">
+              <tr>
+                <td>{{ region.id }}</td>
+                <td>{{ region.regionName }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="onSelect(region)"
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+
+        <!-- No data message -->
+        <div *ngIf="regions.length === 0" class="alert alert-info">
+          No regions found.
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Form -->
+    <div *ngIf="selectedRegion" class="col-md-4">
+      <app-update-region
+        [region]="selectedRegion"
+        (updateComplete)="onUpdateComplete()"
+        (closeForm)="selectedRegion = null"
+      >
+      </app-update-region>
+    </div>
+  </div>
+</div>

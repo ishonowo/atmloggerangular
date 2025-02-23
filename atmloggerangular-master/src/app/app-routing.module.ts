@@ -24,6 +24,7 @@ import { DisplayComponent } from './database/display/display.component';
 import { UpDisplayRegionComponent } from './database/update/up-display-region/up-display-region.component';
 import { UpDisplayVendorComponent } from './database/update/up-display-vendor/up-display-vendor.component';
 import { UpDisplayContactComponent } from './database/update/up-display-contact/up-display-contact.component';
+import { UpDisplayTerminalComponent } from './database/update/up-display-terminal/up-display-terminal.component';
 
 const routes: Routes = [
   {
@@ -123,7 +124,7 @@ const routes: Routes = [
   },
   {
     path: 'update-terminal',
-    component: InsertTerminalComponent,
+    component: UpDisplayTerminalComponent,
     canActivate: [MsalGuard],
   },
   {
