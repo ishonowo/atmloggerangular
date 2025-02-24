@@ -35,6 +35,7 @@
         <table class="table table-striped table-bordered">
           <thead class="table-dark">
             <tr>
+              <th>ID</th>
               <th>Vendor Name</th>
               <th>Terminal ID</th>
               <th>ATM Name</th>
@@ -43,6 +44,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let terminal of terminalObjects">
+              <td>{{terminal.id}}</td>
               <td>{{ terminal.vendorName }}</td>
               <td>{{ terminal.terminalId }}</td>
               <td>{{ terminal.atmName }}</td>

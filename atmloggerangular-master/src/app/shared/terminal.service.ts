@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TerminalObject } from '../model/terminalObject';
 import { TerminalObj } from '../model/terminalObj';
-import { TerminalWName } from '../model/terminalWName';
+import { TerminalWithName } from '../model/terminalWithName';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class TerminalService {
     return this.http.get<Terminal[]>(this.baseUrl);
   }
 
-  getAllTerminalwNames(): Observable<TerminalWName[]> {
-    return this.http.get<TerminalWName[]>(this.baseUrl);
+  getAllTerminalWithNames(): Observable<TerminalWithName[]> {
+    return this.http.get<TerminalWithName[]>(this.baseUrl);
   }
 
   insertTerminal(terminalObj: TerminalObj):
@@ -27,8 +27,8 @@ export class TerminalService {
     return this.http.post<any>(`${this.baseUrl}`, terminalObj);
   }
 
-  updateTerminal(terminal: TerminalWName): Observable<any> {
-      return this.http.put<TerminalWName>(this.baseUrl, terminal);
+  updateTerminal(terminal: TerminalWithName): Observable<any> {
+      return this.http.put<TerminalWithName>(this.baseUrl, terminal);
   }
 }
 

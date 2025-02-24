@@ -37,7 +37,7 @@
                 <td>{{ terminal.atmName }}</td>
                 <td>
                     <span class="badge" [ngClass]="terminal.offsite ? 'bg-success' : 'bg-danger'">
-                      {{ terminal.offsite ? 'Active' : 'Inactive' }}
+                      {{ terminal.offsite ? 'Offsite' : 'Onsite' }}
                     </span>
                   </td>
                 <td>
@@ -54,7 +54,7 @@
 
         <!-- No data message -->
         <div *ngIf="terminals.length === 0" class="alert alert-info">
-          No vendors found.
+          No terminals found.
         </div>
       </div>
     </div>

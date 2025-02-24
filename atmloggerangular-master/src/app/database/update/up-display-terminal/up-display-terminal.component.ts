@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Terminal } from 'src/app/model/terminal';
-import { VNameOption } from 'src/app/model/vNameOption';
-import { InsertTerminalComponent } from '../../insert/insert-terminal/insert-terminal.component';
 import { TerminalService } from 'src/app/shared/terminal.service';
-import { VendorService } from 'src/app/shared/vendor.service';
-import { TerminalWName } from 'src/app/model/terminalWName';
+import { TerminalWithName } from 'src/app/model/terminalWithName';
 
 @Component({
   selector: 'app-up-display-terminal',
@@ -13,41 +9,44 @@ import { TerminalWName } from 'src/app/model/terminalWName';
 })
 
 export class UpDisplayTerminalComponent implements OnInit {
-  terminals: TerminalWName[] = [];
+  terminals: TerminalWithName[] = [];
   loading: boolean = true;
   error: string = '';
-  selectedTerminal: TerminalWName | null = null;
+  selectedTerminal: TerminalWithName | null = null;
 
   constructor(
     private terminalService: TerminalService
   ) {}
 
   ngOnInit(){
-    this.loadTerminals();
+    this.loadTerminalsWithNames();
   }
 
 
-  loadTerminals(): void {
+  loadTerminalsWithNames(): void {
     this.loading = true;
-    this.terminalService.getAllTerminalwNames().subscribe({
+    this.terminalService.getAllTerminalWithNames().subscribe({
       next: (data) => {
         this.terminals = data;
         this.loading = false;
       },
       error: (error) => {
-        this.error = 'Error loading regions';
+        this.error = 'Error loading terminals with names';
         this.loading = false;
         console.error('Error:', error);
+      },
+      complete: () => {
+        console.log('Finished with all terminals with names.');
       },
     });
   }
 
-  onSelect(terminal: TerminalWName): void {
+  onSelect(terminal: TerminalWithName): void {
     this.selectedTerminal = terminal;
   }
 
   onUpdateComplete(): void {
-    this.loadTerminals();
+    this.loadTerminalsWithNames();
     this.selectedTerminal = null; // Close the form
     console.log('Update complete and terminals refreshed');
   }

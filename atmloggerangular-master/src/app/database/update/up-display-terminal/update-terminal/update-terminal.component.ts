@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TerminalWName } from 'src/app/model/terminalWName';
+import { TerminalWithName } from 'src/app/model/terminalWithName';
 import { TerminalService } from 'src/app/shared/terminal.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { TerminalService } from 'src/app/shared/terminal.service';
   styleUrls: ['./update-terminal.component.css'],
 })
 export class UpdateTerminalComponent implements OnInit, OnChanges {
-  @Input() terminal!: TerminalWName;
+  @Input() terminal!: TerminalWithName;
   @Output() updateComplete = new EventEmitter<void>();
   @Output() closeForm = new EventEmitter<void>(); // Add this new event emitter
 
@@ -60,10 +60,12 @@ export class UpdateTerminalComponent implements OnInit, OnChanges {
 
   populateForm(): void {
     this.terminalForm.patchValue({
+      id: this.terminal.id,
       vendorId: this.terminal.vendorId,
       terminalId: this.terminal.terminalId,
       atmName: this.terminal.atmName,
       offsite: this.terminal.offsite,
+      vendorName: this.terminal.vendorName
     });
   }
 
@@ -73,7 +75,7 @@ export class UpdateTerminalComponent implements OnInit, OnChanges {
       this.error = '';
       this.success = '';
 
-      const updatedTerminal: TerminalWName = {
+      const updatedTerminal: TerminalWithName = {
         id: this.terminalForm.get('id')?.value,
         vendorId: this.terminalForm.get('vendorId')?.value,
         vendorName: this.terminalForm.get('vendorName')?.value,

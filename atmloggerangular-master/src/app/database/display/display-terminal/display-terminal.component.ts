@@ -30,7 +30,7 @@ export class DisplayTerminalComponent implements OnInit{
 
   loadTerminalswNames(): void {
     this.loading = true;
-    this.terminalService.getAllTerminalwNames().subscribe({
+    this.terminalService.getAllTerminalWithNames().subscribe({
       next: (data) => {
         this.terminalObjects = data;
         this.loading = false;
