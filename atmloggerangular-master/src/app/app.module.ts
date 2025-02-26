@@ -43,6 +43,8 @@ import { UpDisplayContactComponent } from './database/update/up-display-contact/
 import { UpdateVendorContactComponent } from './database/update/up-display-contact/update-vendor-contact/update-vendor-contact.component';
 import { UpDisplayTerminalComponent } from './database/update/up-display-terminal/up-display-terminal.component';
 import { UpdateTerminalComponent } from './database/update/up-display-terminal/update-terminal/update-terminal.component';
+import { UpDisplayBranchComponent } from './database/update/up-display-branch/up-display-branch.component';
+import { UpdateBranchComponent } from './database/update/up-display-branch/update-branch/update-branch.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -163,6 +165,8 @@ const appRoutes: Routes = [
     UpdateVendorContactComponent,
     UpDisplayTerminalComponent,
     UpdateTerminalComponent,
+    UpDisplayBranchComponent,
+    UpdateBranchComponent,
   ],
   imports: [
     BrowserModule,

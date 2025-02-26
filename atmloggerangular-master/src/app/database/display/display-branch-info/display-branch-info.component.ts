@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BranchObject } from 'src/app/model/BranchObject';
+import { BranchWithName } from 'src/app/model/branchWithName';
 import { BranchService } from 'src/app/shared/branch.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class DisplayBranchInfoComponent implements OnInit{
   protected isClicked: boolean = false;
   public loading: boolean = true;
   public error: string = '';
-  public branches: BranchObject[] = [];
+  public branches: BranchWithName[] = [];
   
   constructor( 
     private fb: FormBuilder,
@@ -24,12 +24,12 @@ export class DisplayBranchInfoComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.loadBranchInfowNames();
+    this.loadBranchesWithNames();
   }
 
-  loadBranchInfowNames(): void {
+  loadBranchesWithNames(): void {
     this.loading = true;
-    this.branchService.findAllBrancheswNames().subscribe({
+    this.branchService.findAllBranchesWithNames().subscribe({
       next: (data) => {
         this.branches = data;
         this.loading = false;

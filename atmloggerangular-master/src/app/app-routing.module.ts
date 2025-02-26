@@ -25,6 +25,7 @@ import { UpDisplayRegionComponent } from './database/update/up-display-region/up
 import { UpDisplayVendorComponent } from './database/update/up-display-vendor/up-display-vendor.component';
 import { UpDisplayContactComponent } from './database/update/up-display-contact/up-display-contact.component';
 import { UpDisplayTerminalComponent } from './database/update/up-display-terminal/up-display-terminal.component';
+import { UpDisplayBranchComponent } from './database/update/up-display-branch/up-display-branch.component';
 
 const routes: Routes = [
   {
@@ -109,7 +110,7 @@ const routes: Routes = [
   },
   {
     path: 'update-branch',
-    component: InsertBranchComponent,
+    component: UpDisplayBranchComponent,
     canActivate: [MsalGuard],
   },
   {

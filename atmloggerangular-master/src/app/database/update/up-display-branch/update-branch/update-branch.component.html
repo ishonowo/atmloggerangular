@@ -1,0 +1,124 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Update Branch Information</h3>
+  </div>
+  <div class="card-body">
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <!-- Success message -->
+    <div *ngIf="success" class="alert alert-success">
+      {{ success }}
+    </div>
+
+    <!-- Update form -->
+    <form [formGroup]="branchForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="solId" class="form-label">Sol ID</label>
+        <input
+          type="text"
+          class="form-control"
+          id="solId"
+          formControlName="solId"
+        />
+
+        <div
+          *ngIf="
+            branchForm.get('solId')?.invalid &&
+            (branchForm.get('solId')?.dirty || branchForm.get('solId')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="branchForm.get('solId')?.errors?.['required']">
+            The Sol ID is required.
+          </div>
+          <div *ngIf="branchForm.get('solId')?.errors?.['minlength']">
+            Contact cannot be less than 3 characters.
+          </div>
+          <div *ngIf="branchForm.get('solId')?.errors?.['maxlength']">
+            Contact cannot exceed 3 characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="regionId" class="form-label">Region</label>
+        <select class="form-select" id="regionId" formControlName="regionId">
+          <option [value]="branch.regionId">
+            {{ branch.regionName }}
+          </option>
+        </select>
+
+        <div
+          *ngIf="
+            branchForm.get('regionId')?.invalid &&
+            (branchForm.get('regionId')?.dirty ||
+              branchForm.get('regionId')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="branchForm.get('regionId')?.errors?.['required']">
+            The region is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="branchName" class="form-label">Branch Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="branchName"
+          formControlName="branchName"
+        />
+
+        <div
+          *ngIf="
+            branchForm.get('branchName')?.invalid &&
+            (branchForm.get('branchName')?.dirty ||
+              branchForm.get('branchName')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="branchForm.get('branchName')?.errors?.['required']">
+            The branch's name is required.
+          </div>
+          <div *ngIf="branchForm.get('branchName')?.errors?.['minlength']">
+            Branch names cannot be less than 5 characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="offsite"
+            formControlName="offsite"
+          />
+          <label class="form-check-label" for="offsite"
+            >Is this an Offsite ATM?</label
+          >
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!branchForm.valid || loading"
+      >
+        Update Terminal
+      </button>
+    </form>
+  </div>
+</div>

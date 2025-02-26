@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <h2>List of Branches</h2>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="row">
+    <!-- Data table -->
+    <div [class]="selectedBranch ? 'col-md-8' : 'col-md-12'">
+      <div *ngIf="!loading && !error" class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Sol ID</th>
+              <th>Region</th>
+              <th>Branch Name</th>
+              <th>Branch Email</th>
+              <th>Branch Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let branch of branches">
+              <tr>
+                <td>{{ branch.id }}</td>
+                <td>{{ branch.solId }}</td>
+                <td>{{ branch.regionName }}</td>
+                <td>{{ branch.branchName }}</td>
+                <td>{{ branch.branchEmail }}</td>
+                <td>{{ branch.physicalAddress }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="onSelect(branch)"
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+
+        <!-- No data message -->
+        <div *ngIf="branches.length === 0" class="alert alert-info">
+          No terminals found.
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Form -->
+    <div *ngIf="selectedBranch" class="col-md-4">
+      <app-update-branch
+        [branch]="selectedBranch"
+        (updateComplete)="onUpdateComplete()"
+        (closeForm)="selectedBranch = null"
+      >
+      </app-update-branch>
+    </div>
+  </div>
+</div>
