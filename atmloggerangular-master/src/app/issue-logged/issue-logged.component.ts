@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AtmService } from '../shared/atm.service';
 import { IssueLogged } from '../model/issuelogged';
 import { AtmIssue } from '../model/atmissue';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
-//import { sName} from '../login/login.component';
 
 @Component({
   selector: 'app-issue-logged',
@@ -14,70 +14,87 @@ import { MsalService } from '@azure/msal-angular';
 export class IssueLoggedComponent implements OnInit {
   atmIssue!: AtmIssue;
   protected isClicked: boolean = false;
-  protected sName: string|undefined=this.msalService.instance.getActiveAccount()?.username;;
-
-  model: IssueLogged = {
-    userEmail: this.sName as string,
-    terminalId: '10701264',
-    issueDesc: 'The ATM has a cash jam.',
-    branchLogger: 'Ahmed Atere',
-    loggerEmail: 'aa@fidelitybank.ng',
-    loggerPhoneNo: '08012345678',
-  };
-
-  //username!: any;
-  /*private userEmail!: string;*/
+  protected sName: string|undefined = this.msalService.instance.getActiveAccount()?.username;
+  
+  issueForm!: FormGroup;
+  
+  // Getter methods for form controls to simplify template syntax
+  get terminalIdControl() { return this.issueForm.get('terminalId') as FormControl; }
+  get issueDescControl() { return this.issueForm.get('issueDesc') as FormControl; }
+  get branchLoggerControl() { return this.issueForm.get('branchLogger') as FormControl; }
+  get loggerEmailControl() { return this.issueForm.get('loggerEmail') as FormControl; }
+  get loggerPhoneNoControl() { return this.issueForm.get('loggerPhoneNo') as FormControl; }
 
   constructor(
     private atmService: AtmService,
     private router: Router,
     private aRoute: ActivatedRoute,
-    private msalService: MsalService
+    private msalService: MsalService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    //console.log(this.aRoute.snapshot.params['username']);
-    //this.model.userEmail=this.aRoute.snapshot.params['username']+'@fidelitybank.ng';
-    /*this.aRoute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has('username')) {
-        this.router.navigate(['/login']);
-        return;
-      }
-      this.model.userEmail = paramMap.get('username')+'@fidelitybank.ng';
-    });*/
-    //this.entryMethod();
+    this.initializeForm();
+  }
+  
+  initializeForm() {
+    this.issueForm = this.fb.group({
+      terminalId: ['10701264', [
+        Validators.required, 
+        Validators.minLength(8), 
+        Validators.maxLength(8)
+      ]],
+      issueDesc: ['The ATM has a cash jam.', [
+        Validators.required, 
+        Validators.minLength(10)
+      ]],
+      branchLogger: ['Ahmed Atere', [
+        Validators.required
+      ]],
+      loggerEmail: ['aa@fidelitybank.ng', [
+        Validators.required, 
+        Validators.email
+      ]],
+      loggerPhoneNo: ['08012345678', [
+        Validators.required, 
+        Validators.minLength(11), 
+        Validators.maxLength(14)
+      ]]
+    });
   }
 
   submitLoggedIssue() {
+    if (this.issueForm.invalid) {
+      return;
+    }
+    
     this.isClicked = true;
-    this.atmService.postIssueLogged(this.model).subscribe(
-      {
-        next: async (res) => {
-          alert('The issue has been successfully logged.');
-          this.atmIssue = res;
-          //if (this.sName){this.atmIssue.userEmail=this.sName;}
-          this.atmService.atmIssue = this.atmIssue;
-          console.log(this.atmIssue);
-          await this.router.navigate(['email']);
-        },
-        error: (err) => {
-          this.isClicked = false;
-          alert('An error has occurred while logging the issue.');
-          console.error(err);
-        }//,
-        //complete: () => this.router.navigate(['email']),
-      }
-      /*async (res) => {
+    
+    // Create an IssueLogged object from form values
+    const issueLogged: IssueLogged = {
+      userEmail: this.sName as string,
+      terminalId: this.issueForm.value.terminalId,
+      issueDesc: this.issueForm.value.issueDesc,
+      branchLogger: this.issueForm.value.branchLogger,
+      loggerEmail: this.issueForm.value.loggerEmail,
+      loggerPhoneNo: this.issueForm.value.loggerPhoneNo
+    };
+    
+    console.log(issueLogged);
+    
+    this.atmService.postIssueLogged(issueLogged).subscribe({
+      next: async (data) => {
         alert('The issue has been successfully logged.');
-        this.atmIssue = res;
+        this.atmIssue = data;
         this.atmService.atmIssue = this.atmIssue;
         console.log(this.atmIssue);
         await this.router.navigate(['email']);
       },
-      (err) => {
+      error: (err) => {
         this.isClicked = false;
         alert('An error has occurred while logging the issue.');
-      }*/
-    );
+        console.error(err);
+      }
+    });
   }
 }

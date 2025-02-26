@@ -35,21 +35,23 @@
         <table class="table table-striped table-bordered">
           <thead class="table-dark">
             <tr>
-              <th>Region Name</th>
-              <th>Branch Email</th>
-              <th>Branch Name</th>
-              <th>Physical Address</th>
+              <th>ID</th>
               <th>SOL ID</th>
+              <th>Region Name</th>
+              <th>Branch Name</th>
+              <th>Branch Email</th>
+              <th>Branch Address</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let branch of branches">
-              <td>{{ branch.regionName }}</td>
-              <td>{{ branch.branchEmail }}</td>
-              <td>{{ branch.branchName }}</td>
-              <td>{{ branch.physicalAddress }}</td>
+              <td>{{ branch.id }}</td>
               <td>{{ branch.solId }}</td>
-            </tr>
+              <td>{{ branch.regionName }}</td>
+              <td>{{ branch.branchName }}</td>
+              <td>{{ branch.branchEmail }}</td>
+              <td>{{ branch.physicalAddress }}</td>
+              </tr>
           </tbody>
         </table>
 

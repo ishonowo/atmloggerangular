@@ -99,16 +99,57 @@
       </div>
 
       <div class="mb-3">
-        <div class="form-check">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            id="offsite"
-            formControlName="offsite"
-          />
-          <label class="form-check-label" for="offsite"
-            >Is this an Offsite ATM?</label
-          >
+        <label for="branchEmail" class="form-label">Branch Email Address</label>
+        <input
+          type="text"
+          class="form-control"
+          id="branchEmail"
+          formControlName="branchEmail"
+        />
+
+        <div
+          *ngIf="
+            branchForm.get('branchEmail')?.invalid &&
+            (branchForm.get('branchEmail')?.dirty ||
+              branchForm.get('branchEmail')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="branchForm.get('branchEmail')?.errors?.['required']">
+            The branch's email is required.
+          </div>
+          <div *ngIf="branchForm.get('branchEmail')?.errors?.['minlength']">
+            The branch's email cannot be less than 5 characters.
+          </div>
+          <div *ngIf="branchForm.get('branchEmail')?.errors?.['email']">
+            This must be a valid email.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="physicalAddress" class="form-label">Branch Physical Address</label>
+        <input
+          type="text"
+          class="form-control"
+          id="physicalAddress"
+          formControlName="physicalAddress"
+        />
+
+        <div
+          *ngIf="
+            branchForm.get('physicalAddress')?.invalid &&
+            (branchForm.get('physicalAddress')?.dirty ||
+              branchForm.get('physicalAddress')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="branchForm.get('physicalAddress')?.errors?.['required']">
+            The branch's address is required.
+          </div>
+          <div *ngIf="branchForm.get('physicalAddress')?.errors?.['minlength']">
+            The branch's address cannot be less than 10 characters.
+          </div>
         </div>
       </div>
 

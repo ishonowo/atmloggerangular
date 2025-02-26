@@ -147,7 +147,8 @@
           <br />
         </div>
         <div class="display">
-          <button type="submit" class="btn btn-success pull-left">
+          <button type="submit" class="btn btn-success pull-left"
+          [disabled]="!branchInsertForm.valid">
             <span>Submit Form</span>
           </button>
         </div>

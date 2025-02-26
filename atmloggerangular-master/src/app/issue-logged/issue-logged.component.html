@@ -2,157 +2,128 @@
   <div class="row">
     <div class="offset-3"></div>
     <div class="col-md-6">
-      <form
-        name="form"
-        (ngSubmit)="f.form.valid && submitLoggedIssue()"
-        #f="ngForm"
-        novalidate
-        class="issueLogged-form"
-      >
+      <form [formGroup]="issueForm" (ngSubmit)="submitLoggedIssue()" class="issueLogged-form">
         <!-- Terminal ID -->
         <div class="form-group">
           <label for="terminalId">Terminal ID</label>
           <input
             type="text"
-            #terminalId="ngModel"
             id="terminalId"
-            [class.is-invalid]="terminalId.invalid && terminalId.touched"
+            [class.is-invalid]="terminalIdControl.invalid && terminalIdControl.touched"
             class="form-control"
-            name="terminalId"
+            formControlName="terminalId"
             placeholder="Enter Terminal ID"
-            [(ngModel)]="model.terminalId"
-            required
-            minlength="8"
-            maxlength="8"
           />
           <!-- Input validation for terminal ID attribute-->
-          <div *ngIf="terminalId.errors && terminalId.touched">
+          <div *ngIf="terminalIdControl.errors && terminalIdControl.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="terminalId.errors?.['required']"
+            <small class="text-danger" *ngIf="terminalIdControl.errors?.['required']"
               >The terminal ID is a required field.</small
             >
-            <small class="text-danger" *ngIf="terminalId.errors?.['minlength']"
+            <small class="text-danger" *ngIf="terminalIdControl.errors?.['minlength']"
               >The terminal ID entered must be at least 8 characters.</small
             >
-            <small class="text-danger" *ngIf="terminalId.errors?.['maxlength']"
+            <small class="text-danger" *ngIf="terminalIdControl.errors?.['maxlength']"
               >The terminal ID entered must be at most 8 characters.</small
             >
           </div>
         </div>
+        
         <!-- Issue Description -->
         <div class="form-group">
           <label for="issueDesc">Issue Description</label>
           <input
             type="text"
-            required
-            minlength="10"
-            #issueDesc="ngModel"
             id="issueDesc"
-            [class.is-invalid]="issueDesc.invalid && issueDesc.touched"
+            [class.is-invalid]="issueDescControl.invalid && issueDescControl.touched"
             class="form-control"
-            name="issueDesc"
+            formControlName="issueDesc"
             placeholder="Describe the issue"
-            [(ngModel)]="model.issueDesc"
           />
-          <!-- Input validation for terminal ID attribute-->
-          <div *ngIf="issueDesc.errors && issueDesc.touched">
+          <!-- Input validation for issue description attribute-->
+          <div *ngIf="issueDescControl.errors && issueDescControl.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="issueDesc.errors?.['required']"
+            <small class="text-danger" *ngIf="issueDescControl.errors?.['required']"
               >The issue description is a required field.</small
             >
-            <small class="text-danger" *ngIf="issueDesc.errors?.['minlength']"
+            <small class="text-danger" *ngIf="issueDescControl.errors?.['minlength']"
               >The issue description entered must be at least 10
               characters.</small
             >
           </div>
         </div>
+        
         <!-- Branch Logger -->
         <div class="form-group">
           <label for="branchLogger">Branch Logger</label>
           <input
             type="text"
-            required
-            #branchLogger="ngModel"
             id="branchLogger"
-            [class.is-invalid]="branchLogger.invalid && branchLogger.touched"
+            [class.is-invalid]="branchLoggerControl.invalid && branchLoggerControl.touched"
             class="form-control"
-            name="branchLogger"
+            formControlName="branchLogger"
             placeholder="Who logged the issue for this ATM?"
-            [(ngModel)]="model.branchLogger"
           />
-          <!-- Input validation for terminal ID attribute-->
-          <div *ngIf="branchLogger.errors && branchLogger.touched">
+          <!-- Input validation for branch logger attribute-->
+          <div *ngIf="branchLoggerControl.errors && branchLoggerControl.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="branchLogger.errors?.['required']"
+            <small class="text-danger" *ngIf="branchLoggerControl.errors?.['required']"
               >The branch logger is a required field.</small
             >
           </div>
         </div>
+        
         <!-- Logger Email -->
         <div class="form-group">
           <label for="loggerEmail">Logger Email</label>
           <input
             type="text"
-            required
-            email
-            #loggerEmail="ngModel"
             id="loggerEmail"
-            [class.is-invalid]="loggerEmail.invalid && loggerEmail.touched"
+            [class.is-invalid]="loggerEmailControl.invalid && loggerEmailControl.touched"
             class="form-control"
-            name="loggerEmail"
+            formControlName="loggerEmail"
             placeholder="Enter the email for the logger"
-            [(ngModel)]="model.loggerEmail"
           />
-          <!-- Input validation for terminal ID attribute-->
-          <div *ngIf="loggerEmail.errors && loggerEmail.touched">
+          <!-- Input validation for logger email attribute-->
+          <div *ngIf="loggerEmailControl.errors && loggerEmailControl.touched">
             <!-- Validation errors-->
-            <small class="text-danger" *ngIf="loggerEmail.errors?.['required']"
+            <small class="text-danger" *ngIf="loggerEmailControl.errors?.['required']"
               >The email for the logger is a required field.</small
             >
-            <small class="text-danger" *ngIf="loggerEmail.errors?.['email']"
+            <small class="text-danger" *ngIf="loggerEmailControl.errors?.['email']"
               >The email entered is invalid.</small
             >
           </div>
         </div>
+        
         <!-- Logger PhoneNo -->
         <div class="form-group">
           <label for="loggerPhoneNo">Logger PhoneNo</label>
           <input
             type="text"
-            required
-            minlength="11"
-            maxlength="14"
-            #loggerPhoneNo="ngModel"
             id="loggerPhoneNo"
-            [class.is-invalid]="loggerPhoneNo.invalid && loggerPhoneNo.touched"
+            [class.is-invalid]="loggerPhoneNoControl.invalid && loggerPhoneNoControl.touched"
             class="form-control"
-            name="loggerPhoneNo"
+            formControlName="loggerPhoneNo"
             placeholder="Enter the logger's phone number"
-            [(ngModel)]="model.loggerPhoneNo"
           />
-          <!-- Input validation for terminal ID attribute-->
-          <div *ngIf="loggerPhoneNo.errors && loggerPhoneNo.touched">
+          <!-- Input validation for logger phone number attribute-->
+          <div *ngIf="loggerPhoneNoControl.errors && loggerPhoneNoControl.touched">
             <!-- Validation errors-->
-            <small
-              class="text-danger"
-              *ngIf="loggerPhoneNo.errors?.['required']"
+            <small class="text-danger" *ngIf="loggerPhoneNoControl.errors?.['required']"
               >The logger's phone number is a required field.</small
             >
-            <small
-              class="text-danger"
-              *ngIf="loggerPhoneNo.errors?.['minlength']"
+            <small class="text-danger" *ngIf="loggerPhoneNoControl.errors?.['minlength']"
               >The phone number entered must be at least 11 characters.</small
             >
-            <small
-              class="text-danger"
-              *ngIf="loggerPhoneNo.errors?.['maxlength']"
-              >The phone number entered must be at least 14 characters.</small
+            <small class="text-danger" *ngIf="loggerPhoneNoControl.errors?.['maxlength']"
+              >The phone number entered must be at most 14 characters.</small
             >
           </div>
         </div>
 
         <button
-          [disabled]="f.form.invalid || isClicked"
+          [disabled]="issueForm.invalid || isClicked"
           type="submit"
           class="btn btn-success pull-right"
         >

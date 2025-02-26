@@ -44,11 +44,12 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
 
   createForm(): FormGroup {
     return this.fb.group({
+      id: [,Validators.required],
       solId: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       regionId: ['', [Validators.required]],
       branchName: ['', [Validators.required, Validators.minLength(5)]],
       branchEmail: ['', [Validators.required, Validators.email]],
-      physicalAddress: ['', [Validators.required]],
+      physicalAddress: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
 
@@ -79,7 +80,7 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
         branchEmail: this.branchForm.get('branchEmail')?.value,
         physicalAddress: this.branchForm.get('physicalAddress')?.value,
       };
-
+      
       this.branchService.updateBranch(updatedbranch).subscribe({
         next: () => {
           this.success = 'Branch updated successfully';
