@@ -13,7 +13,7 @@ import { VendorService } from 'src/app/shared/vendor.service';
 export class UpDisplayContactComponent implements OnInit {
   contacts: VendorContact[] = [];
   vNameOptions: VNameOption[] = [];
-  loading: boolean = true;
+  loading: boolean = false;
   error: string = '';
   selectedContact: VendorContact | null = null;
 

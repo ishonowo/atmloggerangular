@@ -22,6 +22,7 @@ export class InsertBranchComponent {
 
   protected rNameOptions: RNameOption[] = [];
   protected loading: boolean = false;
+error: any;
 
   constructor(
     private fb: FormBuilder,

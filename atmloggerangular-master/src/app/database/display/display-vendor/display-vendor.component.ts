@@ -11,7 +11,7 @@ import { VendorService } from 'src/app/shared/vendor.service';
 })
 export class DisplayVendorComponent implements OnInit {
   vendors: Vendor[] = [];
-  loading: boolean = true;
+  loading: boolean = false;
   error: string = '';
 
   constructor(
