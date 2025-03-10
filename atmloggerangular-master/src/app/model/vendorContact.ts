@@ -3,5 +3,5 @@ export interface VendorContact{
 	contact: string,
 	status: boolean,
     id: number,
-    vendorName?: string
+    vendorName: string
 }

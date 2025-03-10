@@ -16,7 +16,6 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
   @Output() closeForm = new EventEmitter<void>(); // Add this new event emitter
 
   contactForm: FormGroup;
-  vendors: Vendor[] = [];
   loading = false;
   error = '';
   success = '';
@@ -39,23 +38,11 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.loadVendors();
     if (this.vendorContact) {
       this.populateForm();
     }
   }
 
-  loadVendors(): void {
-    this.vendorService.getAllVendors().subscribe({
-      next: (data) => {
-        this.vendors = data;
-      },
-      error: (error) => {
-        this.error = 'Error loading vendors';
-        console.error('Error:', error);
-      }
-    });
-  }
 
   populateForm(): void {
     this.contactForm.patchValue({
@@ -84,7 +71,8 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
         id: this.contactForm.get('id')?.value,
         vendorId: this.contactForm.get('vendorId')?.value,
         contact: this.contactForm.get('contact')?.value,
-        status: this.contactForm.get('status')?.value
+        status: this.contactForm.get('status')?.value,
+        vendorName: this.contactForm.get('vendorName')?.value
       };
 
       this.vendorContactService.updateVendorContact(updatedContact).subscribe({

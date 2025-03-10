@@ -15,8 +15,8 @@ export class VendorContactService {
 
   constructor(private http: HttpClient) {}
 
-  getAllContactswNames(): Observable<VendorContactObject[]> {
-    return this.http.get<VendorContactObject[]>(
+  getAllContactsWithNames(): Observable<VendorContact[]> {
+    return this.http.get<VendorContact[]>(
       `${this.baseUrl}/${this.names}`
     );
   }
@@ -37,7 +37,7 @@ export class VendorContactService {
     return this.http.put<VendorContact>(this.baseUrl, contact);
   }
 
-  async updateVendorNames(
+  /*async updateVendorNames(
     vendorContacts: VendorContact[],
     vendorNames: VNameOption[]
   ): Promise<VendorContact[]> {
@@ -61,5 +61,5 @@ export class VendorContactService {
     );
   
     return updatedContacts;
-  }
+  }*/
 }

@@ -26,14 +26,14 @@ export class DisplayContactComponent implements OnInit {
   { }
 
   ngOnInit(): void {
-    this.loadVendorContactswNames();
+    this.loadVendorContactsWithNames();
   }
 
 
 
-  loadVendorContactswNames(): void{
+  loadVendorContactsWithNames(): void{
     this.loading = true;
-    this.vendorContactService.getAllContactswNames().subscribe({
+    this.vendorContactService.getAllContactsWithNames().subscribe({
       next: (data) => {
         this.contacts = data;
         this.loading = false;

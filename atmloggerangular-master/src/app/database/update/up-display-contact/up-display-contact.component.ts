@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
 import { VendorContact } from 'src/app/model/vendorContact';
 import { VNameOption } from 'src/app/model/vNameOption';
 import { VendorContactService } from 'src/app/shared/vendor-contact.service';
@@ -22,11 +21,29 @@ export class UpDisplayContactComponent implements OnInit {
     private vendorService: VendorService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.initializeComponent();
+  ngOnInit() {
+    this.loadContactsWithNames();
   }
 
-  // New method to handle component initialization and refreshes
+  loadContactsWithNames(): void {
+    this.loading = true;
+    this.vendorContactService.getAllContactsWithNames().subscribe({
+      next: (data) => {
+        this.contacts = data;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.error = 'Error loading contacts with names';
+        this.loading = false;
+        console.error('Error:', error);
+      },
+      complete: () => {
+        console.log('Finished with all contacts with names.');
+      },
+    });
+  }
+
+  /* New method to handle component initialization and refreshes
   private async initializeComponent(): Promise<void> {
     try {
       this.loading = true;
@@ -104,15 +121,15 @@ export class UpDisplayContactComponent implements OnInit {
       console.error('Error loading names:', error);
       throw error;
     }
-  }
+  }*/
 
   onSelect(contact: VendorContact): void {
     this.selectedContact = contact;
   }
 
   // Handler for when update is complete
-  async onUpdateComplete(): Promise<void> {
-    await this.refreshContacts();
+  onUpdateComplete(){
+    this.loadContactsWithNames();
     this.selectedContact = null; // Close the form
     console.log('Update complete and contacts refreshed');
   }
