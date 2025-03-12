@@ -17,14 +17,12 @@ export class EmailIssueComponent implements OnInit {
   private atmIssue!: AtmIssue;
   protected isClicked: boolean = false;
   protected isLoading: boolean = true;
-  //public control!: FormControl;
 
   constructor(
     private fb: FormBuilder,
     private atmService: AtmService,
     private emailIssueService: EmailIssueService,
     protected router: Router
-    
   ) {
     this.emailForm = this.fb.group({
       fromEmail: ['', [Validators.required, Validators.email]],
@@ -32,8 +30,19 @@ export class EmailIssueComponent implements OnInit {
       cc: ['', Validators.required],
       subject: ['', Validators.required],
       mIntro: ['', Validators.required],
-      mHeader: ['', Validators.required],
-      mBody: this.fb.array([]), // Initialize as FormArray
+      message: this.fb.group({  
+        atmLocation: ['', Validators.required],
+        branchName: ['', Validators.required],
+        vendorName: ['', Validators.required],
+        issueDesc: ['', Validators.required],
+        branchLogger: ['', Validators.required],
+        loggerPhone: ['', [
+          Validators.required, 
+          Validators.minLength(11), 
+          Validators.maxLength(14)
+        ]],
+        dateLogged: ['', Validators.required],
+      }),
       mEnd: ['', Validators.required],
     });
   }
@@ -50,6 +59,7 @@ export class EmailIssueComponent implements OnInit {
 
   // Helper method to populate form with initial values
   private populateForm(emailIssue: EmailIssue | undefined) {
+    //console.log(emailIssue);
     if (emailIssue) {
       this.emailForm.patchValue({
         fromEmail: emailIssue.fromEmail,
@@ -57,10 +67,17 @@ export class EmailIssueComponent implements OnInit {
         cc: emailIssue.cc,
         subject: emailIssue.subject,
         mIntro: emailIssue.mIntro,
-        mHeader: emailIssue.mHeader,
+        message: {
+          atmLocation: emailIssue.message.atmLocation,
+          branchName: emailIssue.message.branchName,
+          vendorName: emailIssue.message.vendorName,
+          issueDesc: emailIssue.message.issueDesc,
+          branchLogger: emailIssue.message.branchLogger,
+          loggerPhone: emailIssue.message.loggerPhone,
+          dateLogged: emailIssue.message.dateLogged
+        },
         mEnd: emailIssue.mEnd,
       });
-      this.setMBody(emailIssue.mBody); // Set mBody FormArray
     }
   }
 
@@ -80,10 +97,25 @@ export class EmailIssueComponent implements OnInit {
     mBodyArray.at(index).setValue(newValue);
   }
 
-  sendFeedback() {
+  sendEmailMessage() {
     this.isClicked = true;
     if (this.emailForm.valid) {
-      const formData = this.emailForm.value as EmailIssue;
+      //const formData = this.emailForm.value as EmailIssue;
+      const formData: any = {
+        fromEmail: this.emailForm.get('fromEmail')?.value,
+        toEmail: this.emailForm.get('toEmail')?.value,
+        cc: this.emailForm.get('cc')?.value,
+        subject: this.emailForm.get('subject')?.value,
+        mIntro: this.emailForm.get('mIntro')?.value,
+        atmLocation: this.emailForm.get('message.atmLocation')?.value,
+        branchName: this.emailForm.get('message.branchName')?.value,
+        vendorName: this.emailForm.get('message.vendorName')?.value,
+        issueDesc: this.emailForm.get('message.issueDesc')?.value,
+        branchLogger: this.emailForm.get('message.branchLogger')?.value,
+        loggerPhone: this.emailForm.get('message.loggerPhone')?.value,
+        dateLogged: this.emailForm.get('message.dateLogged')?.value,
+        mEnd: this.emailForm.get('mEnd')
+            };
       this.emailIssueService.postSendEmail(formData).subscribe(
         async (res) => {
           alert('The issue has been emailed successfully.');

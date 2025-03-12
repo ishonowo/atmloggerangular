@@ -40,24 +40,15 @@ export class EmailIssueService {
         ': ' +
         atmIssue.issueDesc,
       mIntro: 'Dear all, kindly attend to this request.',
-      mHeader: [
-        'ATM LOCATION',
-        'BRANCH IN CHARGE',
-        'VENDOR',
-        'ISSUE(S)',
-        'CONTACT',
-        'CONTACT PHONE NUMBER',
-        'DATE LOGGED',
-      ],
-      mBody: [
-        atmIssue.terminalId + ' ' + atmIssue?.atmName,
-        atmIssue.physicalAddress + '',
-        atmIssue.vendorName + '',
-        atmIssue.issueDesc + '',
-        atmIssue.branchLogger + '',
-        atmIssue.loggerPhoneNo + '',
-        formatDate(atmIssue?.logDate, 'medium', 'en-GB', 'GMT+1'),
-      ],
+      message: {
+        atmLocation: atmIssue?.terminalId + ' ' + atmIssue?.atmName,
+        branchName:atmIssue?.physicalAddress,
+        vendorName:atmIssue?.vendorName,
+        issueDesc: atmIssue?.issueDesc,
+        branchLogger: atmIssue?.branchLogger,
+        loggerPhone: atmIssue?.loggerPhoneNo,
+        dateLogged: atmIssue?.logDate,
+      },
       mEnd: 'Thanks.',
     };
     return emailIssue;

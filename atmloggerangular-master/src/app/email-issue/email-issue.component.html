@@ -17,7 +17,7 @@
       <form
         name="emailForm"
         [formGroup]="emailForm"
-        (ngSubmit)="sendFeedback()"
+        (ngSubmit)="sendEmailMessage()"
       >
         <div *ngIf="isLoading">
           <p>This page is still loading...</p>
@@ -117,26 +117,137 @@
           <br />
           <div>
             <table>
-              <thead>
+              <!--<thead>
                 <tr>
-                  <th id="mHeader"
-                  class="tableMHeader"
-                    *ngFor="let m of emailIssue?.mHeader"
-                  >
-                    {{ m }}
-                  </th>
+                  <th>ATM LOCATION</th>
+                  <th>BRANCH IN CHARGE</th>
+                  <th>VENDOR</th>
+                  <th>ISSUE(S)</th>
+                  <th>BRANCH CONTACT</th>
+                  <th>CONTACT PHONE NUMBER</th>
+                  <th>DATE LOGGED</th>
                 </tr>
-              </thead>
+              </thead>-->
               <tbody>
-                <tr id="mBody" class="tableMBody" formArrayName="mBody">
-                  <td *ngFor="let control of mBody.controls; let i = index">
-                    <textarea
-                      [formControlName]="i"
-                      (ngModelChange)="onMessageChange(i, $event)"
-                      rows="5"
-                      cols="20"
-                      placeholder="Enter a valid value."
-                    ></textarea>
+                <tr formGroupName="message">
+                  <td class="atmLocation">
+                    <label for="atmLocation"><b>ATM LOCATION</b></label>
+                    <input
+                      id="atmLocation"
+                      formControlName="atmLocation"
+                      type="text"
+                      placeholder="Enter the ATM's location"
+                      title="ATM Location"
+                    />
+                    <small
+                      *ngIf="
+                        emailForm.get('atmLocation')?.invalid &&
+                        emailForm.get('atmLocation')?.touched
+                      "
+                      >*The location of the ATM is required.</small
+                    >
+                  </td>
+                  <td class="branchName">
+                    <label for="branchName"><b>BRANCH IN CHARGE</b></label>
+                    <input
+                      id="branchName"
+                      formControlName="branchName"
+                      type="text"
+                      placeholder="Enter the branch name for the ATM"
+                      title="Branch Name"
+                    />
+                    <small
+                      *ngIf="
+                        emailForm.get('atmLocation')?.invalid &&
+                        emailForm.get('atmLocation')?.touched
+                      "
+                      >*The ATM location is required.</small
+                    >
+                  </td>
+                  <td class="vendorName">
+                    <label for="vendorName"><b>VENDOR</b></label>
+                    <input
+                      id="vendorName"
+                      formControlName="vendorName"
+                      type="text"
+                      placeholder="Enter the ATM's location"
+                      title="Vendor Name"
+                    />
+                    <small
+                      *ngIf="
+                        emailForm.get('vendorName')?.invalid &&
+                        emailForm.get('vendorName')?.touched
+                      "
+                      >*The Vendor's name is required.</small
+                    >
+                  </td>
+                  <td class="issueDesc">
+                    <label for="issueDesc"><b>ISSUE(S)</b></label>
+                    <input
+                      id="issueDesc"
+                      formControlName="issueDesc"
+                      type="text"
+                      placeholder="Enter the ATM's location"
+                      title="ATM Location"
+                    />
+                    <small
+                      *ngIf="
+                        emailForm.get('atmLocation')?.invalid &&
+                        emailForm.get('atmLocation')?.touched
+                      "
+                      >*The details of the issue(s) the ATM has is required.</small
+                    >
+                  </td>
+                  <td class="branchName">
+                    <label for="branchName"><b>BRANCH CONTACT</b></label>
+                    <input
+                      id="branchName"
+                      formControlName="branchName"
+                      type="text"
+                      placeholder="Enter the ATM's location"
+                      title="ATM Location"
+                    />
+                    <small
+                      *ngIf="
+                        emailForm.get('branchName')?.invalid &&
+                        emailForm.get('branchName')?.touched
+                      "
+                      >*The personnel the vendor has to work with is required.</small
+                    >
+                  </td>
+                  <td class="loggerPhone">
+                    <label for="loggerPhone"><b>CONTACT PHONE NUMBER</b></label>
+                    <input
+                      id="loggerPhone"
+                      formControlName="loggerPhone"
+                      type="text"
+                      placeholder="Enter the ATM's location"
+                      title="ATM Location"
+                    />
+                    <small
+                      *ngIf="
+                        emailForm.get('loggerPhone')?.invalid &&
+                        emailForm.get('loggerPhone')?.touched
+                      "
+                      >*The personnel's phone number is required.</small
+                    >
+                  </td>
+                  <td class="dateLogged">
+                    <label for="dateLogged"><b>DATE LOGGED</b></label>
+                    <input
+                      id="dateLogged"
+                      formControlName="dateLogged"
+                      type="text"
+                      placeholder="Enter the ATM's location"
+                      title="ATM Location"
+                    />
+                    <small
+                      *ngIf="
+                        emailForm.get('dateLogged')?.invalid &&
+                        emailForm.get('dateLogged')?.touched
+                      "
+                      >*The date this incident is logged is required.</small
+                    >
                   </td>
                 </tr>
               </tbody>

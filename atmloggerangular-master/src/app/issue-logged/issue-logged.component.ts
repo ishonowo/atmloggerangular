@@ -84,7 +84,7 @@ export class IssueLoggedComponent implements OnInit {
     
     this.atmService.postIssueLogged(issueLogged).subscribe({
       next: async (data) => {
-        alert('The issue has been successfully logged.');
+        console.log('The issue has been successfully logged.');
         this.atmIssue = data;
         this.atmService.atmIssue = this.atmIssue;
         console.log(this.atmIssue);
