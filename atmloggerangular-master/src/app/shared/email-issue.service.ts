@@ -4,6 +4,7 @@ import { EmailIssue } from '../model/emailissue';
 import { AtmIssue } from '../model/atmissue';
 import { formatDate } from '@angular/common';
 import { Observable } from 'rxjs';
+import { EmailIssueMessage } from '../model/emailIssueMessage';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +16,11 @@ export class EmailIssueService {
   private SEND_EMAIL_URL = 'http://localhost:9442/email/sendEmail';
   private groupSupportEmail: string = 'ATMSupport@fidelitybank.ng';
 
-  private username: any = sessionStorage.getItem('authenticateUser');
-
+  
   constructor(private http: HttpClient) {}
 
-  postSendEmail(emailIssue: EmailIssue): Observable<any> {
-    return this.http.post(this.SEND_EMAIL_URL, emailIssue);
+  postSendEmail(emailIssueMessage: EmailIssueMessage): Observable<any> {
+    return this.http.post(this.SEND_EMAIL_URL, emailIssueMessage);
   }
 
 

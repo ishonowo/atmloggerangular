@@ -5,6 +5,7 @@ import { EmailIssue } from '../model/emailissue';
 import { Router } from '@angular/router';
 import { EmailIssueService } from '../shared/email-issue.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { EmailIssueMessage } from '../model/emailIssueMessage';
 
 @Component({
   selector: 'app-email-issue',
@@ -43,7 +44,7 @@ export class EmailIssueComponent implements OnInit {
         ]],
         dateLogged: ['', Validators.required],
       }),
-      mEnd: ['', Validators.required],
+      mEnd: ['', Validators.required]
     });
   }
 
@@ -101,7 +102,7 @@ export class EmailIssueComponent implements OnInit {
     this.isClicked = true;
     if (this.emailForm.valid) {
       //const formData = this.emailForm.value as EmailIssue;
-      const formData: any = {
+      const formData: EmailIssueMessage = {
         fromEmail: this.emailForm.get('fromEmail')?.value,
         toEmail: this.emailForm.get('toEmail')?.value,
         cc: this.emailForm.get('cc')?.value,
@@ -114,7 +115,7 @@ export class EmailIssueComponent implements OnInit {
         branchLogger: this.emailForm.get('message.branchLogger')?.value,
         loggerPhone: this.emailForm.get('message.loggerPhone')?.value,
         dateLogged: this.emailForm.get('message.dateLogged')?.value,
-        mEnd: this.emailForm.get('mEnd')
+        mEnd: this.emailForm.get('mEnd')?.value
             };
       this.emailIssueService.postSendEmail(formData).subscribe(
         async (res) => {
