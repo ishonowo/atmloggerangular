@@ -82,21 +82,7 @@ export class EmailIssueComponent implements OnInit {
     }
   }
 
-  get mBody(): FormArray {
-    return this.emailForm.get('mBody') as FormArray;
-  }
   
-  private setMBody(mBody: string[]) {
-    const mBodyArray = this.emailForm.get('mBody') as FormArray;
-    mBody.forEach(message => {
-      mBodyArray.push(new FormControl(message, Validators.required));
-    });
-  }
-
-  onMessageChange(index: number, newValue: string) {
-    const mBodyArray = this.emailForm.get('mBody') as FormArray;
-    mBodyArray.at(index).setValue(newValue);
-  }
 
   sendEmailMessage() {
     this.isClicked = true;
@@ -117,16 +103,16 @@ export class EmailIssueComponent implements OnInit {
         dateLogged: this.emailForm.get('message.dateLogged')?.value,
         mEnd: this.emailForm.get('mEnd')?.value
             };
-      this.emailIssueService.postSendEmail(formData).subscribe(
-        async (res) => {
+      this.emailIssueService.postSendEmail(formData).subscribe({
+        next: async (res) => {
           alert('The issue has been emailed successfully.');
           await this.router.navigate(['issue-log']);
         },
-        (err) => {
+        error: (err) => {
           alert('An error has occurred while sending issue by email.');
           this.isClicked = false;
         }
-      );
+    });
     }
   }
 }

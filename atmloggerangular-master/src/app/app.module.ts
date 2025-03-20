@@ -45,6 +45,9 @@ import { UpDisplayTerminalComponent } from './database/update/up-display-termina
 import { UpdateTerminalComponent } from './database/update/up-display-terminal/update-terminal/update-terminal.component';
 import { UpDisplayBranchComponent } from './database/update/up-display-branch/up-display-branch.component';
 import { UpdateBranchComponent } from './database/update/up-display-branch/update-branch/update-branch.component';
+import { LoggedCallComponent } from './logged-call/logged-call.component';
+import { UpdateComponent } from './logged-call/update/update.component';
+import { GenerateComponent } from './logged-call/generate/generate.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -167,6 +170,9 @@ const appRoutes: Routes = [
     UpdateTerminalComponent,
     UpDisplayBranchComponent,
     UpdateBranchComponent,
+    LoggedCallComponent,
+    UpdateComponent,
+    GenerateComponent,
   ],
   imports: [
     BrowserModule,
