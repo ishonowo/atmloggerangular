@@ -32,7 +32,7 @@ export class EmailIssueComponent implements OnInit {
       subject: ['', Validators.required],
       mIntro: ['', Validators.required],
       message: this.fb.group({  
-        atmLocation: ['', Validators.required],
+        physicalAddress: ['', Validators.required],
         branchName: ['', Validators.required],
         vendorName: ['', Validators.required],
         issueDesc: ['', Validators.required],
@@ -69,7 +69,7 @@ export class EmailIssueComponent implements OnInit {
         subject: emailIssue.subject,
         mIntro: emailIssue.mIntro,
         message: {
-          atmLocation: emailIssue.message.atmLocation,
+          physicalAddress: emailIssue.message.physicalAddress,
           branchName: emailIssue.message.branchName,
           vendorName: emailIssue.message.vendorName,
           issueDesc: emailIssue.message.issueDesc,
@@ -94,7 +94,7 @@ export class EmailIssueComponent implements OnInit {
         cc: this.emailForm.get('cc')?.value,
         subject: this.emailForm.get('subject')?.value,
         mIntro: this.emailForm.get('mIntro')?.value,
-        atmLocation: this.emailForm.get('message.atmLocation')?.value,
+        physicalAddress: this.emailForm.get('message.physicalAddress')?.value,
         branchName: this.emailForm.get('message.branchName')?.value,
         vendorName: this.emailForm.get('message.vendorName')?.value,
         issueDesc: this.emailForm.get('message.issueDesc')?.value,

@@ -1,1 +1,73 @@
-<p>logged-call works!</p>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Display Logged Calls</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--branch-list.component.html-->
+    <div class="container mt-4">
+      <h2>Logged Calls</h2>
+
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <!-- Data table -->
+      <div *ngIf="!loading && !error" class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>S/N</th>
+              <th>Branch Name</th>
+              <th>Terminal ID</th>
+              <th>Terminal Name</th>
+              <th>Vendor</th>
+              <th>Fault</th>
+              <th>Contact Person</th>
+              <th>Starting Date</th>
+              <th>Date Completed</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let call of calls; let i = index">
+              <td>i</td>
+              <td>call.branchName</td>
+              <td>call.terminalID</td>
+              <td>call.terminalName</td>
+              <td>call.vendorName</td>
+              <td>call.issueDesc +' '+ call.dateLogged</td>
+              <td>call.branchLogger+' '+call.loggerPhone</td>
+              <td>call.startingDate</td>
+              <td>{{call.dateCompleted}}</td>
+              <td>call.status</td>
+              </tr>
+          </tbody>
+        </table>
+
+        <!-- No data message -->
+        <div *ngIf="calls.length === 0" class="alert alert-info">
+          No calls found.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

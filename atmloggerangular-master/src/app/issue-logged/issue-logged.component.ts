@@ -92,7 +92,7 @@ export class IssueLoggedComponent implements OnInit {
       },
       error: (err) => {
         this.isClicked = false;
-        alert('An error has occurred while logging the issue.');
+        alert('An error has occurred while logging the issue. '+ err);
         console.error(err);
       }
     });

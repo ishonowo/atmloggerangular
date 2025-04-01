@@ -1,0 +1,13 @@
+export interface LoggedCallObj{
+    branchName: string;
+    terminalId: string;
+    terminalName: string;
+    vendorName: string;
+    issueDesc: string;
+    dateLogged: Date;
+    branchLogger: string;
+    loggerPhone: string;
+    startingDate: Date;
+    dateCompleted: Date;
+    status: string;
+}

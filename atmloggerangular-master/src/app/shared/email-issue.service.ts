@@ -36,13 +36,13 @@ export class EmailIssueService {
         atmIssue.branchEmail ,
       subject:
         'FIDELITY BANK: ' +
-        atmIssue.physicalAddress +
+        atmIssue?.terminalId + ' ' + atmIssue?.atmName +
         ': ' +
         atmIssue.issueDesc,
       mIntro: 'Dear all, kindly attend to this request.',
       message: {
-        atmLocation: atmIssue?.terminalId + ' ' + atmIssue?.atmName,
-        branchName:atmIssue?.physicalAddress,
+        physicalAddress: atmIssue?.physicalAddress ,
+        branchName:atmIssue?.branchName,
         vendorName:atmIssue?.vendorName,
         issueDesc: atmIssue?.issueDesc,
         branchLogger: atmIssue?.branchLogger,

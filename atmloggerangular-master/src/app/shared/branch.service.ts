@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BranchObj } from '../model/branchObj';
 import { BranchWithName } from '../model/branchWithName';
-import { BranchObject } from '../model/branchObject';
+//import { BranchObject } from '../model/branchObject';
 
 @Injectable({
   providedIn: 'root',

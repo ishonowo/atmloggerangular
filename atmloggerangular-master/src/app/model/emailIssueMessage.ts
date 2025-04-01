@@ -4,7 +4,7 @@ export interface EmailIssueMessage {
   cc: string;
   subject: string;
   mIntro: string;
-  atmLocation: string;
+  physicalAddress: string;
   branchName: string;
   vendorName: string;
   issueDesc: string;

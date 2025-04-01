@@ -1,5 +1,5 @@
 export interface Message {
-    atmLocation: string;
+    physicalAddress: string;
     branchName: string;
     vendorName: string;
     issueDesc: string;

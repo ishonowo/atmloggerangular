@@ -130,19 +130,19 @@
               </thead>-->
               <tbody>
                 <tr formGroupName="message">
-                  <td class="atmLocation">
-                    <label for="atmLocation"><b>ATM LOCATION</b></label>
+                  <td class="physicalAddress">
+                    <label for="physicalAddress"><b>ATM LOCATION</b></label>
                     <input
-                      id="atmLocation"
-                      formControlName="atmLocation"
+                      id="physicalAddress"
+                      formControlName="physicalAddress"
                       type="text"
                       placeholder="Enter the ATM's location"
-                      title="ATM Location"
+                      title="Physical Address"
                     />
                     <small
                       *ngIf="
-                        emailForm.get('atmLocation')?.invalid &&
-                        emailForm.get('atmLocation')?.touched
+                        emailForm.get('physicalAddress')?.invalid &&
+                        emailForm.get('physicalAddress')?.touched
                       "
                       >*The location of the ATM is required.</small
                     >
@@ -158,10 +158,10 @@
                     />
                     <small
                       *ngIf="
-                        emailForm.get('atmLocation')?.invalid &&
-                        emailForm.get('atmLocation')?.touched
+                        emailForm.get('branchName')?.invalid &&
+                        emailForm.get('branchName')?.touched
                       "
-                      >*The ATM location is required.</small
+                      >*The name of the branch is required.</small
                     >
                   </td>
                   <td class="vendorName">
@@ -198,21 +198,21 @@
                       >*The details of the issue(s) the ATM has is required.</small
                     >
                   </td>
-                  <td class="branchName">
-                    <label for="branchName"><b>BRANCH CONTACT</b></label>
+                  <td class="branchLogger">
+                    <label for="branchLogger"><b>BRANCH CONTACT</b></label>
                     <input
-                      id="branchName"
-                      formControlName="branchName"
+                      id="branchLogger"
+                      formControlName="branchLogger"
                       type="text"
                       placeholder="Enter the ATM's location"
                       title="ATM Location"
                     />
                     <small
                       *ngIf="
-                        emailForm.get('branchName')?.invalid &&
-                        emailForm.get('branchName')?.touched
+                        emailForm.get('branchLogger')?.invalid &&
+                        emailForm.get('branchLogger')?.touched
                       "
-                      >*The personnel the vendor has to work with is required.</small
+                      >*The address of the branch is required.</small
                     >
                   </td>
                   <td class="loggerPhone">
