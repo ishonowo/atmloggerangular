@@ -22,9 +22,9 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
   @Output() closeForm = new EventEmitter<void>(); // Add this new event emitter
 
   branchForm: FormGroup;
-  loading = false;
-  error = '';
-  success = '';
+  loading: boolean = false;
+  error: string = '';
+  success: string = '';
 
   constructor(private fb: FormBuilder, private branchService: BranchService) {
     this.branchForm = this.createForm();

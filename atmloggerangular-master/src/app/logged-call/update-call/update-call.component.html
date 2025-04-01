@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Update Call Information</h3>
+  </div>
+  <div class="card-body">
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <!-- Success message -->
+    <div *ngIf="success" class="alert alert-success">
+      {{ success }}
+    </div>
+
+    <!-- Update form -->
+    <form [formGroup]="callForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="date">Date Completed:</label>
+        <input type="date" id="date" formControlName="dateCompleted" />
+        <div
+          *ngIf="callForm.get('dateCompleted')?.errors?.['required'] && callForm.get('dateCompleted')?.touched"
+        >
+          Date is required
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" formControlName="status">
+          <option [value]="statusObjs.id">
+            {{ statusObjs.statusDesc }}
+          </option>
+        </select>
+
+        <div
+          *ngIf="
+            callForm.get('status')?.invalid &&
+            (callForm.get('status')?.dirty || callForm.get('status')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="callForm.get('status')?.errors?.['required']">
+            The status is required.
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!callForm.valid || loading"
+      >
+        Update Terminal
+      </button>
+    </form>
+  </div>
+</div>

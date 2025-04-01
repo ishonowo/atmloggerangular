@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoggedCallObj } from '../model/loggedCallObj';
 import { Router } from '@angular/router';
 import { LoggedCallService } from '../shared/logged-call.service';
+import { LogStatusService } from '../shared/log-status.service';
+
 
 @Component({
   selector: 'app-logged-call',
@@ -16,6 +18,9 @@ export class LoggedCallComponent implements OnInit{
   public loading: boolean = true;
   public error: string = '';
   public calls: LoggedCallObj[] = [];
+  //public statusObjs: LogStatus[]=[];
+
+  selectedCall: LoggedCallObj | null = null;
 
  constructor( 
    private fb: FormBuilder,
@@ -45,5 +50,16 @@ loadLoggedCallObjs(): void {
   });
 }
 
+
+
+  onSelect(call: LoggedCallObj): void {
+    this.selectedCall = call;
+  }
+
+  onUpdateComplete(): void {
+    this.loadLoggedCallObjs();
+    this.selectedCall = null; // Close the form
+    console.log('Update complete and calls refreshed');
+  }
 
 }

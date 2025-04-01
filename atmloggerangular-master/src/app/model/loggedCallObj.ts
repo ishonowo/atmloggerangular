@@ -1,4 +1,5 @@
 export interface LoggedCallObj{
+    logId: number;
     branchName: string;
     terminalId: string;
     terminalName: string;
