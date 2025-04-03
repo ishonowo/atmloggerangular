@@ -9,8 +9,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoggedCallObj } from 'src/app/model/loggedCallObj';
-import { LogStatus } from 'src/app/model/logStatus';
-import { LogStatusService } from 'src/app/shared/log-status.service';
 import { LoggedCallService } from 'src/app/shared/logged-call.service';
 
 
@@ -22,9 +20,9 @@ import { LoggedCallService } from 'src/app/shared/logged-call.service';
 export class UpdateCallComponent implements OnInit, OnChanges {
 
   @Input() call!: LoggedCallObj;
-  public statusObjs: LogStatus[];
   @Output() updateComplete = new EventEmitter<void>();
   @Output() closeForm = new EventEmitter<void>(); // Add this new event emitter
+
 
   callForm: FormGroup;
   loading: boolean = false;
@@ -33,36 +31,18 @@ export class UpdateCallComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private loggedCallService: LoggedCallService,
-    private logService: LogStatusService
+    private loggedCallService: LoggedCallService
   ) {
     this.callForm = this.createForm();
   }
 
   ngOnInit(): void {
     if (this.call) {
-      this.loadLogStatus();
       this.populateForm();
     }
   }
 
-  loadLogStatus(): void {
-    this.loading = true;
-    this.logService.findAllLogStatus().subscribe({
-      next: (data) => {
-        this.statusObjs = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Error loading branches with region names.';
-        this.loading = false;
-        console.error('Error:', error);
-      },
-      complete: () => {
-        console.log('Finished loading calls status with complete data.');
-      }
-    });
-  }
+  
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['call'] && this.call) {
@@ -92,7 +72,8 @@ export class UpdateCallComponent implements OnInit, OnChanges {
       loggerPhone: this.call.loggerPhone,
       startingDate: this.call.startingDate,
       dateCompleted: this.call.dateCompleted,
-      status: this.call.status,
+      statusDesc: this.call.statusDesc,
+      statusId: this.call.statusId
     });
   }
 
@@ -114,7 +95,8 @@ export class UpdateCallComponent implements OnInit, OnChanges {
         loggerPhone: this.callForm.get('loggerPhone')?.value,
         startingDate: this.callForm.get('startingDate')?.value,
         dateCompleted: this.callForm.get('dateCompleted')?.value,
-        status: this.callForm.get('statusId')?.value,
+        statusDesc: this.callForm.get('statusDesc')?.value,
+        statusId: this.callForm.get('statusId')?.value
       };
       
       this.loggedCallService.updateLoggedCall(updatedCall).subscribe({

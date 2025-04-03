@@ -26,6 +26,7 @@ import { UpDisplayVendorComponent } from './database/update/up-display-vendor/up
 import { UpDisplayContactComponent } from './database/update/up-display-contact/up-display-contact.component';
 import { UpDisplayTerminalComponent } from './database/update/up-display-terminal/up-display-terminal.component';
 import { UpDisplayBranchComponent } from './database/update/up-display-branch/up-display-branch.component';
+import { LoggedCallComponent } from './logged-call/logged-call.component';
 
 const routes: Routes = [
   {
@@ -131,6 +132,11 @@ const routes: Routes = [
   {
     path: 'update-vendor',
     component: UpDisplayVendorComponent,
+    canActivate: [MsalGuard],
+  },
+  {
+    path: 'logged-call',
+    component: LoggedCallComponent,
     canActivate: [MsalGuard],
   },
   {

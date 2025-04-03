@@ -49,18 +49,28 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let call of calls; let i = index">
-              <td>i</td>
-              <td>call.branchName</td>
-              <td>call.terminalID</td>
-              <td>call.terminalName</td>
-              <td>call.vendorName</td>
-              <td>call.issueDesc +' '+ call.dateLogged</td>
-              <td>call.branchLogger+' '+call.loggerPhone</td>
-              <td>call.startingDate</td>
-              <td>call.dateCompleted</td>
-              <td>call.status</td>
+            <ng-container *ngFor="let call of calls; let i = index">
+            <tr >
+              <td>{{i+1}}</td>
+              <td>{{call.branchName}}</td>
+              <td>{{call.terminalId}}</td>
+              <td>{{call.terminalName}}</td>
+              <td>{{call.vendorName}}</td>
+              <td>{{call.issueDesc +' '+ call.dateLogged}}</td>
+              <td>{{call.branchLogger+' '+call.loggerPhone}}</td>
+              <td>{{call.startingDate}}</td>
+              <td>{{call.dateCompleted}}</td>
+              <td>{{call.statusDesc}}</td>
+              <td>
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="onSelect(call)"
+                >
+                  Edit
+                </button>
+              </td>
               </tr>
+            </ng-container>
           </tbody>
         </table>
 

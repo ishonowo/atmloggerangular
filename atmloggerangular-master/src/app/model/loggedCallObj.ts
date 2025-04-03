@@ -10,5 +10,6 @@ export interface LoggedCallObj{
     loggerPhone: string;
     startingDate: Date;
     dateCompleted: Date;
-    status: string;
+    statusDesc: string;
+    statusId: number;
 }

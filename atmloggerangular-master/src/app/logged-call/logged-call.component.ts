@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoggedCallObj } from '../model/loggedCallObj';
 import { Router } from '@angular/router';
 import { LoggedCallService } from '../shared/logged-call.service';
-import { LogStatusService } from '../shared/log-status.service';
 
 
 @Component({
@@ -37,10 +36,11 @@ loadLoggedCallObjs(): void {
   this.loggedCallService.findAllLoggedCalls().subscribe({
     next: (data) => {
       this.calls = data;
+      //console.log(this.calls);
       this.loading = false;
     },
     error: (error) => {
-      this.error = 'Error loading branches with region names.';
+      this.error = 'Error loading calls.';
       this.loading = false;
       console.error('Error:', error);
     },

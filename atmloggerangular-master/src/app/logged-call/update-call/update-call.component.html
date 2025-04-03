@@ -28,27 +28,27 @@
         <div
           *ngIf="callForm.get('dateCompleted')?.errors?.['required'] && callForm.get('dateCompleted')?.touched"
         >
-          Date is required
+          The date completed is required.
         </div>
       </div>
 
       <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select class="form-select" id="status" formControlName="status">
-          <option [value]="statusObjs.id">
-            {{ statusObjs.statusDesc }}
+        <label for="statusId" class="form-label">Status of Call</label>
+        <select class="form-select" id="statusId" formControlName="statusId">
+          <option [value]="call.statusId">
+            {{ call.statusDesc }}
           </option>
         </select>
 
         <div
           *ngIf="
-            callForm.get('status')?.invalid &&
-            (callForm.get('status')?.dirty || callForm.get('status')?.touched)
+            callForm.get('statusId')?.invalid &&
+            (callForm.get('statusId')?.dirty || callForm.get('statusId')?.touched)
           "
           class="alert alert-danger mt-2"
         >
-          <div *ngIf="callForm.get('status')?.errors?.['required']">
-            The status is required.
+          <div *ngIf="callForm.get('statusId')?.errors?.['required']">
+            The current status is required.
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@
         class="btn btn-primary"
         [disabled]="!callForm.valid || loading"
       >
-        Update Terminal
+        Update Call
       </button>
     </form>
   </div>
