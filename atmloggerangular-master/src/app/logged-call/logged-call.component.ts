@@ -17,7 +17,6 @@ export class LoggedCallComponent implements OnInit{
   public loading: boolean = true;
   public error: string = '';
   public calls: LoggedCallObj[] = [];
-  //public statusObjs: LogStatus[]=[];
 
   selectedCall: LoggedCallObj | null = null;
 
@@ -30,6 +29,8 @@ export class LoggedCallComponent implements OnInit{
  ngOnInit(): void {
   this.loadLoggedCallObjs();
 }
+
+
 
 loadLoggedCallObjs(): void {
   this.loading = true;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LogStatus } from '../model/logStatus';
+import { CallStatus } from '../model/callStatus';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,8 +12,8 @@ export class LogStatusService {
 
   constructor(private http: HttpClient) {}
 
-  findAllLogStatus(): Observable<LogStatus[]> {
-      return this.http.get<LogStatus[]>(this.baseUrl);
+  findAllLogStatus(): Observable<CallStatus[]> {
+      return this.http.get<CallStatus[]>(this.baseUrl);
     }
   
     

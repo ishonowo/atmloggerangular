@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { LoggedCall } from '../model/loggedCall';
 import { Observable } from 'rxjs';
 import { LoggedCallObj } from '../model/loggedCallObj';
-import { CallWithStatusObj } from '../model/callWithStatusObj';
-import { LogStatus } from '../model/logStatus';
 
 @Injectable({
   providedIn: 'root'
