@@ -12,6 +12,7 @@ import { CallStatus } from 'src/app/model/callStatus';
 import { LoggedCallObj } from 'src/app/model/loggedCallObj';
 import { LogStatusService } from 'src/app/shared/log-status.service';
 import { LoggedCallService } from 'src/app/shared/logged-call.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-update-call',
@@ -21,10 +22,10 @@ import { LoggedCallService } from 'src/app/shared/logged-call.service';
 export class UpdateCallComponent implements OnInit, OnChanges {
   @Input() call!: LoggedCallObj;
   @Output() updateComplete = new EventEmitter<void>();
-  @Output() closeForm = new EventEmitter<void>(); // Add this new event emitter
+  @Output() closeForm = new EventEmitter<void>();
 
-  
-  public statusObjs: CallStatus[]=[];
+  public statusObjs: CallStatus[] = [];
+  //public currentStatus: CallStatus | undefined;
   callForm: FormGroup;
   loading: boolean = false;
   error: string = '';
@@ -38,29 +39,33 @@ export class UpdateCallComponent implements OnInit, OnChanges {
     this.callForm = this.createForm();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.call) {
-      this.loadLogStatus();
-      this.populateForm();
+      await this.loadLogStatus(); // sets currentStatus & populates form
     }
   }
 
-  loadLogStatus() {
+  async loadLogStatus(): Promise<void> {
     this.loading = true;
-    this.callStatusService.findAllLogStatus().subscribe({
-      next: (data) => {
-        this.statusObjs = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Error loading all status.';
-        this.loading = false;
-        console.error('Error:', error);
-      },
-      complete: () => {
-        console.log('Finished with all log status with complete data.');
-      },
-    });
+    try {
+      this.statusObjs = await firstValueFrom(
+        this.callStatusService.findAllLogStatus()
+      );
+      console.log(this.statusObjs);
+      /*/ Set currentStatus once statusObjs is available
+      this.currentStatus = this.statusObjs.find(
+        (status) => status.statusId === this.call.statusId
+      );
+      console.log(this.currentStatus);*/
+
+      // Now that currentStatus is available, populate the form
+      this.populateForm();
+    } catch (error) {
+      this.error = 'Error loading all status.';
+      console.error('Error:', error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -71,14 +76,13 @@ export class UpdateCallComponent implements OnInit, OnChanges {
 
   createForm(): FormGroup {
     return this.fb.group({
-      logId: ['', Validators.required],
-      statusId: ['', Validators.required],
-      statusDesc: ['', Validators.required],
+      status: [null, Validators.required],
       dateCompleted: ['', Validators.required],
     });
   }
 
   populateForm(): void {
+    //console.log(this.currentStatus);
     this.callForm.patchValue({
       logId: this.call.logId,
       branchName: this.call.branchName,
@@ -91,8 +95,8 @@ export class UpdateCallComponent implements OnInit, OnChanges {
       loggerPhone: this.call.loggerPhone,
       startingDate: this.call.startingDate,
       dateCompleted: this.call.dateCompleted,
-      statusDesc: '',
-      statusId: '',
+      statusDesc: this.call.statusDesc,
+      statusId: this.call.statusId,
     });
   }
 
@@ -102,21 +106,26 @@ export class UpdateCallComponent implements OnInit, OnChanges {
       this.error = '';
       this.success = '';
 
+      const selectedStatus = this.callForm.get('status')?.value;
+      console.log('Selected status from form:', selectedStatus);
+
       const updatedCall: LoggedCallObj = {
-        logId: this.callForm.get('logId')?.value,
-        branchName: this.callForm.get('branchName')?.value,
-        terminalId: this.callForm.get('terminalId')?.value,
-        terminalName: this.callForm.get('terminalName')?.value,
-        vendorName: this.callForm.get('vendorName')?.value,
-        issueDesc: this.callForm.get('issueDesc')?.value,
-        dateLogged: this.callForm.get('dateLogged')?.value,
-        branchLogger: this.callForm.get('branchLogger')?.value,
-        loggerPhone: this.callForm.get('loggerPhone')?.value,
-        startingDate: this.callForm.get('startingDate')?.value,
+        logId: this.call.logId,
+        branchName: this.call.branchName,
+        terminalId: this.call.terminalId,
+        terminalName: this.call.terminalName,
+        vendorName: this.call.vendorName,
+        issueDesc: this.call.issueDesc,
+        dateLogged: this.call.dateLogged,
+        branchLogger: this.call.branchLogger,
+        loggerPhone: this.call.loggerPhone,
+        startingDate: this.call.startingDate,
         dateCompleted: this.callForm.get('dateCompleted')?.value,
-        statusDesc: this.callForm.get('statusDesc')?.value,
-        statusId: this.callForm.get('statusId')?.value,
+        statusDesc: selectedStatus?.statusDesc as string,
+        statusId: selectedStatus?.id as number,
       };
+
+      console.log(updatedCall);
 
       this.loggedCallService.updateLoggedCall(updatedCall).subscribe({
         next: () => {

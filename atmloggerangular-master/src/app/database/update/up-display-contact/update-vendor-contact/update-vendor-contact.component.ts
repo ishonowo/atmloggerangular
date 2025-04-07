@@ -23,7 +23,7 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private vendorContactService: VendorContactService,
-    private vendorService: VendorService
+    //private vendorService: VendorService
   ) {
     this.contactForm = this.createForm();
   }

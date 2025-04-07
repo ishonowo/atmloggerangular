@@ -33,12 +33,12 @@
       </div>
 
       <div class="mb-3">
-        <label for="statusId" class="form-label">Status of Call</label>
-        <select class="form-select" id="statusId" formControlName="statusId">
-          <option [ngValue]="null" selected disabled></option>
+        <label for="status" class="form-label">Status of Call</label>
+        <select class="form-select" id="status" formControlName="status">
+          <option [ngValue]="null" selected disabled>Select a status</option>
           <option
             *ngFor="let statusObj of statusObjs"
-            [ngValue]="statusObj.statusId"
+            [ngValue]="statusObj"
           >
             {{ statusObj.statusDesc }}
           </option>
@@ -46,13 +46,13 @@
 
         <ng-container
           *ngIf="
-            callForm.get('statusId')?.invalid &&
-            (callForm.get('statusId')?.dirty ||
-              callForm.get('statusId')?.touched)
+            callForm.get('status')?.invalid &&
+            (callForm.get('status')?.dirty ||
+              callForm.get('status')?.touched)
           "
           class="alert alert-danger mt-2"
         >
-          <small *ngIf="callForm.get('statusId')?.errors?.['required']">
+          <small *ngIf="callForm.get('status')?.errors?.['required']">
             The current status is required.
           </small>
         </ng-container>
