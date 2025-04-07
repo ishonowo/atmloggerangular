@@ -3,14 +3,46 @@
     <div class="navbar-brand">
       <h3>ATM Issue Logger App</h3>
     </div>
-    <div class="navbar-nav">
-      <div>
-        <a *ngIf="!isLoggedIn()" routerLink="login" class="nav-link">Home</a>
+    
+    <!-- Main navigation links - only shown when logged in -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav" *ngIf="isLoggedIn()">
+        <a routerLink="/issue-log" routerLinkActive="active" class="nav-link">Log Issue</a>
+        
+        <!-- Database dropdown -->
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="databaseDropdown" role="button" 
+             data-bs-toggle="dropdown" aria-expanded="false">
+            Database
+          </a>
+          <div class="dropdown-menu" aria-labelledby="databaseDropdown">
+            <a class="dropdown-item" routerLink="/db-display">Display</a>
+            <a class="dropdown-item" routerLink="/db-insert">Insert</a>
+            <a class="dropdown-item" routerLink="/db-update">Update</a>
+          </div>
+        </div>
+        
+        <a routerLink="/logged-call" routerLinkActive="active" class="nav-link">Logged Calls</a>
+        <a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>
+      </div>
+      
+      <!-- Home link shown only when not logged in -->
+      <div class="navbar-nav">
+        <div>
+          <a *ngIf="!isLoggedIn()" routerLink="login" class="nav-link">Home</a>
+        </div>
       </div>
     </div>
+    
+    <!-- Login/Logout section -->
     <div class="navbar-nav navbar-collapse justify-content-end">
       <div>
-        <a
+        <a href
           (click)="login()"
           *ngIf="!isLoggedIn()"
           routerLink="/issue-log"
@@ -19,7 +51,7 @@
         >
       </div>
       <div>
-        <a
+        <a href
           (click)="logout()"
           *ngIf="isLoggedIn()"
           routerLink="/logout"
