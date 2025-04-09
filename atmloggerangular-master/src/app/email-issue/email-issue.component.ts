@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AtmService } from '../shared/atm.service';
+import { EmailIssueService } from '../shared/email-issue.service';
 import { AtmIssue } from '../model/atmissue';
 import { EmailIssue } from '../model/emailissue';
-import { Router } from '@angular/router';
-import { EmailIssueService } from '../shared/email-issue.service';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { EmailIssueMessage } from '../model/emailIssueMessage';
 
 @Component({
@@ -55,12 +55,10 @@ export class EmailIssueComponent implements OnInit {
       this.populateForm(this.emailIssue); // Populate form with initial values
       this.isLoading = false;
     }
-    //this.control = this.emailIssue?.mBody as FormControl;
   }
 
   // Helper method to populate form with initial values
   private populateForm(emailIssue: EmailIssue | undefined) {
-    //console.log(emailIssue);
     if (emailIssue) {
       this.emailForm.patchValue({
         fromEmail: emailIssue.fromEmail,
@@ -82,27 +80,25 @@ export class EmailIssueComponent implements OnInit {
     }
   }
 
-  
-
   sendEmailMessage() {
     this.isClicked = true;
     if (this.emailForm.valid) {
-      //const formData = this.emailForm.value as EmailIssue;
       const formData: EmailIssueMessage = {
         fromEmail: this.emailForm.get('fromEmail')?.value,
         toEmail: this.emailForm.get('toEmail')?.value,
         cc: this.emailForm.get('cc')?.value,
         subject: this.emailForm.get('subject')?.value,
         mIntro: this.emailForm.get('mIntro')?.value,
-        physicalAddress: this.emailForm.get('message.physicalAddress')?.value,
-        branchName: this.emailForm.get('message.branchName')?.value,
-        vendorName: this.emailForm.get('message.vendorName')?.value,
-        issueDesc: this.emailForm.get('message.issueDesc')?.value,
-        branchLogger: this.emailForm.get('message.branchLogger')?.value,
-        loggerPhone: this.emailForm.get('message.loggerPhone')?.value,
-        dateLogged: this.emailForm.get('message.dateLogged')?.value,
+        physicalAddress: this.emailForm.get('message')?.get('physicalAddress')?.value,
+        branchName: this.emailForm.get('message')?.get('branchName')?.value,
+        vendorName: this.emailForm.get('message')?.get('vendorName')?.value,
+        issueDesc: this.emailForm.get('message')?.get('issueDesc')?.value,
+        branchLogger: this.emailForm.get('message')?.get('branchLogger')?.value,
+        loggerPhone: this.emailForm.get('message')?.get('loggerPhone')?.value,
+        dateLogged: this.emailForm.get('message')?.get('dateLogged')?.value,
         mEnd: this.emailForm.get('mEnd')?.value
-            };
+      };
+      
       this.emailIssueService.postSendEmail(formData).subscribe({
         next: async (res) => {
           alert('The issue has been emailed successfully.');
@@ -112,7 +108,7 @@ export class EmailIssueComponent implements OnInit {
           alert('An error has occurred while sending issue by email.');
           this.isClicked = false;
         }
-    });
+      });
     }
   }
 }
