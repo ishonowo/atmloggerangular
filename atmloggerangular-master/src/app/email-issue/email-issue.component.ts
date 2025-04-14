@@ -95,7 +95,8 @@ export class EmailIssueComponent implements OnInit {
         issueDesc: this.emailForm.get('message')?.get('issueDesc')?.value,
         branchLogger: this.emailForm.get('message')?.get('branchLogger')?.value,
         loggerPhone: this.emailForm.get('message')?.get('loggerPhone')?.value,
-        dateLogged: this.emailForm.get('message')?.get('dateLogged')?.value,
+        //dateLogged: this.emailForm.get('message')?.get('dateLogged')?.value,
+        dateLogged: new Date(this.emailForm.get('message')?.get('dateLogged')?.value),
         mEnd: this.emailForm.get('mEnd')?.value
       };
       
@@ -103,6 +104,7 @@ export class EmailIssueComponent implements OnInit {
         next: async (res) => {
           alert('The issue has been emailed successfully.');
           await this.router.navigate(['issue-log']);
+          this.isClicked = false;
         },
         error: (err) => {
           alert('An error has occurred while sending issue by email.');

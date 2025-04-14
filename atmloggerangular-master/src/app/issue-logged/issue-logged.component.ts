@@ -39,7 +39,7 @@ export class IssueLoggedComponent implements OnInit {
   
   initializeForm() {
     this.issueForm = this.fb.group({
-      terminalId: ['10701264', [
+      terminalId: ['10700166', [
         Validators.required, 
         Validators.minLength(8), 
         Validators.maxLength(8)
@@ -48,7 +48,7 @@ export class IssueLoggedComponent implements OnInit {
         Validators.required, 
         Validators.minLength(10)
       ]],
-      branchLogger: ['Ahmed Atere', [
+      branchLogger: ['Adedamola Adeniyi', [
         Validators.required
       ]],
       loggerEmail: ['aa@fidelitybank.ng', [
