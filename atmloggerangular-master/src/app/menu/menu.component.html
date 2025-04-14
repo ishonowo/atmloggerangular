@@ -5,19 +5,19 @@
     </div>
     
     <!-- Main navigation links - only shown when logged in -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     
     <div class="collapse navbar-collapse" id="navbarNav">
       <div class="navbar-nav" *ngIf="isLoggedIn()">
-        <a routerLink="/issue-log" routerLinkActive="active" class="nav-link">Log Issue</a>
+        <a routerLink="/issue-log" routerLinkActive="active" class="nav-link">Log an Issue</a>
         
         <!-- Database dropdown -->
         <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="databaseDropdown" role="button" 
-             data-bs-toggle="dropdown" aria-expanded="false">
+          <a routerLink="/database" routerLinkActive="active" class="nav-link dropdown-toggle" href="#" id="databaseDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
             Use Application Backend
           </a>
           <div class="dropdown-menu" aria-labelledby="databaseDropdown">
@@ -28,7 +28,7 @@
         </div>
         
         <a routerLink="/logged-call" routerLinkActive="active" class="nav-link">Logged Calls</a>
-        <a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>
+        <!--<a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>-->
       </div>
       
       <!-- Home link shown only when not logged in -->

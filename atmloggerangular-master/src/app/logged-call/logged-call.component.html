@@ -59,10 +59,10 @@
                     <td>{{ call.terminalId }}</td>
                     <td>{{ call.terminalName }}</td>
                     <td>{{ call.vendorName }}</td>
-                    <td>{{ call.issueDesc + " " + call.dateLogged }}</td>
+                    <td>{{ call.issueDesc + " " + formatDateTime(call.dateLogged) }}</td>
                     <td>{{ call.branchLogger + " " + call.loggerPhone }}</td>
-                    <td>{{ call.startingDate }}</td>
-                    <td>{{ call.dateCompleted }}</td>
+                    <td>{{ formatDate(call.startingDate) }}</td>
+                    <td>{{ formatDate(call.dateCompleted) }}</td>
                     <td>{{ call.statusDesc }}</td>
                     <td>
                       <button
