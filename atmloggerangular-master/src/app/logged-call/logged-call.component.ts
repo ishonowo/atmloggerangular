@@ -70,27 +70,28 @@ export class LoggedCallComponent implements OnInit {
         //minute: '2-digit',
         timeZone: 'Africa/Lagos', // Lagos uses West African Time (WAT/UTC+1)
       };
-    
-    return date.toLocaleDateString('en-NG', options);
-    // This will format the date according to Nigerian English format in WAT timezone
-    }
-    else return '';
+
+      return date.toLocaleDateString('en-NG', options);
+      // This will format the date according to Nigerian English format in WAT timezone
+    } else return '';
   }
 
   formatDateTime(dateString: Date): string {
-    const date = new Date(dateString);
+    if (dateString) {
+      const date = new Date(dateString);
 
-    // Create options for West African format
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'Africa/Lagos', // Lagos uses West African Time (WAT/UTC+1)
-    };
+      // Create options for West African format
+      const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Africa/Lagos', // Lagos uses West African Time (WAT/UTC+1)
+      };
 
-    return date.toLocaleDateString('en-NG', options);
-    // This will format the date according to Nigerian English format in WAT timezone
+      return date.toLocaleDateString('en-NG', options);
+      // This will format the date according to Nigerian English format in WAT timezone
+    } else return '';
   }
 }

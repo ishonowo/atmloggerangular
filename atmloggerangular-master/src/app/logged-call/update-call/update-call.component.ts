@@ -120,7 +120,7 @@ export class UpdateCallComponent implements OnInit, OnChanges {
         branchLogger: this.call.branchLogger,
         loggerPhone: this.call.loggerPhone,
         startingDate: this.call.startingDate,
-        dateCompleted: this.callForm.get('dateCompleted')?.value,
+        dateCompleted: new Date(this.callForm.get('dateCompleted')?.value),
         statusDesc: selectedStatus?.statusDesc as string,
         statusId: selectedStatus?.id as number,
       };

@@ -24,7 +24,7 @@
     <form [formGroup]="callForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
       <div class="mb-3">
         <label for="date">Date Completed:</label>
-        <input type="date" id="date" formControlName="dateCompleted" />
+        <input type="datetime-local" id="date" formControlName="dateCompleted" />
         <div
           *ngIf="callForm.get('dateCompleted')?.errors?.['required'] && callForm.get('dateCompleted')?.touched"
         >
