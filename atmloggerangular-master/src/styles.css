@@ -1,38 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
 /*@import "../node_modules/bootstrap/dist/css/bootstrap.min.css"*/
 
-.invalid-input{
+.invalid-input {
     color: red;
-  }
-  
-small{
+}
+
+small {
     color: red;
     font-weight: bold;
 }
 
 textarea {
-    resize: both;  /* Allow both horizontal and vertical resizing */
-    white-space: normal;  /* Allow text to wrap */
-    overflow-x: hidden;  /* Hide horizontal scrollbar */
-    overflow-y: auto;  /* Show vertical scrollbar when needed */
-    min-width: 800px;  /* Adjust as needed */
+    resize: both;          /* Allow both horizontal and vertical resizing */
+    white-space: normal;   /* Allow text to wrap */
+    overflow-x: hidden;    /* Hide horizontal scrollbar */
+    overflow-y: auto;      /* Show vertical scrollbar when needed */
+    min-width: 800px;      /* Adjust as needed */
     max-width: 100%;
-    min-height: 4em;  /* Use min-height instead of height */
+    min-height: 4em;       /* Use min-height instead of height */
     vertical-align: middle;
-    line-height: 1.5;  /* Improve readability */
-    padding: 5px;  /* Add some padding for better appearance */
+    line-height: 1.5;      /* Improve readability */
+    padding: 5px;          /* Add some padding for better appearance */
 }
 
 #display {
-    display: flex; 
-    justify-content: space-between
+    display: flex;
+    justify-content: space-between;
 }
 
-input.ng-invalid.ng-touched{
+input.ng-invalid.ng-touched {
     border: red 2px solid;
-  }
-  
-input.ng-pending{
+}
+
+input.ng-pending {
     border: yellow 2px solid;
-  }
-  
+}
+
+/* Full-screen table with the horizontal scrollbar pinned to the top */
+.table-wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: auto;
+    overflow-y: auto;
+    transform: rotateX(180deg);  /* flips the box so its native scrollbar renders at the top */
+}
+
+.table-wrapper table {
+    transform: rotateX(180deg);  /* flip content back so it displays right-side up */
+    width: 100%;
+    min-width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrapper thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+}

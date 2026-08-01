@@ -19,7 +19,7 @@ export class LoggedCallComponent implements OnInit {
   selectedCall: LoggedCallObj | null = null;
 
   constructor(
-    private fb: FormBuilder,
+    //private fb: FormBuilder,
     protected router: Router,
     private loggedCallService: LoggedCallService
   ) {}
