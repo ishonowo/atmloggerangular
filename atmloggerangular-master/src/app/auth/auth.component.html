@@ -1,0 +1,24 @@
+<div class="login-box">
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <input
+      name="username"
+      [(ngModel)]="username"
+      required
+      placeholder="LDAP Username"
+    />
+    <input
+      name="password"
+      type="password"
+      [(ngModel)]="password"
+      required
+      placeholder="Password"
+    />
+    <button type="submit" [disabled]="loginForm.invalid || isSubmitting">
+      {{ isSubmitting ? 'Logging in...' : 'Log In' }}
+    </button>
+  </form>
+
+  <div *ngIf="errorMessage" class="error-message" role="alert">
+    {{ errorMessage }}
+  </div>
+</div>

@@ -66,9 +66,13 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          //"options":{
-          //  "proxyConfig":"proxy.conf.json"
-          //}
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "ssl": true,
+            "sslKey": "ssl/angular-key.pem",
+            "sslCert": "ssl/angular-cert.pem",
+            "proxyConfig":"proxy.conf.json"
+          },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {

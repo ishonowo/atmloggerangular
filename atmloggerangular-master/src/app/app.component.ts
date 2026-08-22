@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'atm-issue-resolver-app';
+  title = 'atm-issue-logger-app';
 }

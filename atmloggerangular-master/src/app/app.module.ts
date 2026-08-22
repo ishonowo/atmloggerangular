@@ -7,7 +7,7 @@ import { IssueLoggedComponent } from './issue-logged/issue-logged.component';
 import { DbUpdateComponent } from './database/update/db-update/db-update.component';
 import { Router, Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EmailIssueComponent } from './email-issue/email-issue.component';
 import { ReportComponent } from './report/report.component';
@@ -47,18 +47,14 @@ import { UpDisplayBranchComponent } from './database/update/up-display-branch/up
 import { UpdateBranchComponent } from './database/update/up-display-branch/update-branch/update-branch.component';
 import { LoggedCallComponent } from './logged-call/logged-call.component';
 import { UpdateCallComponent } from './logged-call/update-call/update-call.component';
-
-export function MSALInstanceFactory(): IPublicClientApplication {
-  return new PublicClientApplication({
-    auth: {
-      //clientId: '630cbdbe-7cd3-4715-816f-5b780eed3d90',
-      clientId: '05d02707-b643-4f22-8e61-391484cb9733',
-      redirectUri: 'http://localhost:4200',
-    },
-  });
-}
+import { AuthComponent } from './auth/auth.component';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 const appRoutes: Routes = [
+  {
+    path: 'auth',
+    component: AuthComponent,
+  },
   {
     path: 'issue-log',
     component: IssueLoggedComponent,
@@ -171,6 +167,7 @@ const appRoutes: Routes = [
     UpdateBranchComponent,
     LoggedCallComponent,
     UpdateCallComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -179,18 +176,9 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     MsalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [
-    {
-      /*provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorService,
-      multi: true,*/
-      provide: MSAL_INSTANCE,
-      useFactory: MSALInstanceFactory,
-    },
-    MsalService,
-  ],
+  providers: [provideHttpClient(withInterceptors([AuthInterceptor]))],
   bootstrap: [AppComponent, BrowserModule, AppRoutingModule],
 })
 export class AppModule {}
