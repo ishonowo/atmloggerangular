@@ -7,7 +7,7 @@ import { IssueLoggedComponent } from './issue-logged/issue-logged.component';
 import { DbUpdateComponent } from './database/update/db-update/db-update.component';
 import { Router, Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EmailIssueComponent } from './email-issue/email-issue.component';
 import { ReportComponent } from './report/report.component';
@@ -16,11 +16,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { ErrorComponent } from './error/error.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
-import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
-import {
-  IPublicClientApplication,
-  PublicClientApplication,
-} from '@azure/msal-browser';
 import { DbInsertComponent } from './database/insert/db-insert.component';
 import { DatabaseComponent } from './database/database.component';
 import { InsertBranchComponent } from './database/insert/insert-branch/insert-branch.component';
@@ -174,8 +169,6 @@ const appRoutes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
     FormsModule,
-    HttpClientModule,
-    MsalModule,
     ReactiveFormsModule,
   ],
   providers: [provideHttpClient(withInterceptors([AuthInterceptor]))],

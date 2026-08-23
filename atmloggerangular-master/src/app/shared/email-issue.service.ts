@@ -11,9 +11,9 @@ import { EmailIssueMessage } from '../model/emailIssueMessage';
 })
 export class EmailIssueService {
   //private BASE_URL = window["cfgAtmBaseUrl"];
-  private BASE_URL = 'http:\\localhost:9442';
+  private BASE_URL = 'https:\\localhost:9442';
   //private VIEW_EMAIL_URL=`${this.BASE_URL}\\atm\\email`;
-  private SEND_EMAIL_URL = 'http://localhost:9442/email/sendEmail';
+  private SEND_EMAIL_URL = 'https://localhost:9442/email/sendEmail';
   private groupSupportEmail: string = 'ATMSupport@fidelitybank.ng';
 
   

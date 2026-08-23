@@ -9,7 +9,7 @@ import { VNameOption } from '../model/vNameOption';
   providedIn: 'root',
 })
 export class VendorService {
-  private baseUrl: string = 'http://localhost:9442/api/vendors';
+  private baseUrl: string = 'https://localhost:9442/api/vendors';
   private path: string ='/names'
 
   constructor(private http: HttpClient) {}

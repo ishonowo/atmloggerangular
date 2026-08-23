@@ -9,7 +9,7 @@ import { LoggedCallObj } from '../model/loggedCallObj';
 })
 export class LoggedCallService {
   
-  private baseUrl: string = 'http://localhost:9442/api/calls';
+  private baseUrl: string = 'https://localhost:9442/api/calls';
   
   constructor(private http: HttpClient) {}
 

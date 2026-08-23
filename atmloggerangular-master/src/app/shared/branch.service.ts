@@ -9,7 +9,7 @@ import { BranchWithName } from '../model/branchWithName';
   providedIn: 'root',
 })
 export class BranchService {
-  private baseUrl: string = 'http://localhost:9442/api/branches';
+  private baseUrl: string = 'https://localhost:9442/api/branches';
 
   constructor(private http: HttpClient) {}
 

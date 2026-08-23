@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LogStatusService {
 
-  private baseUrl: string = 'http://localhost:9442/api/status';
+  private baseUrl: string = 'https://localhost:9442/api/status';
 
   constructor(private http: HttpClient) {}
 

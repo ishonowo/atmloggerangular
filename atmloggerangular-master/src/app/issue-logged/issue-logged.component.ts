@@ -4,7 +4,8 @@ import { AtmService } from '../shared/atm.service';
 import { IssueLogged } from '../model/issuelogged';
 import { AtmIssue } from '../model/atmissue';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MsalService } from '@azure/msal-angular';
+import { AuthService } from '../shared/auth.service';
+
 
 @Component({
   selector: 'app-issue-logged',
@@ -14,7 +15,7 @@ import { MsalService } from '@azure/msal-angular';
 export class IssueLoggedComponent implements OnInit {
   atmIssue!: AtmIssue;
   protected isClicked: boolean = false;
-  protected sName: string|undefined = this.msalService.instance.getActiveAccount()?.username;
+  protected sName: string|undefined ;
   
   issueForm!: FormGroup;
   
@@ -28,13 +29,14 @@ export class IssueLoggedComponent implements OnInit {
   constructor(
     private atmService: AtmService,
     private router: Router,
-    private aRoute: ActivatedRoute,
-    private msalService: MsalService,
+    //private aRoute: ActivatedRoute,
+    private authService: AuthService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.initializeForm();
+    this.sName = this.authService.getEmail() ?? undefined;
   }
   
   initializeForm() {

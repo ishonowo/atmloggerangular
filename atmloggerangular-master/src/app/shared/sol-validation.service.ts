@@ -8,7 +8,7 @@ import { catchError, Observable, of } from "rxjs";
 })
 
 export class SolValidationService {
-  private apiUrl = 'http://localhost:9442/api/branches/sol/validate';
+  private apiUrl = 'https://localhost:9442/api/branches/sol/validate';
 
   constructor(private http: HttpClient) {}
 

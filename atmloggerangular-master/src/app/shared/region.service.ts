@@ -9,7 +9,7 @@ import { Region } from '../model/region';
     providedIn: 'root'
 })
 export class RegionService {
-    private baseUrl: string = 'http://localhost:9442/api/regions';
+    private baseUrl: string = 'https://localhost:9442/api/regions';
     private val: string ='validate';
     
     constructor(private http: HttpClient) {}

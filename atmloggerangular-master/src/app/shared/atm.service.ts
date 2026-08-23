@@ -9,7 +9,7 @@ import { AtmIssue } from '../model/atmissue';
 })
 export class AtmService {
   //private BASE_URL = window['cfgAtmBaseUrl'];
-  private baseUrl: string = 'http://localhost:9442/atm';
+  private baseUrl: string = 'https://localhost:9442/atm';
   private log: string = '/issue';
   private DELETE_ISSUE_URL = '\\atm\\delete\\';
   public atmIssue: AtmIssue | undefined;

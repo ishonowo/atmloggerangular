@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './shared/auth.guard';
 
 import { AuthComponent } from './auth/auth.component';
 import { EmailIssueComponent } from './email-issue/email-issue.component';
@@ -31,123 +32,122 @@ import { LoggedCallComponent } from './logged-call/logged-call.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: '/auth',
     pathMatch: 'full',
   },
   {
     path: 'auth',
     component: AuthComponent,
-    
   },
   {
     path: 'issue-log',
     component: IssueLoggedComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'database',
     component: DatabaseComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'db-display',
     component: DisplayComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'display-branch',
     component: DisplayBranchInfoComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'display-contact',
     component: DisplayContactComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'display-region',
     component: DisplayRegionComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'display-terminal',
     component: DisplayTerminalComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'display-vendor',
     component: DisplayVendorComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'db-insert',
     component: DbInsertComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'insert-branch',
     component: InsertBranchComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'insert-contact',
     component: InsertContactComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'insert-region',
     component: InsertRegionComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'insert-terminal',
     component: InsertTerminalComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'insert-vendor',
     component: InsertVendorComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'db-update',
     component: DbUpdateComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'update-branch',
     component: UpDisplayBranchComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'update-contact',
     component: UpDisplayContactComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'update-region',
     component: UpDisplayRegionComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'update-terminal',
     component: UpDisplayTerminalComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'update-vendor',
     component: UpDisplayVendorComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'logged-call',
     component: LoggedCallComponent,
-    
+    canActivate: [authGuard]
   },
   {
     path: 'email',
     component: EmailIssueComponent,
-    
+    canActivate: [authGuard]
   },
   { path: 'login', component: LoginComponent },
   {
