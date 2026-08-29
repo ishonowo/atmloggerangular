@@ -1,128 +1,87 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Display Logged Calls</title>
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
+<div class="container mt-4">
+  <h2>Logged Calls</h2>
 
-      .table-wrapper {
-        width: 100%;
-        max-height: 70vh;    /* adjust as needed */
-        overflow-x: auto;    /* becomes left-side scrollbar after flip */
-        overflow-y: auto;    /* becomes top-side scrollbar after flip */
-        transform: rotate(0deg);   /* flips the box so native scrollbars move to top/left */
-      }
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 
-      .table-wrapper table {
-        transform: rotate(0deg);   /* flips content back to normal orientation */
-        width: max-content;
-        min-width: 100%;
-      }
+  <!-- Error message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
 
-      .table-wrapper thead th {
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        background-color: #212529;  /* match table-dark so rows don't show through when scrolling */
-        color: #fff;
-      }
-    </style>
-  </head>
+  <div class="row">
+    <!-- Data table -->
+    <div [class]="selectedCall ? 'col-md-8' : 'col-md-12'">
+      <div *ngIf="!loading && !error" class="table-wrapper">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>S/N</th>
+              <th>Branch Name</th>
+              <th>Terminal ID</th>
+              <th>Terminal Name</th>
+              <th>Vendor</th>
+              <th>Fault</th>
+              <th>Contact Person</th>
+              <th>Starting Date</th>
+              <th>Date Completed</th>
+              <th>Status</th>
+              <th>Actions</th>
+              <th>Backend Staff Email</th>
+              <th>Backend Staff Browser</th>
+              <th>Backend Staff Hostname</th>
+              <th>Backend Staff IP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let call of calls; let i = index">
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ call.branchName }}</td>
+                <td>{{ call.terminalId }}</td>
+                <td>{{ call.terminalName }}</td>
+                <td>{{ call.vendorName }}</td>
+                <td>{{ call.issueDesc + " " + formatDateTime(call.dateLogged) }}</td>
+                <td>{{ call.branchLogger + " " + call.loggerPhone }}</td>
+                <td>{{ formatDate(call.startingDate) }}</td>
+                <td>{{ formatDateTime(call.dateCompleted) }}</td>
+                <td>{{ call.statusDesc }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="onSelect(call)"
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>{{ call.fromEmail }}</td>
+                <td>{{ call.browserUsed }}</td>
+                <td>{{ call.hostName }}</td>
+                <td>{{ call.loggerIP }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
 
-  <body>
-    <!--branch-list.component.html-->
-    <div class="container mt-4">
-      <h2>Logged Calls</h2>
-
-      <!-- Loading spinner -->
-      <div *ngIf="loading" class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-
-      <!-- Error message -->
-      <div *ngIf="error" class="alert alert-danger">
-        {{ error }}
-      </div>
-
-      <div class="row">
-        <!-- Data table -->
-        <div [class]="selectedCall ? 'col-md-8' : 'col-md-12'">
-          <!-- Data table -->
-          <div *ngIf="!loading && !error" class="table-wrapper">
-            <table class="table table-striped table-bordered">
-              <thead class="table-dark">
-                <tr>
-                  <th>S/N</th>
-                  <th>Branch Name</th>
-                  <th>Terminal ID</th>
-                  <th>Terminal Name</th>
-                  <th>Vendor</th>
-                  <th>Fault</th>
-                  <th>Contact Person</th>
-                  <th>Starting Date</th>
-                  <th>Date Completed</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                  <th>Backend Staff Email</th>
-                  <th>Backend Staff Browser</th>
-                  <th>Backend Staff Hostname</th>
-                  <th>Backend Staff IP</th>
-                </tr>
-              </thead>
-              <tbody>
-                <ng-container *ngFor="let call of calls; let i = index">
-                  <tr>
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ call.branchName }}</td>
-                    <td>{{ call.terminalId }}</td>
-                    <td>{{ call.terminalName }}</td>
-                    <td>{{ call.vendorName }}</td>
-                    <td>{{ call.issueDesc + " " + formatDateTime(call.dateLogged) }}</td>
-                    <td>{{ call.branchLogger + " " + call.loggerPhone }}</td>
-                    <td>{{ formatDate(call.startingDate) }}</td>
-                    <td>{{ formatDateTime(call.dateCompleted) }}</td>
-                    <td>{{ call.statusDesc }}</td>
-                    <td>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        (click)="onSelect(call)"
-                      >
-                        Edit
-                      </button>
-                    </td>
-                    <td>{{ call.fromEmail}}</td>
-                    <td>{{ call.browserUsed }}</td>
-                    <td>{{ call.hostName }}</td>
-                    <td>{{ call.loggerIP}}</td>
-                  </tr>
-                </ng-container>
-              </tbody>
-            </table>
-
-            <!-- No data message -->
-            <div *ngIf="calls.length === 0" class="alert alert-info">
-              No calls found.
-            </div>
-          </div>
-        </div>
-        <!-- Update Form -->
-        <div *ngIf="selectedCall" class="col-md-4">
-          <app-update-call
-            [call]="selectedCall"
-            (updateComplete)="onUpdateComplete()"
-            (closeForm)="selectedCall = null"
-          >
-          </app-update-call>
+        <!-- No data message -->
+        <div *ngIf="calls.length === 0" class="alert alert-info">
+          No calls found.
         </div>
       </div>
     </div>
-  </body>
-</html>
+
+    <!-- Update Form -->
+    <div *ngIf="selectedCall" class="col-md-4">
+      <app-update-call
+        [call]="selectedCall"
+        (updateComplete)="onUpdateComplete()"
+        (closeForm)="selectedCall = null"
+      >
+      </app-update-call>
+    </div>
+  </div>
+</div>

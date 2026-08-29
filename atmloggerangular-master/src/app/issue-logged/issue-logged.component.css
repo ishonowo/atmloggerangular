@@ -18,3 +18,32 @@
   color: #fff;
   border-color: #0d6efd;
 }
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.table-wrapper {
+  width: 100%;
+  max-height: 70vh;    /* adjust as needed */
+  overflow-x: auto;    /* becomes left-side scrollbar after flip */
+  overflow-y: auto;    /* becomes top-side scrollbar after flip */
+  transform: rotate(0deg);   /* flips the box so native scrollbars move to top/left */
+}
+
+.table-wrapper table {
+  transform: rotate(0deg);   /* flips content back to normal orientation */
+  width: max-content;
+  min-width: 100%;
+}
+
+.table-wrapper thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #212529;  /* match table-dark so rows don't show through when scrolling */
+  color: #fff;
+}
