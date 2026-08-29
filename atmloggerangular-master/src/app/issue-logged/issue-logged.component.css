@@ -1,3 +1,20 @@
 .invalid-input{
     color: red;
 }
+
+.fault-button-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+.fault-btn {
+  font-size: 0.85rem;
+}
+
+.fault-btn.active {
+  background-color: #0d6efd;
+  color: #fff;
+  border-color: #0d6efd;
+}

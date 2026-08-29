@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IssueLoggedComponent } from './issue-logged/issue-logged.component';
 import { DbUpdateComponent } from './database/update/db-update/db-update.component';
-import { Router, Routes, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EmailIssueComponent } from './email-issue/email-issue.component';
 import { ReportComponent } from './report/report.component';
@@ -45,82 +45,6 @@ import { UpdateCallComponent } from './logged-call/update-call/update-call.compo
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 
-const appRoutes: Routes = [
-  {
-    path: 'auth',
-    component: AuthComponent,
-  },
-  {
-    path: 'issue-log',
-    component: IssueLoggedComponent,
-  },
-  {
-    path: 'database',
-    component: DatabaseComponent,
-  },
-  {
-    path: 'db-display',
-    component: DisplayComponent,
-  },
-  {
-    path: 'display-branch',
-    component: DisplayBranchInfoComponent,
-  },
-  {
-    path: 'display-contact',
-    component: DisplayContactComponent,
-  },
-  {
-    path: 'display-region',
-    component: DisplayRegionComponent,
-  },
-  {
-    path: 'display-terminal',
-    component: DisplayTerminalComponent,
-  },
-  {
-    path: 'display-vendor',
-    component: DisplayVendorComponent,
-  },
-  {
-    path: 'db-insert',
-    component: DbInsertComponent,
-  },
-  {
-    path: 'insert-branch',
-    component: InsertBranchComponent,
-  },
-  {
-    path: 'insert-contact',
-    component: InsertContactComponent,
-  },
-  {
-    path: 'insert-region',
-    component: InsertRegionComponent,
-  },
-  {
-    path: 'insert-terminal',
-    component: InsertTerminalComponent,
-  },
-  {
-    path: 'insert-vendor',
-    component: InsertVendorComponent,
-  },
-  {
-    path: 'db-update',
-    component: DbUpdateComponent,
-  },
-  {
-    path: '',
-    component: LoginComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    component: NotFoundComponent,
-  },
-];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -148,13 +72,11 @@ const appRoutes: Routes = [
     DisplayRegionComponent,
     DisplayComponent,
     RegionItemComponent,
-    DbUpdateComponent,
     UpDisplayRegionComponent,
     UpdateRegionComponent,
     UpDisplayVendorComponent,
     UpdateVendorComponent,
     UpDisplayContactComponent,
-    UpdateVendorContactComponent,
     UpdateVendorContactComponent,
     UpDisplayTerminalComponent,
     UpdateTerminalComponent,
@@ -166,12 +88,11 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    AppRoutingModule, // Handles all application routing
     FormsModule,
     ReactiveFormsModule,
   ],
   providers: [provideHttpClient(withInterceptors([AuthInterceptor]))],
-  bootstrap: [AppComponent, BrowserModule, AppRoutingModule],
+  bootstrap: [AppComponent], // ONLY AppComponent belongs here
 })
 export class AppModule {}

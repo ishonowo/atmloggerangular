@@ -37,29 +37,4 @@ export class VendorContactService {
     return this.http.put<VendorContact>(this.baseUrl, contact);
   }
 
-  /*async updateVendorNames(
-    vendorContacts: VendorContact[],
-    vendorNames: VNameOption[]
-  ): Promise<VendorContact[]> {
-    // Create a map for faster lookups
-    const vendorNameMap = new Map<number, string>(
-      vendorNames.map((vn) => [vn.id, vn.vendorName])
-    );
-  
-    // Process each contact and wait for all to complete
-    const updatedContacts = await Promise.all(
-      vendorContacts.map(async (contact) => {
-  
-        return {
-          vendorId: contact.vendorId,
-          contact: contact.contact,
-          status: contact.status,
-          id: contact.id,
-          vendorName: vendorNameMap.get(contact.vendorId) || contact.vendorName || '', // Fallback if no name found
-        };
-      })
-    );
-  
-    return updatedContacts;
-  }*/
 }

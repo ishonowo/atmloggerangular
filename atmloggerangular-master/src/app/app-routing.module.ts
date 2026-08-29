@@ -32,7 +32,7 @@ import { LoggedCallComponent } from './logged-call/logged-call.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/auth',
+    redirectTo: '/issue-log',
     pathMatch: 'full',
   },
   {

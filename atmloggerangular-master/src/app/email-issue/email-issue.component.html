@@ -23,7 +23,7 @@
           >*The Sender's email is required.</small
         >
       </div>
-      
+
       <div class="form-row">
         <label for="toEmail"><b>To:</b></label>
         <textarea
@@ -41,7 +41,7 @@
           >*The Recipient's email is required.</small
         >
       </div>
-      
+
       <div class="form-row">
         <label for="cc"><b>Cc:</b></label>
         <textarea
@@ -58,7 +58,7 @@
           >*The Carbon copy email is required.</small
         >
       </div>
-      
+
       <div class="form-row">
         <label for="subject"><b>Subject:</b></label>
         <textarea
@@ -76,7 +76,7 @@
           >*The Subject is required.</small
         >
       </div>
-      
+
       <div class="form-row">
         <label for="mIntro"><b>Message Introduction:</b></label>
         <textarea
@@ -94,11 +94,11 @@
           >*The message introduction is required.</small
         >
       </div>
-      
+
       <!-- ATM Issue Details Section -->
       <div class="message-section" formGroupName="message">
         <h2>ATM Issue Details</h2>
-        
+
         <div class="form-row">
           <label for="physicalAddress"><b>ATM LOCATION</b></label>
           <input
@@ -116,7 +116,7 @@
             >*The location of the ATM is required.</small
           >
         </div>
-    
+
         <div class="form-row">
           <label for="branchName"><b>BRANCH IN CHARGE</b></label>
           <input
@@ -134,7 +134,7 @@
             >*The name of the branch is required.</small
           >
         </div>
-    
+
         <div class="form-row">
           <label for="vendorName"><b>VENDOR</b></label>
           <input
@@ -152,25 +152,38 @@
             >*The Vendor's name is required.</small
           >
         </div>
-    
-        <div class="form-row">
-          <label for="issueDesc"><b>ISSUE(S)</b></label>
-          <textarea
-            id="issueDesc"
-            formControlName="issueDesc"
-            placeholder="Enter the issues with the ATM"
-            title="Issue Description"
-            rows="3"
-          ></textarea>
-          <small
-            *ngIf="
-              emailForm.get('message')?.get('issueDesc')?.invalid &&
-              emailForm.get('message')?.get('issueDesc')?.touched
-            "
-            >*The details of the issue(s) the ATM has is required.</small
+
+        <!-- Editable list of faults tied to this issue. The nature/type stay
+             fixed, but the description can be edited before the email is sent. -->
+        <div class="form-row" formArrayName="faults">
+          <label><b>ISSUE(S)</b></label>
+          <div
+            *ngFor="let faultGroup of faultsArray.controls; let i = index"
+            [formGroupName]="i"
+            class="fault-edit-row"
+          >
+            <div class="fault-edit-header">
+              <strong>{{ faultGroup.get('displayLabel')?.value }}</strong>
+              <small class="text-muted">({{ faultGroup.get('faultType')?.value }})</small>
+            </div>
+            <textarea
+              formControlName="description"
+              rows="1"
+              [class.is-invalid]="faultGroup.get('description')?.invalid && faultGroup.get('description')?.touched"
+              title="Fault description"
+              placeholder="Describe this fault"
+            ></textarea>
+            <small
+              class="text-danger"
+              *ngIf="faultGroup.get('description')?.errors && faultGroup.get('description')?.touched"
+              >*A description of at least 5 characters is required.</small
+            >
+          </div>
+          <small *ngIf="faultsArray.length === 0"
+            >*No faults were found for this issue.</small
           >
         </div>
-    
+
         <div class="form-row">
           <label for="branchLogger"><b>BRANCH CONTACT</b></label>
           <input
@@ -188,7 +201,7 @@
             >*The branch contact is required.</small
           >
         </div>
-    
+
         <div class="form-row">
           <label for="loggerPhone"><b>CONTACT PHONE NUMBER</b></label>
           <input
@@ -206,7 +219,7 @@
             >*The personnel's phone number is required (11-14 digits).</small
           >
         </div>
-    
+
         <div class="form-row">
           <label for="dateLogged"><b>DATE AND TIME LOGGED</b></label>
           <input
@@ -225,7 +238,7 @@
           >
         </div>
       </div>
-      
+
       <div class="form-row">
         <label for="mEnd"><b>MESSAGE END</b></label>
         <textarea
@@ -242,7 +255,7 @@
           >*The message ending is required.</small
         >
       </div>
-      
+
       <div class="display">
         <button
           [disabled]="emailForm.invalid || isClicked"

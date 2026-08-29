@@ -1,7 +1,10 @@
+import { AtmFault } from './atmfault';
+
 export interface AtmIssue {
   id: number;
   terminalId: string;
-  issueDesc: string;
+  atmFaults: AtmFault[];
+  otherFaultDesc?: string;
   branchLogger: string;
   loggerEmail: string;
   loggerPhoneNo: string;

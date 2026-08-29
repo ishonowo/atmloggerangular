@@ -1,3 +1,5 @@
+import { AtmFault } from './atmfault';
+
 export interface EmailIssueMessage {
   fromEmail: string;
   toEmail: string;
@@ -7,7 +9,8 @@ export interface EmailIssueMessage {
   physicalAddress: string;
   branchName: string;
   vendorName: string;
-  issueDesc: string;
+  atmFaults: AtmFault[];
+  otherFaultDesc?: string;
   branchLogger: string;
   loggerPhone: string;
   dateLogged: Date;

@@ -1,11 +1,22 @@
-import { Message } from "./message";
+import { AtmFault } from './atmfault';
+
+export interface EmailIssueMessageInfo {
+  physicalAddress: string;
+  branchName: string;
+  vendorName: string;
+  atmFaults: AtmFault[];
+  otherFaultDesc?: string;
+  branchLogger: string;
+  loggerPhone: string;
+  dateLogged: Date;
+}
 
 export interface EmailIssue {
   fromEmail: string;
-  toEmail: string; 
-  cc: string; 
+  toEmail: string;
+  cc: string;
   subject: string;
   mIntro: string;
-  message: Message;
+  message: EmailIssueMessageInfo;
   mEnd: string;
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, InteropObservable } from 'rxjs';
 import { IssueLogged } from '../model/issuelogged';
 import { AtmIssue } from '../model/atmissue';
+import { AtmFault } from '../model/atmfault';
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +20,14 @@ export class AtmService {
   postIssueLogged(issueLogged: IssueLogged): Observable<any> {
     //postIssueLogged(issueLogged: IssueLogged): Observable<AtmIssue> {
     //return this.http.post(this.LOG_ISSUE_URL, issueLogged);
-    return this.http.post(this.baseUrl+this.log, issueLogged);
+    return this.http.post(this.baseUrl + this.log, issueLogged);
   }
 
   deleteIssueLogged(id: number | undefined): Observable<any> {
     return this.http.delete(this.DELETE_ISSUE_URL + id);
+  }
+
+  getAtmFaults() {
+    return this.http.get<AtmFault[]>(`${this.baseUrl}/atm-faults`);
   }
 }
