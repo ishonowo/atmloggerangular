@@ -7,7 +7,7 @@ import { Vendor } from '../../../model/vendor';
   templateUrl: './up-display-vendor.component.html',
   styleUrls: ['./up-display-vendor.component.css']
 })
-export class UpDisplayVendorComponent {
+export class UpDisplayVendorComponent implements OnInit{
   vendors: Vendor[] = [];
   loading: boolean = true;
   error: string = '';

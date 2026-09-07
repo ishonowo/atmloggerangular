@@ -14,6 +14,10 @@
   </head>
 
   <body>
+    <div>
+      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+    </div>
+
     <div class="container-fluid">
       <form
         name="terminalInsertForm"
@@ -29,8 +33,7 @@
               title="vendorId"
               class="form-select"
             >
-              <option [ngValue]="null" selected disabled>
-              </option>
+              <option [ngValue]="null" selected disabled></option>
               <option
                 *ngFor="let vNameOption of vNameOptions"
                 [ngValue]="vNameOption.id"
@@ -70,7 +73,9 @@
               "
             >
               <small
-                *ngIf=" terminalInsertForm.get('terminalId')?.errors?.['required']"
+                *ngIf="
+                  terminalInsertForm.get('terminalId')?.errors?.['required']
+                "
               >
                 *The terminal ID is required.</small
               >
@@ -95,7 +100,7 @@
               "
             >
               <small
-                *ngIf=" terminalInsertForm.get('atmName')?.errors?.['required']"
+                *ngIf="terminalInsertForm.get('atmName')?.errors?.['required']"
               >
                 *The ATM name is required.</small
               >
@@ -119,7 +124,7 @@
               "
             >
               <small
-                *ngIf=" terminalInsertForm.get('offsite')?.errors?.['required']"
+                *ngIf="terminalInsertForm.get('offsite')?.errors?.['required']"
               >
                 *The location of the ATM is required.</small
               >

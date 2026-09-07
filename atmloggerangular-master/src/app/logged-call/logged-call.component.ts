@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoggedCallObj } from '../model/loggedCallObj';
 import { Router } from '@angular/router';
 import { LoggedCallService } from '../shared/logged-call.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-logged-call',
@@ -15,13 +16,14 @@ export class LoggedCallComponent implements OnInit {
   public loading: boolean = true;
   public error: string = '';
   public calls: LoggedCallObj[] = [];
+  protected exporting = false;
 
   selectedCall: LoggedCallObj | null = null;
 
   constructor(
     //private fb: FormBuilder,
     protected router: Router,
-    private loggedCallService: LoggedCallService
+    private loggedCallService: LoggedCallService,
   ) {}
 
   ngOnInit(): void {
@@ -93,5 +95,37 @@ export class LoggedCallComponent implements OnInit {
       return date.toLocaleDateString('en-NG', options);
       // This will format the date according to Nigerian English format in WAT timezone
     } else return '';
+  }
+  exportToExcel(): void {
+    this.exporting = true;
+    this.loggedCallService.exportToExcel().subscribe({
+      next: (response: HttpResponse<Blob>) => {
+        const blob = response.body as Blob;
+        const url = window.URL.createObjectURL(blob);
+
+        const contentDisposition = response.headers.get('Content-Disposition');
+        let filename = `logged-calls-${new Date().toISOString().slice(0, 10)}.xlsx`; // fallback
+
+        if (contentDisposition) {
+          const match = contentDisposition.match(/filename="?([^"]+)"?/);
+          if (match && match[1]) {
+            filename = match[1];
+          }
+        }
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        this.exporting = false;
+      },
+      error: (err) => {
+        console.error('Export failed', err);
+        this.exporting = false;
+      },
+    });
   }
 }

@@ -14,6 +14,10 @@
   </head>
 
   <body>
+    <div>
+      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+    </div>
+
     <div class="container-fluid">
       <form
         name="branchInsertForm"
@@ -21,36 +25,36 @@
         (ngSubmit)="branchInsert()"
       >
         <div>
-            <div class="input">
-                <label for="regionId"><b>Region: </b></label>
-                <select
-                  id="regionId"
-                  formControlName="regionId"
-                  title="regionId"
-                  class="form-select"
-                >
-                  <option [ngValue]="null" selected disabled></option>
-                  <option
-                    *ngFor="let rNameOption of rNameOptions"
-                    [ngValue]="rNameOption.id"
-                  >
-                    {{ rNameOption.regionName }}
-                  </option>
-                </select>
-                <ng-container
-                  *ngIf="
-                    branchInsertForm.get('regionId')?.invalid &&
-                    (branchInsertForm.get('regionId')?.touched ||
-                      branchInsertForm.get('regionId')?.dirty)
-                  "
-                >
-                  <small
-                    *ngIf="branchInsertForm.get('regionId')?.errors?.['required']"
-                  >
-                    *Please select a region
-                  </small>
-                </ng-container>
-              </div>
+          <div class="input">
+            <label for="regionId"><b>Region: </b></label>
+            <select
+              id="regionId"
+              formControlName="regionId"
+              title="regionId"
+              class="form-select"
+            >
+              <option [ngValue]="null" selected disabled></option>
+              <option
+                *ngFor="let rNameOption of rNameOptions"
+                [ngValue]="rNameOption.id"
+              >
+                {{ rNameOption.regionName }}
+              </option>
+            </select>
+            <ng-container
+              *ngIf="
+                branchInsertForm.get('regionId')?.invalid &&
+                (branchInsertForm.get('regionId')?.touched ||
+                  branchInsertForm.get('regionId')?.dirty)
+              "
+            >
+              <small
+                *ngIf="branchInsertForm.get('regionId')?.errors?.['required']"
+              >
+                *Please select a region
+              </small>
+            </ng-container>
+          </div>
           <div class="solId">
             <label for="solId"><b>Sol ID: </b></label>
             <input
@@ -68,7 +72,7 @@
               "
             >
               <small
-                *ngIf=" branchInsertForm.get('solId')?.errors?.['required']"
+                *ngIf="branchInsertForm.get('solId')?.errors?.['required']"
               >
                 *The Sol ID is required.</small
               >
@@ -133,12 +137,14 @@
               "
             >
               <small
-                *ngIf=" branchInsertForm.get('branchName')?.errors?.['required']"
+                *ngIf="branchInsertForm.get('branchName')?.errors?.['required']"
               >
                 *The branch name is required.</small
               >
               <small
-                *ngIf="branchInsertForm.get('branchName')?.errors?.['branchFound']"
+                *ngIf="
+                  branchInsertForm.get('branchName')?.errors?.['branchFound']
+                "
               >
                 *The branch name entered already exists.</small
               >
@@ -147,13 +153,15 @@
           <br />
         </div>
         <div class="display">
-          <button type="submit" class="btn btn-success pull-left"
-          [disabled]="!branchInsertForm.valid">
+          <button
+            type="submit"
+            class="btn btn-success pull-left"
+            [disabled]="!branchInsertForm.valid"
+          >
             <span>Submit Form</span>
           </button>
         </div>
       </form>
     </div>
-  
   </body>
 </html>

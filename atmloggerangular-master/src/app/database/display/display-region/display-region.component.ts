@@ -5,7 +5,7 @@ import { Region } from 'src/app/model/region';
 @Component({
   selector: 'app-display-region',
   templateUrl: './display-region.component.html',
-  styleUrls: ['./display-region.component.css']
+  styleUrls: ['./display-region.component.css'],
 })
 export class DisplayRegionComponent implements OnInit {
   protected isClicked: boolean = false;
@@ -13,9 +13,7 @@ export class DisplayRegionComponent implements OnInit {
   loading: boolean = true;
   error: string = '';
 
-  constructor(
-    private regionService: RegionService
-  ) {}
+  constructor(private regionService: RegionService) {}
 
   ngOnInit(): void {
     this.loadRegions();
@@ -33,9 +31,9 @@ export class DisplayRegionComponent implements OnInit {
         this.loading = false;
         console.error('Error:', error);
       },
-      complete:() => {
+      complete: () => {
         console.log('Finished with fetching all regions.');
-      }
+      },
     });
   }
 }

@@ -14,6 +14,10 @@
   </head>
 
   <body>
+    <div>
+      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+    </div>
+
     <div class="container-fluid">
       <form
         name="contactInsertForm"
@@ -29,8 +33,7 @@
               title="vendorId"
               class="form-select"
             >
-              <option [ngValue]="null" selected disabled>
-              </option>
+              <option [ngValue]="null" selected disabled></option>
               <option
                 *ngFor="let vNameOption of vNameOptions"
                 [ngValue]="vNameOption.id"
@@ -70,12 +73,12 @@
               "
             >
               <small
-                *ngIf=" contactInsertForm.get('contact')?.errors?.['required']"
+                *ngIf="contactInsertForm.get('contact')?.errors?.['required']"
               >
                 *The contact's email is required.</small
               >
               <small
-                *ngIf=" contactInsertForm.get('contact')?.errors?.['email']"
+                *ngIf="contactInsertForm.get('contact')?.errors?.['email']"
               >
                 *The contact's email is required.</small
               >
@@ -96,11 +99,11 @@
               *ngIf="
                 contactInsertForm.get('status')?.invalid &&
                 (contactInsertForm.get('status')?.touched ||
-                contactInsertForm.get('status')?.dirty)
+                  contactInsertForm.get('status')?.dirty)
               "
             >
               <small
-                *ngIf=" contactInsertForm.get('status')?.errors?.['required']"
+                *ngIf="contactInsertForm.get('status')?.errors?.['required']"
               >
                 *The status of the contact is required.</small
               >
@@ -114,47 +117,49 @@
         </div>
       </form>
     </div>
-    <br/>
-        <!-- contact-list.component.html -->
-        <div class="container mt-4">
-          <h2>Vendor Contact List</h2>
-    
-          <!-- Loading spinner -->
-          <div *ngIf="loading" class="d-flex justify-content-center">
-            <div class="spinner-border" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>
-    
-          <!-- Error message -->
-          <div *ngIf="error" class="alert alert-danger">
-            {{ error }}
-          </div>
-    
-          <!-- Data table -->
-          <div *ngIf="!loading && !error" class="table-responsive">
-            <table class="table table-striped table-bordered">
-              <thead class="table-dark">
-                <tr>
-                  <th>Vendor Name</th>
-                  <th>Email Contact</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let contact of contacts">
-                  <td>{{ contact.vendorName }}</td>
-                  <td>{{ contact.contact }}</td>
-                  <td>{{ contact.status ? "Active Contact":"Inactive Contact"}}</td>
-                </tr>
-              </tbody>
-            </table>
-    
-            <!-- No data message -->
-            <div *ngIf="contacts.length === 0" class="alert alert-info">
-              No contact found.
-            </div>
-          </div>
-        </div>  
+    <br />
+    <!-- contact-list.component.html -->
+    <div class="container mt-4">
+      <h2>Vendor Contact List</h2>
+
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{ error }}
+      </div>
+
+      <!-- Data table -->
+      <div *ngIf="!loading && !error" class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>Vendor Name</th>
+              <th>Email Contact</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contact of contacts">
+              <td>{{ contact.vendorName }}</td>
+              <td>{{ contact.contact }}</td>
+              <td>
+                {{ contact.status ? "Active Contact" : "Inactive Contact" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- No data message -->
+        <div *ngIf="contacts.length === 0" class="alert alert-info">
+          No contact found.
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -38,11 +38,6 @@ export class InsertTerminalComponent implements OnInit {
     private vendorService: VendorService
   ) {
     this.terminalInsertForm = this.fb.group({
-      // id: [
-      //   '',
-      //   [Validators.required, CustomValidators.noSpaceAllowed],
-      //   [CustomValidators.verifyRegionID(this.regionService)],
-      // ],
       vendorId: ['', Validators.required],
       terminalId: ['', [Validators.required]],
       atmName: ['', [Validators.required]],

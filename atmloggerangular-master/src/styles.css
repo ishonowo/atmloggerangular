@@ -58,3 +58,34 @@ input.ng-pending {
     z-index: 1;
     background: #fff;
 }
+
+.return-link {
+  color: blue; /* Custom hex blue or use standard 'blue' */
+  text-decoration: none;
+  font-size: 1.5rem;        /* Matches default <h3> size */
+  font-weight: 500;          /* Matches <h3> font weight */
+  line-height: 1.2;          /* Heading line height */
+  text-decoration: none;     /* Removes link underline */
+  display: inline-block;     /* Ensures layout spacing applies properly */
+}
+
+.return-link:hover {
+  color: rgb(66, 0, 128); /* Darker blue on hover */
+}
+
+body {
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('/assets/images/fidelity-bank-logo.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1200px;
+  opacity: 0.10;               /* watermark effect */
+  z-index: -1;
+  pointer-events: none;
+}

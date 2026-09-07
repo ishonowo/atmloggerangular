@@ -14,6 +14,9 @@
   </head>
 
   <body>
+    <div>
+      <a routerLink="/db-display" class="nav-link return-link">Return</a>
+    </div>
     <!-- terminal-list.component.html -->
     <div class="container mt-4">
       <h2>Terminal List</h2>
@@ -44,7 +47,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let terminal of terminalObjects">
-              <td>{{terminal.id}}</td>
+              <td>{{ terminal.id }}</td>
               <td>{{ terminal.vendorName }}</td>
               <td>{{ terminal.terminalId }}</td>
               <td>{{ terminal.atmName }}</td>

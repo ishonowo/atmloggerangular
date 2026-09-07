@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+
+//import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { InsertTerminalComponent } from './database/insert/insert-terminal/inser
 import { InsertContactComponent } from './database/insert/insert-contact/insert-contact.component';
 import { DisplayContactComponent } from './database/display/display-contact/display-contact.component';
 import { DisplayVendorComponent } from './database/display/display-vendor/display-vendor.component';
+import { DisplayFaultComponent } from './database/display/display-fault/display-fault.component';
 import { DisplayTerminalComponent } from './database/display/display-terminal/display-terminal.component';
 import { DisplayBranchInfoComponent } from './database/display/display-branch-info/display-branch-info.component';
 import { DisplayRegionComponent } from './database/display/display-region/display-region.component';
@@ -44,6 +46,9 @@ import { LoggedCallComponent } from './logged-call/logged-call.component';
 import { UpdateCallComponent } from './logged-call/update-call/update-call.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { InsertFaultComponent } from './database/insert/insert-fault/insert-fault.component';
+import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
+import { UpdateFaultComponent } from './database/update/up-display-fault/update-fault/update-fault.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +90,10 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     LoggedCallComponent,
     UpdateCallComponent,
     AuthComponent,
+    DisplayFaultComponent,
+    InsertFaultComponent,
+    UpDisplayFaultComponent,
+    UpdateFaultComponent,
   ],
   imports: [
     BrowserModule,

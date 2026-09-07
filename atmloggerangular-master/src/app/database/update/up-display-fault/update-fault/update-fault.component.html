@@ -1,0 +1,100 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Update ATM Fault</h3>
+  </div>
+  <div class="card-body">
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <!-- Success message -->
+    <div *ngIf="success" class="alert alert-success">
+      {{ success }}
+    </div>
+
+    <!--Update from-->
+    <form [formGroup]="faultForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="natureOfFault" class="form-label">Nature Of Fault</label>
+        <input
+          type="text"
+          class="form-control"
+          id="natureOfFault"
+          formControlName="natureOfFault"
+        />
+        <div
+          *ngIf="
+            faultForm.get('natureOfFault')?.invalid &&
+            (faultForm.get('natureOfFault')?.dirty ||
+              faultForm.get('natureOfFault')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="faultForm.get('natureOfFault')?.errors?.['required']">
+            The nature of the ATM fault is required.
+          </div>
+          <div *ngIf="faultForm.get('natureOfFault')?.errors?.['minlength']">
+            The nature of the ATM fault must be at least 5 characters long.
+          </div>
+        </div>
+        <label for="description" class="form-label">Description Of Fault</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          formControlName="description"
+        />
+        <div
+          *ngIf="
+            faultForm.get('description')?.invalid &&
+            (faultForm.get('description')?.dirty ||
+              faultForm.get('description')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="faultForm.get('description')?.errors?.['required']">
+            The description is required.
+          </div>
+          <div *ngIf="faultForm.get('description')?.errors?.['minlength']">
+            The description must be at least 5 characters long.
+          </div>
+        </div>
+        <label for="faultType" class="form-label">Type Of Fault</label>
+        <input
+          type="text"
+          class="form-control"
+          id="faultType"
+          formControlName="faultType"
+        />
+        <div
+          *ngIf="
+            faultForm.get('faultType')?.invalid &&
+            (faultForm.get('faultType')?.dirty ||
+              faultForm.get('faultType')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="faultForm.get('faultType')?.errors?.['required']">
+            The fault type is required.
+          </div>
+          <div *ngIf="faultForm.get('faultType')?.errors?.['minlength']">
+            The fault type must be at least 5 characters long.
+          </div>
+        </div>
+      </div>
+        <button type="submit" 
+                class="btn btn-primary" 
+                [disabled]="!faultForm.valid || loading">
+          Update ATM Fault
+        </button>      
+    </form>
+  </div>
+</div>

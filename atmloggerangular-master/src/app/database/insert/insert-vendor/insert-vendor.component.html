@@ -14,6 +14,10 @@
   </head>
 
   <body>
+    <div>
+      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+    </div>
+
     <div class="container-fluid">
       <form
         name="vendorInsertForm"
@@ -34,17 +38,17 @@
               *ngIf="
                 vendorInsertForm.get('vendorName')?.invalid &&
                 (vendorInsertForm.get('vendorName')?.touched ||
-                vendorInsertForm.get('vendorName')?.dirty)
+                  vendorInsertForm.get('vendorName')?.dirty)
               "
             >
               <small
-                *ngIf=" vendorInsertForm.get('vendorName')?.errors?.['required']"
+                *ngIf="vendorInsertForm.get('vendorName')?.errors?.['required']"
               >
                 *The vendor name is required.</small
               >
             </ng-container>
           </div>
-          <br/>
+          <br />
           <div class="input">
             <label for="shortName"><b>Vendor's Short Name: </b></label>
             <input
@@ -58,22 +62,23 @@
               *ngIf="
                 vendorInsertForm.get('shortName')?.invalid &&
                 (vendorInsertForm.get('shortName')?.touched ||
-                vendorInsertForm.get('shortName')?.dirty)
+                  vendorInsertForm.get('shortName')?.dirty)
               "
             >
               <small
-                *ngIf=" vendorInsertForm.get('shortName')?.errors?.['required']"
+                *ngIf="vendorInsertForm.get('shortName')?.errors?.['required']"
               >
                 *The short name is required.</small
               >
             </ng-container>
           </div>
-          
         </div>
         <div class="display">
-          <button type="submit" 
-          class="btn btn-success pull-left"
-          [disabled]="vendorInsertForm.invalid||loading">
+          <button
+            type="submit"
+            class="btn btn-success pull-left"
+            [disabled]="vendorInsertForm.invalid || loading"
+          >
             Submit Form
           </button>
         </div>

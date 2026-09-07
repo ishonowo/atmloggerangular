@@ -1,37 +1,43 @@
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Backend Data</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div class="container-fluid">
-        <p>
-            <a routerLink="/update-branch">Update branches.</a>
-        </p>
-        <p>
-            <a routerLink="/update-contact">Update a vendor personnel.</a>
-        </p>
-        <p>
-            <a routerLink="/update-region">Update regions.</a>
-        </p>
-        <p>
-            <a routerLink="/update-terminal">Update terminals.</a>
-        </p>
-        <p>
-            <a routerLink="/update-vendor">Update vendors.</a>
-        </p>
+  <body>
+    <div>
+      <p>
+        <a routerLink="/database">Return</a>
+      </p>
     </div>
-</body>
-
+    <div class="container-fluid">
+      <p>
+        <a routerLink="/update-branch">Update branches.</a>
+      </p>
+      <p>
+        <a routerLink="/update-fault">Update an ATM fault.</a>
+      </p>
+      <p>
+        <a routerLink="/update-contact">Update a vendor personnel.</a>
+      </p>
+      <p>
+        <a routerLink="/update-region">Update regions.</a>
+      </p>
+      <p>
+        <a routerLink="/update-terminal">Update terminals.</a>
+      </p>
+      <p>
+        <a routerLink="/update-vendor">Update vendors.</a>
+      </p>
+    </div>
+  </body>
 </html>

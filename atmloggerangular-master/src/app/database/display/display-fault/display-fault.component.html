@@ -3,7 +3,7 @@
     <a routerLink="/db-display" class="nav-link return-link">Return</a>
   </div>
 
-  <h2>Regions List</h2>
+  <h2>ATM Faults List</h2>
 
   <!-- Loading spinner -->
   <div *ngIf="loading" class="d-flex justify-content-center">
@@ -23,20 +23,24 @@
       <thead class="table-dark">
         <tr>
           <th>ID</th>
-          <th>Region Name</th>
+          <th>Nature of Fault</th>
+          <th>Description</th>
+          <th>Fault Type</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let region of regions">
-          <td>{{ region.id }}</td>
-          <td>{{ region.regionName }}</td>
+        <tr ng-container *ngFor="let fault of faults; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ fault.natureOfFault }}</td>
+          <td>{{ fault.description }}</td>
+          <td>{{ fault.faultType }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <!-- No data message -->
-  <div *ngIf="regions.length === 0" class="alert alert-info">
-    No regions found.
+  <div *ngIf="faults.length === 0" class="alert alert-info">
+    No faults found.
   </div>
 </div>

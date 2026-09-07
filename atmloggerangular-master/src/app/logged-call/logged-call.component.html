@@ -25,7 +25,7 @@
               <th>Terminal ID</th>
               <th>Terminal Name</th>
               <th>Vendor</th>
-              <th>Fault</th>
+              <th>Fault/Date and Time Logged</th>
               <th>Contact Person</th>
               <th>Starting Date</th>
               <th>Date Completed</th>
@@ -84,4 +84,9 @@
       </app-update-call>
     </div>
   </div>
+  <div class="d-flex justify-content-between align-items-center">
+  <button class="btn btn-outline-light" (click)="exportToExcel()" [disabled]="exporting">
+    {{ exporting ? 'Exporting...' : 'Export to Excel' }}
+  </button>
+</div>
 </div>

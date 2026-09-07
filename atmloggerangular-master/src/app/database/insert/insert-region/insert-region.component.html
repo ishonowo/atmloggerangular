@@ -14,6 +14,10 @@
   </head>
 
   <body>
+    <div>
+      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+    </div>
+
     <div class="container-fluid">
       <form
         name="regionInsertForm"
@@ -21,32 +25,6 @@
         (ngSubmit)="regionInsert()"
       >
         <div>
-          <!--<div class="id">
-            <label for="id"><b>Region ID: </b></label>
-            <input
-              id="id"
-              formControlName="id"
-              placeholder="Enter the region id."
-              title="regionId"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                regionInsertForm.get('id')?.invalid &&
-                (regionInsertForm.get('id')?.touched ||
-                  regionInsertForm.get('id')?.dirty)
-              "
-            >
-              <small *ngIf=" regionInsertForm.get('id')?.errors?.['required']">
-                *The Region ID is required.</small
-              >
-              <small
-                *ngIf="regionInsertForm.get('id')?.errors?.['regionFound']"
-              >
-                *The Region ID entered already exists.</small
-              >
-            </ng-container>
-          </div> -->
           <br />
           <div class="input">
             <label for="regionName"><b>Name: </b></label>
@@ -65,7 +43,7 @@
               "
             >
               <small
-                *ngIf=" regionInsertForm.get('regionName')?.errors?.['required']"
+                *ngIf="regionInsertForm.get('regionName')?.errors?.['required']"
               >
                 *The region name is required.</small
               >

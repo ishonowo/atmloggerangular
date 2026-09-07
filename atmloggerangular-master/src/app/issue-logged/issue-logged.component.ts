@@ -6,6 +6,7 @@ import { AtmIssue } from '../model/atmissue';
 import { AtmFault } from '../model/atmfault';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
+import { AtmFaultService } from '../shared/atm-fault.service';
 
 @Component({
   selector: 'app-issue-logged',
@@ -44,6 +45,7 @@ export class IssueLoggedComponent implements OnInit {
   get otherDescControl() { return this.issueForm.get('otherDesc') as FormControl; }
 
   constructor(
+    private faultService: AtmFaultService,
     private atmService: AtmService,
     private router: Router,
     private authService: AuthService,
@@ -84,8 +86,8 @@ export class IssueLoggedComponent implements OnInit {
 
   loadAtmFaults() {
     this.faultsLoading = true;
-    this.atmService.getAtmFaults().subscribe({
-      next: (faults) => {
+    this.faultService.getAllFaults().subscribe({
+      next: (faults: AtmFault[]) => {
         this.atmFaults = faults;
         this.faultsLoading = false;
       },

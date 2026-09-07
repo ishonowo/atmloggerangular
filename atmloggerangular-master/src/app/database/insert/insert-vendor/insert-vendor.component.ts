@@ -26,7 +26,7 @@ export class InsertVendorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     protected router: Router,
-    private vendorService: VendorService
+    private vendorService: VendorService,
   ) {
     this.vendorInsertForm = this.fb.group({
       vendorName: ['', [Validators.required]],

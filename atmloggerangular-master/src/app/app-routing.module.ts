@@ -16,6 +16,7 @@ import { InsertVendorComponent } from './database/insert/insert-vendor/insert-ve
 import { InsertRegionComponent } from './database/insert/insert-region/insert-region.component';
 import { InsertTerminalComponent } from './database/insert/insert-terminal/insert-terminal.component';
 import { InsertContactComponent } from './database/insert/insert-contact/insert-contact.component';
+import { InsertFaultComponent } from './database/insert/insert-fault/insert-fault.component';
 import { DisplayContactComponent } from './database/display/display-contact/display-contact.component';
 import { DisplayTerminalComponent } from './database/display/display-terminal/display-terminal.component';
 import { DisplayRegionComponent } from './database/display/display-region/display-region.component';
@@ -28,6 +29,9 @@ import { UpDisplayContactComponent } from './database/update/up-display-contact/
 import { UpDisplayTerminalComponent } from './database/update/up-display-terminal/up-display-terminal.component';
 import { UpDisplayBranchComponent } from './database/update/up-display-branch/up-display-branch.component';
 import { LoggedCallComponent } from './logged-call/logged-call.component';
+import { DisplayFaultComponent } from './database/display/display-fault/display-fault.component';
+import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
+
 
 const routes: Routes = [
   {
@@ -80,6 +84,11 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'display-fault',
+    component: DisplayFaultComponent,
+    canActivate: [authGuard]
+  },
+  {
     path: 'db-insert',
     component: DbInsertComponent,
     canActivate: [authGuard]
@@ -110,6 +119,11 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'insert-fault',
+    component: InsertFaultComponent,
+    canActivate: [authGuard]
+  },
+  {
     path: 'db-update',
     component: DbUpdateComponent,
     canActivate: [authGuard]
@@ -122,6 +136,11 @@ const routes: Routes = [
   {
     path: 'update-contact',
     component: UpDisplayContactComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'update-fault',
+    component: UpDisplayFaultComponent,
     canActivate: [authGuard]
   },
   {

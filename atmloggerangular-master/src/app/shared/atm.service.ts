@@ -27,7 +27,7 @@ export class AtmService {
     return this.http.delete(this.DELETE_ISSUE_URL + id);
   }
 
-  getAtmFaults() {
+  /*getAtmFaults() {
     return this.http.get<AtmFault[]>(`${this.baseUrl}/atm-faults`);
-  }
+  }*/
 }

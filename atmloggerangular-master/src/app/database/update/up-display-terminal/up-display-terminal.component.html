@@ -1,7 +1,11 @@
-<div class="container mt-4">
-    <h2>Terminal List</h2>
+<div>
+  <a routerLink="/db-update" class="nav-link return-link">Return</a>
+</div>
 
-    <!-- Loading spinner -->
+<div class="container mt-4">
+  <h2>Terminal List</h2>
+
+  <!-- Loading spinner -->
   <div *ngIf="loading" class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -36,14 +40,18 @@
                 <td>{{ terminal.terminalId }}</td>
                 <td>{{ terminal.atmName }}</td>
                 <td>
-                    <span class="badge" [ngClass]="terminal.offsite ? 'bg-success' : 'bg-danger'">
-                      {{ terminal.offsite ? 'Offsite' : 'Onsite' }}
-                    </span>
-                  </td>
+                  <span
+                    class="badge"
+                    [ngClass]="terminal.offsite ? 'bg-success' : 'bg-danger'"
+                  >
+                    {{ terminal.offsite ? "Offsite" : "Onsite" }}
+                  </span>
+                </td>
                 <td>
-                  <button 
+                  <button
                     class="btn btn-primary btn-sm"
-                    (click)="onSelect(terminal)">
+                    (click)="onSelect(terminal)"
+                  >
                     Edit
                   </button>
                 </td>
@@ -59,15 +67,14 @@
       </div>
     </div>
 
-       <!-- Update Form -->
-       <div *ngIf="selectedTerminal" class="col-md-4">
-        <app-update-terminal
+    <!-- Update Form -->
+    <div *ngIf="selectedTerminal" class="col-md-4">
+      <app-update-terminal
         [terminal]="selectedTerminal"
         (updateComplete)="onUpdateComplete()"
-        (closeForm)="selectedTerminal = null">
-        </app-update-terminal>
-      </div>
+        (closeForm)="selectedTerminal = null"
+      >
+      </app-update-terminal>
     </div>
   </div>
-
-  
+</div>
