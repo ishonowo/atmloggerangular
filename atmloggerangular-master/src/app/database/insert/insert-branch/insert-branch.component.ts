@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../../validators/custom.validators';
 import { SolValidationService } from '../../../shared/sol-validation.service';
-import { RNameOption } from 'src/app/model/rNameOption';
 import { BranchService } from 'src/app/shared/branch.service';
-import { RegionService } from 'src/app/shared/region.service';
 import { BranchObj } from 'src/app/model/branchObj';
+import { BranchWithName } from 'src/app/model/branchWithName';
 
 @Component({
   selector: 'app-insert-branch',
@@ -20,7 +19,7 @@ export class InsertBranchComponent {
 
   protected branchObj?: BranchObj;
 
-  protected rNameOptions: RNameOption[] = [];
+  protected branchesWithNames: BranchWithName[] = [];
   protected loading: boolean = false;
 error: any;
 
@@ -28,8 +27,7 @@ error: any;
     private fb: FormBuilder,
     protected router: Router,
     private solValidationService: SolValidationService,
-    private branchService: BranchService,
-    private regionService: RegionService
+    private branchService: BranchService
   ) {
     this.branchInsertForm = this.fb.group({
         solId: [
@@ -49,14 +47,14 @@ error: any;
 
 
   ngOnInit(): void {
-    this.loadRNameOptions();
+    this.loadBranchesWithNames();
   }
 
-  loadRNameOptions() {
+  loadBranchesWithNames() {
     this.loading = true;
-    this.regionService.getAllRegions().subscribe({
-      next: (rNameOptions) => {
-        this.rNameOptions = rNameOptions;
+    this.branchService.getAllNames().subscribe({
+      next: (data) => {
+        this.branchesWithNames = data;
         this.loading = false;
       },
       error: (error) => {

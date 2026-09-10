@@ -1,165 +1,141 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Insert Vendor Contacts</title>
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-    </style>
-  </head>
+<div>
+  <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+</div>
 
-  <body>
+<div class="container-fluid">
+  <form
+    name="contactInsertForm"
+    [formGroup]="contactInsertForm"
+    (ngSubmit)="contactInsert()"
+  >
     <div>
-      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
-    </div>
-
-    <div class="container-fluid">
-      <form
-        name="contactInsertForm"
-        [formGroup]="contactInsertForm"
-        (ngSubmit)="contactInsert()"
-      >
-        <div>
-          <div class="input">
-            <label for="vendorId"><b>Vendor: </b></label>
-            <select
-              id="vendorId"
-              formControlName="vendorId"
-              title="vendorId"
-              class="form-select"
-            >
-              <option [ngValue]="null" selected disabled></option>
-              <option
-                *ngFor="let vNameOption of vNameOptions"
-                [ngValue]="vNameOption.id"
-              >
-                {{ vNameOption.vendorName }}
-              </option>
-            </select>
-            <ng-container
-              *ngIf="
-                contactInsertForm.get('vendorId')?.invalid &&
-                (contactInsertForm.get('vendorId')?.touched ||
-                  contactInsertForm.get('vendorId')?.dirty)
-              "
-            >
-              <small
-                *ngIf="contactInsertForm.get('vendorId')?.errors?.['required']"
-              >
-                *Please select a vendor
-              </small>
-            </ng-container>
-          </div>
-          <br />
-          <div class="input">
-            <label for="contact"><b>Contact Email: </b></label>
-            <input
-              id="contact"
-              formControlName="contact"
-              placeholder="Enter the email of the new contact."
-              title="contact"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                contactInsertForm.get('contact')?.invalid &&
-                (contactInsertForm.get('contact')?.touched ||
-                  contactInsertForm.get('contact')?.dirty)
-              "
-            >
-              <small
-                *ngIf="contactInsertForm.get('contact')?.errors?.['required']"
-              >
-                *The contact's email is required.</small
-              >
-              <small
-                *ngIf="contactInsertForm.get('contact')?.errors?.['email']"
-              >
-                *The contact's email is required.</small
-              >
-            </ng-container>
-          </div>
-
-          <br />
-          <div class="input">
-            <label for="status"><b>Is this contact active?: </b></label>
-            <input
-              id="status"
-              formControlName="status"
-              placeholder="Enter true if this is contact is active."
-              title="status"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                contactInsertForm.get('status')?.invalid &&
-                (contactInsertForm.get('status')?.touched ||
-                  contactInsertForm.get('status')?.dirty)
-              "
-            >
-              <small
-                *ngIf="contactInsertForm.get('status')?.errors?.['required']"
-              >
-                *The status of the contact is required.</small
-              >
-            </ng-container>
-          </div>
-        </div>
-        <div class="display">
-          <button type="submit" class="btn btn-success pull-left">
-            <span>Submit Form</span>
-          </button>
-        </div>
-      </form>
-    </div>
-    <br />
-    <!-- contact-list.component.html -->
-    <div class="container mt-4">
-      <h2>Vendor Contact List</h2>
-
-      <!-- Loading spinner -->
-      <div *ngIf="loading" class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+      <div class="input">
+        <label for="vendorId"><b>Vendor: </b></label>
+        <select
+          id="vendorId"
+          formControlName="vendorId"
+          title="vendorId"
+          class="form-select"
+        >
+          <option [ngValue]="null" selected disabled></option>
+          <option
+            *ngFor="let vNameOption of vNameOptions"
+            [ngValue]="vNameOption.id"
+          >
+            {{ vNameOption.vendorName }}
+          </option>
+        </select>
+        <ng-container
+          *ngIf="
+            contactInsertForm.get('vendorId')?.invalid &&
+            (contactInsertForm.get('vendorId')?.touched ||
+              contactInsertForm.get('vendorId')?.dirty)
+          "
+        >
+          <small
+            *ngIf="contactInsertForm.get('vendorId')?.errors?.['required']"
+          >
+            *Please select a vendor
+          </small>
+        </ng-container>
+      </div>
+      <br />
+      <div class="input">
+        <label for="contact"><b>Contact Email: </b></label>
+        <input
+          id="contact"
+          formControlName="contact"
+          placeholder="Enter the email of the new contact."
+          title="contact"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            contactInsertForm.get('contact')?.invalid &&
+            (contactInsertForm.get('contact')?.touched ||
+              contactInsertForm.get('contact')?.dirty)
+          "
+        >
+          <small *ngIf="contactInsertForm.get('contact')?.errors?.['required']">
+            *The contact's email is required.</small
+          >
+          <small *ngIf="contactInsertForm.get('contact')?.errors?.['email']">
+            *The contact's email is required.</small
+          >
+        </ng-container>
       </div>
 
-      <!-- Error message -->
-      <div *ngIf="error" class="alert alert-danger">
-        {{ error }}
-      </div>
-
-      <!-- Data table -->
-      <div *ngIf="!loading && !error" class="table-responsive">
-        <table class="table table-striped table-bordered">
-          <thead class="table-dark">
-            <tr>
-              <th>Vendor Name</th>
-              <th>Email Contact</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let contact of contacts">
-              <td>{{ contact.vendorName }}</td>
-              <td>{{ contact.contact }}</td>
-              <td>
-                {{ contact.status ? "Active Contact" : "Inactive Contact" }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- No data message -->
-        <div *ngIf="contacts.length === 0" class="alert alert-info">
-          No contact found.
-        </div>
+      <br />
+      <div class="input">
+        <label for="status"><b>Is this contact active?: </b></label>
+        <input
+          id="status"
+          formControlName="status"
+          placeholder="Enter true if this is contact is active."
+          title="status"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            contactInsertForm.get('status')?.invalid &&
+            (contactInsertForm.get('status')?.touched ||
+              contactInsertForm.get('status')?.dirty)
+          "
+        >
+          <small *ngIf="contactInsertForm.get('status')?.errors?.['required']">
+            *The status of the contact is required.</small
+          >
+        </ng-container>
       </div>
     </div>
-  </body>
-</html>
+    <div class="display">
+      <button type="submit" class="btn btn-success pull-left">
+        <span>Submit Form</span>
+      </button>
+    </div>
+  </form>
+</div>
+<br />
+<!-- contact-list.component.html -->
+<div class="container mt-4">
+  <h2>Vendor Contact List</h2>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Data table -->
+  <div *ngIf="!loading && !error" class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Vendor Name</th>
+          <th>Email Contact</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts">
+          <td>{{ contact.vendorName }}</td>
+          <td>{{ contact.contact }}</td>
+          <td>
+            {{ contact.status ? "Active Contact" : "Inactive Contact" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- No data message -->
+    <div *ngIf="contacts.length === 0" class="alert alert-info">
+      No contact found.
+    </div>
+  </div>
+</div>

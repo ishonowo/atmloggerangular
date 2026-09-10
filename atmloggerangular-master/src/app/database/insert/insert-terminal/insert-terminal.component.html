@@ -1,145 +1,125 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Insert Terminal</title>
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-    </style>
-  </head>
+<div>
+  <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+</div>
 
-  <body>
+<div class="container-fluid">
+  <form
+    name="terminalInsertForm"
+    [formGroup]="terminalInsertForm"
+    (ngSubmit)="terminalInsert()"
+  >
     <div>
-      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
-    </div>
+      <div class="input">
+        <label for="vendorId"><b>Vendor: </b></label>
+        <select
+          id="vendorId"
+          formControlName="vendorId"
+          title="vendorId"
+          class="form-select"
+        >
+          <option [ngValue]="null" selected disabled></option>
+          <option
+            *ngFor="let vNameOption of vNameOptions"
+            [ngValue]="vNameOption.id"
+          >
+            {{ vNameOption.vendorName }}
+          </option>
+        </select>
+        <ng-container
+          *ngIf="
+            terminalInsertForm.get('vendorId')?.invalid &&
+            (terminalInsertForm.get('vendorId')?.touched ||
+              terminalInsertForm.get('vendorId')?.dirty)
+          "
+        >
+          <small
+            *ngIf="terminalInsertForm.get('vendorId')?.errors?.['required']"
+          >
+            *Please select a vendor
+          </small>
+        </ng-container>
+      </div>
+      <br />
+      <div class="input">
+        <label for="terminalId"><b>Terminal ID: </b></label>
+        <input
+          id="terminalId"
+          formControlName="terminalId"
+          placeholder="Enter the terminal ID of the new terminal."
+          title="terminalId"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            terminalInsertForm.get('terminalId')?.invalid &&
+            (terminalInsertForm.get('terminalId')?.touched ||
+              terminalInsertForm.get('terminalId')?.dirty)
+          "
+        >
+          <small
+            *ngIf="terminalInsertForm.get('terminalId')?.errors?.['required']"
+          >
+            *The terminal ID is required.</small
+          >
+        </ng-container>
+      </div>
 
-    <div class="container-fluid">
-      <form
-        name="terminalInsertForm"
-        [formGroup]="terminalInsertForm"
-        (ngSubmit)="terminalInsert()"
-      >
-        <div>
-          <div class="input">
-            <label for="vendorId"><b>Vendor: </b></label>
-            <select
-              id="vendorId"
-              formControlName="vendorId"
-              title="vendorId"
-              class="form-select"
-            >
-              <option [ngValue]="null" selected disabled></option>
-              <option
-                *ngFor="let vNameOption of vNameOptions"
-                [ngValue]="vNameOption.id"
-              >
-                {{ vNameOption.vendorName }}
-              </option>
-            </select>
-            <ng-container
-              *ngIf="
-                terminalInsertForm.get('vendorId')?.invalid &&
-                (terminalInsertForm.get('vendorId')?.touched ||
-                  terminalInsertForm.get('vendorId')?.dirty)
-              "
-            >
-              <small
-                *ngIf="terminalInsertForm.get('vendorId')?.errors?.['required']"
-              >
-                *Please select a vendor
-              </small>
-            </ng-container>
-          </div>
-          <br />
-          <div class="input">
-            <label for="terminalId"><b>Terminal ID: </b></label>
-            <input
-              id="terminalId"
-              formControlName="terminalId"
-              placeholder="Enter the terminal ID of the new terminal."
-              title="terminalId"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                terminalInsertForm.get('terminalId')?.invalid &&
-                (terminalInsertForm.get('terminalId')?.touched ||
-                  terminalInsertForm.get('terminalId')?.dirty)
-              "
-            >
-              <small
-                *ngIf="
-                  terminalInsertForm.get('terminalId')?.errors?.['required']
-                "
-              >
-                *The terminal ID is required.</small
-              >
-            </ng-container>
-          </div>
-
-          <br />
-          <div class="input">
-            <label for="atmName"><b>ATM's Name: </b></label>
-            <input
-              id="atmName"
-              formControlName="atmName"
-              placeholder="Enter the ATM name of the new terminal."
-              title="atmName"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                terminalInsertForm.get('atmName')?.invalid &&
-                (terminalInsertForm.get('atmName')?.touched ||
-                  terminalInsertForm.get('atmName')?.dirty)
-              "
-            >
-              <small
-                *ngIf="terminalInsertForm.get('atmName')?.errors?.['required']"
-              >
-                *The ATM name is required.</small
-              >
-            </ng-container>
-          </div>
-          <br />
-          <div class="input">
-            <label for="offsite"><b>Is this an offsite ATM?: </b></label>
-            <input
-              id="offsite"
-              formControlName="offsite"
-              placeholder="Enter false if this is not an offsite ATM."
-              title="offsite"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                terminalInsertForm.get('offsite')?.invalid &&
-                (terminalInsertForm.get('offsite')?.touched ||
-                  terminalInsertForm.get('offsite')?.dirty)
-              "
-            >
-              <small
-                *ngIf="terminalInsertForm.get('offsite')?.errors?.['required']"
-              >
-                *The location of the ATM is required.</small
-              >
-            </ng-container>
-          </div>
-        </div>
-        <div class="display">
-          <button type="submit" class="btn btn-success pull-left">
-            <span>Submit Form</span>
-          </button>
-        </div>
-      </form>
+      <br />
+      <div class="input">
+        <label for="atmName"><b>ATM's Name: </b></label>
+        <input
+          id="atmName"
+          formControlName="atmName"
+          placeholder="Enter the ATM name of the new terminal."
+          title="atmName"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            terminalInsertForm.get('atmName')?.invalid &&
+            (terminalInsertForm.get('atmName')?.touched ||
+              terminalInsertForm.get('atmName')?.dirty)
+          "
+        >
+          <small
+            *ngIf="terminalInsertForm.get('atmName')?.errors?.['required']"
+          >
+            *The ATM name is required.</small
+          >
+        </ng-container>
+      </div>
+      <br />
+      <div class="input">
+        <label for="offsite"><b>Is this an offsite ATM?: </b></label>
+        <input
+          id="offsite"
+          formControlName="offsite"
+          placeholder="Enter false if this is not an offsite ATM."
+          title="offsite"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            terminalInsertForm.get('offsite')?.invalid &&
+            (terminalInsertForm.get('offsite')?.touched ||
+              terminalInsertForm.get('offsite')?.dirty)
+          "
+        >
+          <small
+            *ngIf="terminalInsertForm.get('offsite')?.errors?.['required']"
+          >
+            *The location of the ATM is required.</small
+          >
+        </ng-container>
+      </div>
     </div>
-    <br />
-    <br />
-    <app-display-terminal></app-display-terminal>
-  </body>
-</html>
+    <div class="display">
+      <button type="submit" class="btn btn-success pull-left">
+        <span>Submit Form</span>
+      </button>
+    </div>
+  </form>
+</div>
+<br />
+<br />
+<app-display-terminal></app-display-terminal>

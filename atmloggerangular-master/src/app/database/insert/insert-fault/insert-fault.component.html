@@ -1,156 +1,134 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Insert an ATM Fault</title>
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-    </style>
-  </head>
+<div>
+  <a routerLink="/db-insert" class="nav-link return-link">Return</a>
+</div>
 
-  <body>
+<div class="container-fluid">
+  <form
+    name="faultInsertForm"
+    [formGroup]="faultInsertForm"
+    (ngSubmit)="faultInsert()"
+  >
     <div>
-      <a routerLink="/db-insert" class="nav-link return-link">Return</a>
-    </div>
-
-    <div class="container-fluid">
-      <form
-        name="faultInsertForm"
-        [formGroup]="faultInsertForm"
-        (ngSubmit)="faultInsert()"
-      >
-        <div>
-          <div class="input">
-            <label for="natureOfFault"><b>Nature Of Fault: </b></label>
-            <input
-              id="natureOfFault"
-              formControlName="natureOfFault"
-              placeholder="Enter the nature of fault."
-              title="natureOfFault"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                faultInsertForm.get('natureOfFault')?.invalid &&
-                (faultInsertForm.get('natureOfFault')?.touched ||
-                  faultInsertForm.get('natureOfFault')?.dirty)
-              "
-            >
-              <small
-                *ngIf="
-                  faultInsertForm.get('natureOfFault')?.errors?.['required']
-                "
-              >
-                *The nature of the ATM fault is required.</small
-              >
-            </ng-container>
-          </div>
-          <br />
-          <div class="input">
-            <label for="description"><b>ATM Fault Description: </b></label>
-            <input
-              id="description"
-              formControlName="description"
-              placeholder="Enter the description of the ATM fault."
-              title="description"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                faultInsertForm.get('description')?.invalid &&
-                (faultInsertForm.get('description')?.touched ||
-                  faultInsertForm.get('description')?.dirty)
-              "
-            >
-              <small
-                *ngIf="faultInsertForm.get('description')?.errors?.['required']"
-              >
-                *The description of the ATM fault is required.</small
-              >
-            </ng-container>
-          </div>
-          <br />
-          <div class="input">
-            <label for="faultType"><b>ATM Fault type: </b></label>
-            <input
-              id="faultType"
-              formControlName="faultType"
-              placeholder="Enter the type of the ATM fault."
-              title="faultType"
-              type="text"
-            />
-            <ng-container
-              *ngIf="
-                faultInsertForm.get('faultType')?.invalid &&
-                (faultInsertForm.get('faultType')?.touched ||
-                  faultInsertForm.get('faultType')?.dirty)
-              "
-            >
-              <small
-                *ngIf="faultInsertForm.get('faultType')?.errors?.['required']"
-              >
-                *The description of the ATM fault is required.</small
-              >
-            </ng-container>
-          </div>
-        </div>
-        <div class="display">
-          <button
-            type="submit"
-            class="btn btn-success pull-left"
-            [disabled]="faultInsertForm.invalid || loading"
+      <div class="input">
+        <label for="natureOfFault"><b>Nature Of Fault: </b></label>
+        <input
+          id="natureOfFault"
+          formControlName="natureOfFault"
+          placeholder="Enter the nature of fault."
+          title="natureOfFault"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            faultInsertForm.get('natureOfFault')?.invalid &&
+            (faultInsertForm.get('natureOfFault')?.touched ||
+              faultInsertForm.get('natureOfFault')?.dirty)
+          "
+        >
+          <small
+            *ngIf="faultInsertForm.get('natureOfFault')?.errors?.['required']"
           >
-            Submit Form
-          </button>
-        </div>
-      </form>
+            *The nature of the ATM fault is required.</small
+          >
+        </ng-container>
+      </div>
+      <br />
+      <div class="input">
+        <label for="description"><b>ATM Fault Description: </b></label>
+        <input
+          id="description"
+          formControlName="description"
+          placeholder="Enter the description of the ATM fault."
+          title="description"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            faultInsertForm.get('description')?.invalid &&
+            (faultInsertForm.get('description')?.touched ||
+              faultInsertForm.get('description')?.dirty)
+          "
+        >
+          <small
+            *ngIf="faultInsertForm.get('description')?.errors?.['required']"
+          >
+            *The description of the ATM fault is required.</small
+          >
+        </ng-container>
+      </div>
+      <br />
+      <div class="input">
+        <label for="faultType"><b>ATM Fault type: </b></label>
+        <input
+          id="faultType"
+          formControlName="faultType"
+          placeholder="Enter the type of the ATM fault."
+          title="faultType"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            faultInsertForm.get('faultType')?.invalid &&
+            (faultInsertForm.get('faultType')?.touched ||
+              faultInsertForm.get('faultType')?.dirty)
+          "
+        >
+          <small *ngIf="faultInsertForm.get('faultType')?.errors?.['required']">
+            *The description of the ATM fault is required.</small
+          >
+        </ng-container>
+      </div>
     </div>
-    <div>
-      <h2>ATM Faults List</h2>
-
-      <!-- Loading spinner -->
-      <div *ngIf="loading" class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-
-      <!-- Error message -->
-      <div *ngIf="error" class="alert alert-danger">
-        {{ error }}
-      </div>
-
-      <!-- Data table -->
-      <div *ngIf="!loading && !error" class="table-responsive">
-        <table class="table table-striped table-bordered">
-          <thead class="table-dark">
-            <tr>
-              <th>ID</th>
-              <th>Nature of Fault</th>
-              <th>Description</th>
-              <th>Fault Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let fault of faults; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ fault.natureOfFault }}</td>
-              <td>{{ fault.description }}</td>
-              <td>{{ fault.faultType }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- No data message -->
-      <div *ngIf="faults.length === 0" class="alert alert-info">
-        No ATM faults found.
-      </div>
+    <div class="display">
+      <button
+        type="submit"
+        class="btn btn-success pull-left"
+        [disabled]="faultInsertForm.invalid || loading"
+      >
+        Submit Form
+      </button>
     </div>
-  </body>
-</html>
+  </form>
+</div>
+<div>
+  <h2>ATM Faults List</h2>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Data table -->
+  <div *ngIf="!loading && !error" class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nature of Fault</th>
+          <th>Description</th>
+          <th>Fault Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fault of faults; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ fault.natureOfFault }}</td>
+          <td>{{ fault.description }}</td>
+          <td>{{ fault.faultType }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No data message -->
+  <div *ngIf="faults.length === 0" class="alert alert-info">
+    No ATM faults found.
+  </div>
+</div>
