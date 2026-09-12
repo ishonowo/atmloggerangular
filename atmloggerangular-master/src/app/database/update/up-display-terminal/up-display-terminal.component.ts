@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TerminalService } from 'src/app/shared/terminal.service';
 import { TerminalWithName } from 'src/app/model/terminalWithName';
 
@@ -15,7 +16,8 @@ export class UpDisplayTerminalComponent implements OnInit {
   selectedTerminal: TerminalWithName | null = null;
 
   constructor(
-    private terminalService: TerminalService
+    private terminalService: TerminalService,
+    protected router: Router
   ) {}
 
   ngOnInit(){
@@ -45,9 +47,10 @@ export class UpDisplayTerminalComponent implements OnInit {
     this.selectedTerminal = terminal;
   }
 
-  onUpdateComplete(): void {
+  async onUpdateComplete(): Promise<void> {
     this.loadTerminalsWithNames();
     this.selectedTerminal = null; // Close the form
+    await this.router.navigate(['/update-terminal']);
     console.log('Update complete and terminals refreshed');
   }
 } 

@@ -18,8 +18,6 @@ export class AtmService {
   constructor(private http: HttpClient) {}
 
   postIssueLogged(issueLogged: IssueLogged): Observable<any> {
-    //postIssueLogged(issueLogged: IssueLogged): Observable<AtmIssue> {
-    //return this.http.post(this.LOG_ISSUE_URL, issueLogged);
     return this.http.post(this.baseUrl + this.log, issueLogged);
   }
 

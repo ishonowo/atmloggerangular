@@ -77,9 +77,10 @@ export class InsertVendorComponent implements OnInit {
           console.error('Error inserting vendor', error);
           // Handle error (show error message to user)
         },
-        complete: () => {
+        complete: async () => {
           console.log('Done with vendor insert.');
           this.loadVendors();
+          await this.router.navigate(['/insert-vendor']);
         },
       });
     } else {

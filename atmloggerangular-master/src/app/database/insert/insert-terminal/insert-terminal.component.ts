@@ -87,8 +87,10 @@ export class InsertTerminalComponent implements OnInit {
           console.error('Error inserting terminal', error);
           // Handle error (show error message to user)
         },
-        complete: () => {
+        complete: async() => {
           console.log('Done with terminal insert.');
+          this.loadVNameOptions();
+          await this.router.navigate(['/insert-terminal']);
         },
       });
     } else {

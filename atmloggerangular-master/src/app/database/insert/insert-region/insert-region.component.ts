@@ -69,9 +69,10 @@ export class InsertRegionComponent implements OnInit {
           console.error('Error inserting region', error);
           // Handle error (show error message to user)
         },
-        complete: () => {
+        complete: async () => {
           console.log('Done with region insert.');
           this.loadRegions();
+          await this.router.navigate(['/insert-region']);
         },
       });
     } else {

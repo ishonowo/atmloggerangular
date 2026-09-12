@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BranchWithName } from 'src/app/model/branchWithName';
 import { BranchService } from 'src/app/shared/branch.service';
 
@@ -15,7 +16,8 @@ export class UpDisplayBranchComponent implements OnInit {
   selectedBranch: BranchWithName | null = null;
 
   constructor(
-    private branchService: BranchService
+    private branchService: BranchService,
+    protected router: Router
   ) {}
 
   ngOnInit(){
@@ -37,6 +39,7 @@ export class UpDisplayBranchComponent implements OnInit {
       },
       complete: () => {
         console.log('Finished with all branches with names.');
+        this.loadBranchesWithNames();
       },
     });
   }
@@ -45,9 +48,10 @@ export class UpDisplayBranchComponent implements OnInit {
     this.selectedBranch = branch;
   }
 
-  onUpdateComplete(): void {
+  async onUpdateComplete(): Promise<void> {
     this.loadBranchesWithNames();
     this.selectedBranch = null; // Close the form
+    await this.router.navigate(['/update-branch']);
     console.log('Update complete and terminals refreshed');
   }
 } 

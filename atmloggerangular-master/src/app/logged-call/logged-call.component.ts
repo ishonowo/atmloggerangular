@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { LoggedCallObj } from '../model/loggedCallObj';
 import { Router } from '@angular/router';
 import { LoggedCallService } from '../shared/logged-call.service';

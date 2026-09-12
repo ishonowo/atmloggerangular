@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RegionService } from '../../../shared/region.service';
 import { Region } from '../../../model/region';
 
@@ -13,7 +14,9 @@ export class UpDisplayRegionComponent implements OnInit {
   error: string = '';
   selectedRegion: Region | null = null;
 
-  constructor(private regionService: RegionService) {}
+  constructor(private regionService: RegionService,
+    protected router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadRegions();
@@ -38,9 +41,10 @@ export class UpDisplayRegionComponent implements OnInit {
     this.selectedRegion = region;
   }
 
-  onUpdateComplete(): void {
+  async onUpdateComplete(): Promise<void> {
     this.loadRegions();
     this.selectedRegion = null; // Close the form
+    await this.router.navigate(['/update-region']);
     console.log('Update complete and regions refreshed');
   }
 }

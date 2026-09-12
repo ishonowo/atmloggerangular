@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { VendorService } from '../../../shared/vendor.service';
 import { Vendor } from '../../../model/vendor';
 
@@ -13,7 +14,9 @@ export class UpDisplayVendorComponent implements OnInit{
   error: string = '';
   selectedVendor: Vendor | null = null;
 
-  constructor(private vendorService: VendorService) {}
+  constructor(private vendorService: VendorService,
+    protected router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadVendors();
@@ -37,9 +40,10 @@ export class UpDisplayVendorComponent implements OnInit{
     this.selectedVendor = vendor;
   }
 
-  onUpdateComplete(): void {
+  async onUpdateComplete(): Promise<void> {
     this.loadVendors();
     this.selectedVendor = null; // Close the form
+    await this.router.navigate(['/update-vendor']);
     console.log('Update complete and vendors refreshed');
   }
 

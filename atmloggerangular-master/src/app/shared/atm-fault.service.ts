@@ -10,18 +10,18 @@ import { Observable } from 'rxjs';
 export class AtmFaultService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl: string = 'https://localhost:9442/atm';
+  private baseUrl: string = 'https://localhost:9442/atm-fault';
 
   getAllFaults(): Observable<AtmFault[]> {
-    return this.http.get<AtmFault[]>(`${this.baseUrl}/atm-faults`);
+    return this.http.get<AtmFault[]>(this.baseUrl);
   }
 
   insertFault(fault: AtmFaultObj): Observable<any> {
-    return this.http.post(`${this.baseUrl}/atm-faults`, fault);
+    return this.http.post(this.baseUrl, fault);
   }
 
   updateFault(fault: AtmFault): Observable<any> {
-    return this.http.put(`${this.baseUrl}/atm-faults`, fault);
+    return this.http.put(this.baseUrl, fault);
   }
 
 }

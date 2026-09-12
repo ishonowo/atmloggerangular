@@ -100,3 +100,8 @@ app-root {
   flex-direction: column;
   min-height: 100vh;
 }
+
+input[readonly] {
+  pointer-events: none;
+  background-color: #e9ecef; /* visually indicate it's locked, like Bootstrap's disabled look */
+}

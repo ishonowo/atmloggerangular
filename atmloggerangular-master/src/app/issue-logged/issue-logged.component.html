@@ -82,7 +82,7 @@
             [class.is-invalid]="branchLoggerControl.invalid && branchLoggerControl.touched"
             class="form-control"
             formControlName="branchLogger"
-            placeholder="Who logged the issue for this ATM?"
+            placeholder="Who logged the issue(s) for this ATM?"
           />
           <div *ngIf="branchLoggerControl.errors && branchLoggerControl.touched">
             <small class="text-danger" *ngIf="branchLoggerControl.errors?.['required']"

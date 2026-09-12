@@ -19,10 +19,10 @@
         >
           <option [ngValue]="null" selected disabled></option>
           <option
-            *ngFor="let branch of branchesWithNames"
-            [ngValue]="branch.regionId"
+            *ngFor="let region of regions"
+            [ngValue]="region.id"
           >
-            {{ branch.regionName }}
+            {{ region.regionName }}
           </option>
         </select>
         <ng-container

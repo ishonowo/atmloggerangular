@@ -100,9 +100,10 @@ export class InsertContactComponent implements OnInit {
         error: (error) => {
           console.error('Error inserting contact ', error);
         },
-        complete: () => {
+        complete: async () => {
           console.log('Done with contact inserting.');
           this.loadVendorContactsWithNames();
+          await this.router.navigate(['/insert-contact']);
         },
       });
     } else {

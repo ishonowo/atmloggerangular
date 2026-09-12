@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AtmFault } from 'src/app/model/atmfault';
 import { AtmFaultObj } from 'src/app/model/atmfaultObj';
 import { AtmFaultService } from 'src/app/shared/atm-fault.service';
@@ -17,7 +18,8 @@ export class UpDisplayFaultComponent implements OnInit{
   selectedFault: AtmFault | null = null;
 
   constructor(
-    private faultService: AtmFaultService
+    private faultService: AtmFaultService,
+    protected router: Router
   ) {}
 
   ngOnInit() {
@@ -46,9 +48,10 @@ export class UpDisplayFaultComponent implements OnInit{
     this.selectedFault=fault;
   }
 
-  onUpdateComplete():void{
+  async onUpdateComplete():Promise<void>{
     this.loadFaults();
     this.selectedFault=null;
+    await this.router.navigate(['/update-contact']);
     console.log('Update complete and ATM faults have been refreshed.');
   }
 

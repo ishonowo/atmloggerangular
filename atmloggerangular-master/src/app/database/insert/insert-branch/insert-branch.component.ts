@@ -6,48 +6,69 @@ import { SolValidationService } from '../../../shared/sol-validation.service';
 import { BranchService } from 'src/app/shared/branch.service';
 import { BranchObj } from 'src/app/model/branchObj';
 import { BranchWithName } from 'src/app/model/branchWithName';
+import { RegionService } from 'src/app/shared/region.service';
+import { Region } from 'src/app/model/region';
 
 @Component({
   selector: 'app-insert-branch',
   templateUrl: './insert-branch.component.html',
-  styleUrls: ['./insert-branch.component.css']
+  styleUrls: ['./insert-branch.component.css'],
 })
 export class InsertBranchComponent {
-
   public branchInsertForm!: FormGroup;
   protected isClicked: boolean = false;
 
   protected branchObj?: BranchObj;
-
+  protected region?: Region;
   protected branchesWithNames: BranchWithName[] = [];
+  protected regions: Region[] = [];
   protected loading: boolean = false;
-error: any;
+  error: any;
 
   constructor(
     private fb: FormBuilder,
     protected router: Router,
     private solValidationService: SolValidationService,
-    private branchService: BranchService
+    private branchService: BranchService,
+    private regionService: RegionService,
   ) {
     this.branchInsertForm = this.fb.group({
-        solId: [
-          '',
-          [
-            Validators.required,
-            CustomValidators.noSpaceAllowed,
-            CustomValidators.solID, 
-          ],[CustomValidators.verifySolID(this.solValidationService),]
+      solId: [
+        '',
+        [
+          Validators.required,
+          CustomValidators.noSpaceAllowed,
+          CustomValidators.solID,
         ],
-        branchEmail: ['', [Validators.required, Validators.email]],
-        physicalAddress: ['', Validators.required],
-        branchName: ['', Validators.required],// CustomValidators.verifyBranch],
-        regionId: ['', [Validators.required]]//,CustomValidators.verifyRegionID]],
+        [CustomValidators.verifySolID(this.solValidationService)],
+      ],
+      branchEmail: ['', [Validators.required, Validators.email]],
+      physicalAddress: ['', Validators.required],
+      branchName: ['', Validators.required], // CustomValidators.verifyBranch],
+      regionId: ['', [Validators.required]], //,CustomValidators.verifyRegionID]],
     });
   }
 
-
   ngOnInit(): void {
     this.loadBranchesWithNames();
+    this.loadRegionNames();
+  }
+
+  loadRegionNames() {
+    this.loading = true;
+    this.regionService.getAllRegions().subscribe({
+      next: (data) => {
+        this.regions = data;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.loading = false;
+        console.error('Error loading regions:', error);
+      },
+      complete: () => {
+        console.log('Finished fetching regions.');
+      },
+    });
   }
 
   loadBranchesWithNames() {
@@ -59,10 +80,10 @@ error: any;
       },
       error: (error) => {
         this.loading = false;
-        console.error('Error loading regions:', error);
+        console.error('Error loading branches:', error);
       },
       complete: () => {
-        console.log('Finished fetching region options');
+        console.log('Finished fetching branches.');
       },
     });
   }
@@ -88,9 +109,11 @@ error: any;
           console.error('Error inserting branch', error);
           // Handle error (show error message to user)
         },
-        complete: () => {
+        complete: async() => {
           console.log('Done with branch insert.');
-          this.router.navigate(['/insert-branch']);
+          this.loadBranchesWithNames();
+          this.loadRegionNames();
+          await this.router.navigate(['/insert-branch']);
         },
       });
     } else {
@@ -100,7 +123,6 @@ error: any;
         control?.markAsTouched();
       });
     }
-    }
-    
 
+  }
 }

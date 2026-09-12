@@ -75,9 +75,10 @@ export class InsertFaultComponent implements OnInit  {
           console.error('Error inserting fault', error);
           // Handle error (show error message to user)
         },
-        complete: () => {
+        complete: async () => {
           console.log('Done with ATM fault insert.');
           this.loadFaults();
+          await this.router.navigate(['/insert-fault']);
         },
       });
     } else {

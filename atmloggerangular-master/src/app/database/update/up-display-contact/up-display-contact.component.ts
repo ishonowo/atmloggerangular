@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { VendorContact } from 'src/app/model/vendorContact';
 import { VNameOption } from 'src/app/model/vNameOption';
 import { VendorContactService } from 'src/app/shared/vendor-contact.service';
@@ -18,7 +19,8 @@ export class UpDisplayContactComponent implements OnInit {
 
   constructor(
     private vendorContactService: VendorContactService,
-    private vendorService: VendorService
+    protected router: Router
+    //private vendorService: VendorService
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class UpDisplayContactComponent implements OnInit {
       },
       complete: () => {
         console.log('Finished with all contacts with names.');
+        
       },
     });
   }
@@ -128,9 +131,10 @@ export class UpDisplayContactComponent implements OnInit {
   }
 
   // Handler for when update is complete
-  onUpdateComplete(){
+  async onUpdateComplete(): Promise<void>{
     this.loadContactsWithNames();
     this.selectedContact = null; // Close the form
+    await this.router.navigate(['/update-contact']);
     console.log('Update complete and contacts refreshed');
   }
   
