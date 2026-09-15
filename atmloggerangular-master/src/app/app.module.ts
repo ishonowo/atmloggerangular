@@ -1,9 +1,10 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';  
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
-//import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +50,7 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { InsertFaultComponent } from './database/insert/insert-fault/insert-fault.component';
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
 import { UpdateFaultComponent } from './database/update/up-display-fault/update-fault/update-fault.component';
+import { SlaLogListComponent } from './sla-log-list/sla-log-list.component';
 
 @NgModule({
   declarations: [
@@ -94,12 +96,15 @@ import { UpdateFaultComponent } from './database/update/up-display-fault/update-
     InsertFaultComponent,
     UpDisplayFaultComponent,
     UpdateFaultComponent,
+    SlaLogListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, // Handles all application routing
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
+    HttpClientModule   
   ],
   providers: [provideHttpClient(withInterceptors([AuthInterceptor]))],
   bootstrap: [AppComponent], // ONLY AppComponent belongs here

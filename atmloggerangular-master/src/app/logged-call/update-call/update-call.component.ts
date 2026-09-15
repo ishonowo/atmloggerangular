@@ -34,7 +34,7 @@ export class UpdateCallComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private loggedCallService: LoggedCallService,
-    private callStatusService: LogStatusService
+    private callStatusService: LogStatusService,
   ) {
     this.callForm = this.createForm();
   }
@@ -49,7 +49,7 @@ export class UpdateCallComponent implements OnInit, OnChanges {
     this.loading = true;
     try {
       this.statusObjs = await firstValueFrom(
-        this.callStatusService.findAllLogStatus()
+        this.callStatusService.findAllLogStatus(),
       );
       console.log(this.statusObjs);
       /*/ Set currentStatus once statusObjs is available
