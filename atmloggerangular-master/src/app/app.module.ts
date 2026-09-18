@@ -50,7 +50,7 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { InsertFaultComponent } from './database/insert/insert-fault/insert-fault.component';
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
 import { UpdateFaultComponent } from './database/update/up-display-fault/update-fault/update-fault.component';
-import { SlaLogListComponent } from './sla-log-list/sla-log-list.component';
+
 
 @NgModule({
   declarations: [
@@ -96,7 +96,6 @@ import { SlaLogListComponent } from './sla-log-list/sla-log-list.component';
     InsertFaultComponent,
     UpDisplayFaultComponent,
     UpdateFaultComponent,
-    SlaLogListComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoggedCallService } from '../shared/logged-call.service';
 import { HttpResponse } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-logged-call',
   templateUrl: './logged-call.component.html',
@@ -20,8 +21,15 @@ export class LoggedCallComponent implements OnInit {
 
   selectedCall: LoggedCallObj | null = null;
 
+  // Inline hold/resume date-time pickers, keyed by logId (same pattern as
+  // the SLA log tracker component)
+  activeHoldLogId: number | null = null;
+  holdDateTimeValue = '';
+
+  activeResumeLogId: number | null = null;
+  resumeDateTimeValue = '';
+
   constructor(
-    //private fb: FormBuilder,
     protected router: Router,
     private loggedCallService: LoggedCallService,
   ) {}
@@ -59,7 +67,66 @@ export class LoggedCallComponent implements OnInit {
     console.log('Update complete and calls refreshed');
   }
 
-  formatDate(dateString: Date): string {
+  // --- SLA helpers ---
+
+  isOnHold(call: LoggedCallObj): boolean {
+    return !!call.holdStart && !call.holdEnd;
+    //return call.holdStart && !call.holdEnd;
+  }
+
+  openHoldPicker(call: LoggedCallObj): void {
+    this.activeHoldLogId = call.logId;
+    this.holdDateTimeValue = '';
+  }
+
+  cancelHoldPicker(): void {
+    this.activeHoldLogId = null;
+    this.holdDateTimeValue = '';
+  }
+
+  confirmHold(call: LoggedCallObj): void {
+    if (!this.holdDateTimeValue) {
+      return;
+    }
+    this.loggedCallService.putOnHold(call.logId, this.holdDateTimeValue).subscribe({
+      next: () => {
+        this.activeHoldLogId = null;
+        this.loadLoggedCallObjs();
+      },
+      error: (err) => {
+        this.error = err?.error?.message || 'Error putting call on hold';
+        console.error('Error:', err);
+      },
+    });
+  }
+
+  openResumePicker(call: LoggedCallObj): void {
+    this.activeResumeLogId = call.logId;
+    this.resumeDateTimeValue = '';
+  }
+
+  cancelResumePicker(): void {
+    this.activeResumeLogId = null;
+    this.resumeDateTimeValue = '';
+  }
+
+  confirmResume(call: LoggedCallObj): void {
+    if (!this.resumeDateTimeValue) {
+      return;
+    }
+    this.loggedCallService.resumeFromHold(call.logId, this.resumeDateTimeValue).subscribe({
+      next: () => {
+        this.activeResumeLogId = null;
+        this.loadLoggedCallObjs();
+      },
+      error: (err) => {
+        this.error = err?.error?.message || 'Error resuming call from hold';
+        console.error('Error:', err);
+      },
+    });
+  }
+
+  formatDate(dateString: Date| undefined | null): string {
     if (dateString) {
       const date = new Date(dateString);
 
@@ -78,7 +145,7 @@ export class LoggedCallComponent implements OnInit {
     } else return '';
   }
 
-  formatDateTime(dateString: Date): string {
+  formatDateTime(dateString: Date | undefined | null): string {
     if (dateString) {
       const date = new Date(dateString);
 

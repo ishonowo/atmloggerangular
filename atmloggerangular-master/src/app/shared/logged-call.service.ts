@@ -24,6 +24,14 @@ export class LoggedCallService {
     return this.http.put<void>(this.baseUrl, updatedCall);
   }
 
+  putOnHold(logId: number, holdStart: string): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${logId}/hold`, { holdStart });
+  }
+
+  resumeFromHold(logId: number, holdEnd: string): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${logId}/resume`, { holdEnd });
+  }
+
   exportToExcel(): Observable<HttpResponse<Blob>> {
     return this.http.get(`${this.baseUrl}/export`, {
       responseType: 'blob',

@@ -30,6 +30,10 @@
               <th>Starting Date</th>
               <th>Date Completed</th>
               <th>Status</th>
+              <th>SLA (hrs)</th>
+              <th>SLA Deadline</th>
+              <th>Breached</th>
+              <th>Hold</th>
               <th>Actions</th>
               <th>Backend Staff Email</th>
               <th>Backend Staff Browser</th>
@@ -39,7 +43,7 @@
           </thead>
           <tbody>
             <ng-container *ngFor="let call of calls; let i = index">
-              <tr>
+              <tr [class.table-danger]="call.slaBreached">
                 <td>{{ i + 1 }}</td>
                 <td>{{ call.branchName }}</td>
                 <td>{{ call.terminalId }}</td>
@@ -50,13 +54,70 @@
                 <td>{{ formatDate(call.startingDate) }}</td>
                 <td>{{ formatDateTime(call.dateCompleted) }}</td>
                 <td>{{ call.statusDesc }}</td>
+                <td>{{ call.allowedHours }}</td>
+                <td>{{ formatDateTime(call.slaDeadline) }}</td>
                 <td>
-                  <button
-                    class="btn btn-primary btn-sm"
-                    (click)="onSelect(call)"
-                  >
-                    Edit
-                  </button>
+                  <span *ngIf="call.slaBreached" class="badge bg-danger">Yes</span>
+                  <span *ngIf="!call.slaBreached" class="badge bg-success">No</span>
+                </td>
+                <td>
+                  <span *ngIf="isOnHold(call)" class="badge bg-warning text-dark">
+                    On hold since {{ formatDateTime(call.holdStart!) }}
+                  </span>
+                  <span *ngIf="!isOnHold(call) && call.holdStart && call.holdEnd" class="badge bg-secondary">
+                    Held {{ formatDateTime(call.holdStart) }} &ndash; {{ formatDateTime(call.holdEnd) }}
+                  </span>
+                  <span *ngIf="!call.holdStart">&ndash;</span>
+                </td>
+                <td>
+                  <div class="d-flex flex-column gap-1">
+                    <button
+                      class="btn btn-primary btn-sm"
+                      (click)="onSelect(call)"
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      *ngIf="!call.holdStart || call.holdEnd"
+                      class="btn btn-warning btn-sm"
+                      (click)="openHoldPicker(call)"
+                    >
+                      Put on Hold
+                    </button>
+
+                    <button
+                      *ngIf="isOnHold(call)"
+                      class="btn btn-outline-primary btn-sm"
+                      (click)="openResumePicker(call)"
+                    >
+                      Resume
+                    </button>
+
+                    <!-- Inline hold date-time picker -->
+                    <div *ngIf="activeHoldLogId === call.logId" class="hold-picker mt-1">
+                      <input
+                        type="datetime-local"
+                        [(ngModel)]="holdDateTimeValue"
+                        class="form-control form-control-sm mb-1"
+                        title="Hold start date and time"
+                      />
+                      <button class="btn btn-sm btn-primary" (click)="confirmHold(call)">Confirm</button>
+                      <button class="btn btn-sm btn-outline-secondary" (click)="cancelHoldPicker()">Cancel</button>
+                    </div>
+
+                    <!-- Inline resume date-time picker -->
+                    <div *ngIf="activeResumeLogId === call.logId" class="resume-picker mt-1">
+                      <input
+                        type="datetime-local"
+                        [(ngModel)]="resumeDateTimeValue"
+                        class="form-control form-control-sm mb-1"
+                        title="Hold end date and time"
+                      />
+                      <button class="btn btn-sm btn-primary" (click)="confirmResume(call)">Confirm</button>
+                      <button class="btn btn-sm btn-outline-secondary" (click)="cancelResumePicker()">Cancel</button>
+                    </div>
+                  </div>
                 </td>
                 <td>{{ call.fromEmail }}</td>
                 <td>{{ call.browserUsed }}</td>

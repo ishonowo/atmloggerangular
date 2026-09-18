@@ -4,18 +4,34 @@
       <h3>ATM Issue Logger App</h3>
     </div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <div class="navbar-nav" *ngIf="isLoggedIn()">
-        <a routerLink="/issue-log" routerLinkActive="active" class="nav-link">Log an Issue</a>
-
+        <a routerLink="/issue-log" routerLinkActive="active" class="nav-link"
+          >Log an Issue</a
+        >
         <div class="nav-item dropdown">
-          <a routerLink="/database" routerLinkActive="active" class="nav-link dropdown-toggle" href="#" id="databaseDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
+          <a
+            routerLink="/database"
+            routerLinkActive="active"
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="databaseDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             Use Application Backend
           </a>
           <div class="dropdown-menu" aria-labelledby="databaseDropdown">
@@ -25,8 +41,11 @@
           </div>
         </div>
 
-        <a routerLink="/logged-call" routerLinkActive="active" class="nav-link">Logged Calls</a>
-        <!--<a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>-->
+        <a routerLink="/logged-call" routerLinkActive="active" class="nav-link"
+          >Logged Calls</a
+        >
+
+<!--<a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>-->
       </div>
 
       <div class="navbar-nav">
@@ -38,18 +57,17 @@
 
     <div class="navbar-nav navbar-collapse justify-content-end">
       <div>
-        
-          <a href *ngIf="!isLoggedIn()"
+        <a
+          href
+          *ngIf="!isLoggedIn()"
           routerLink="/auth"
           routerLinkActive="active"
           class="nav-link"
-          >Login</a>
+          >Login</a
+        >
       </div>
       <div>
-        <a href
-          (click)="logout()"
-          *ngIf="isLoggedIn()"
-          class="nav-link"
+        <a href (click)="logout()" *ngIf="isLoggedIn()" class="nav-link"
           >Logout</a
         >
       </div>

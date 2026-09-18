@@ -33,6 +33,7 @@ import { DisplayFaultComponent } from './database/display/display-fault/display-
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
 
 
+
 const routes: Routes = [
   {
     path: '',

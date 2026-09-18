@@ -16,4 +16,11 @@ export interface LoggedCallObj{
     loggerIP: string;
     statusDesc: string;
     statusId: number;
+
+    // SLA fields
+    holdStart?: Date | null;
+    holdEnd?: Date | null;
+    allowedHours?: number;
+    slaDeadline?: Date;
+    slaBreached?: boolean;
 }
