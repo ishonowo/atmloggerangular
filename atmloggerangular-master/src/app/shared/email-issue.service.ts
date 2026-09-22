@@ -4,6 +4,7 @@ import { EmailIssue } from '../model/emailissue';
 import { AtmIssue } from '../model/atmissue';
 import { Observable } from 'rxjs';
 import { EmailIssueMessage } from '../model/emailIssueMessage';
+//import { AtmFault } from '../model/atmfault';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ import { EmailIssueMessage } from '../model/emailIssueMessage';
 export class EmailIssueService {
   private BASE_URL = 'https:\\localhost:9442';
   private SEND_EMAIL_URL = 'https://localhost:9442/email/sendEmail';
-  private groupSupportEmail: string = 'ATMSupport@fidelitybank.ng';
+  private emailIssues: EmailIssue[] = [];
+  //private groupSupportEmail: string = 'ATMSupport@fidelitybank.ng';
 
   constructor(private http: HttpClient) {}
 
@@ -19,36 +21,75 @@ export class EmailIssueService {
     return this.http.post(this.SEND_EMAIL_URL, emailIssueMessage);
   }
 
-  generateEmailIssue(atmIssue: AtmIssue): EmailIssue {
-    // Build a readable summary of the selected faults for the subject line,
-    // e.g. "Cash Jam, Network Issue" - replaces the old single issueDesc string.
-    const faultSummary = (atmIssue?.atmFaults || [])
-      .map(f => f.natureOfFault)
+  /*generateEmailIssue(atmIssues: AtmIssue[]): EmailIssue[] {
+    for (const issue of atmIssues) {
+      // Build a readable summary of the selected faults for the subject line,
+      // e.g. "Cash Jam, Network Issue" - replaces the old single issueDesc string.
+
+      const faultSummary = (issue.atmFaults || [])
+        .map((f: { natureOfFault: string }) => f.natureOfFault)
+        .join(', ');
+
+      let emailIssue: EmailIssue = {
+        fromEmail: issue?.userEmail,
+        toEmail: issue?.contact,
+        cc:
+          issue.supportEmail +
+          ';' +
+          issue.loggerEmail +
+          ';' +
+          issue.branchEmail,
+        subject:
+          'FIDELITY BANK: ' +
+          issue?.terminalId +
+          ' ' +
+          issue?.atmName +
+          (faultSummary ? ': ' + faultSummary : ''),
+        mIntro: 'Dear all, kindly attend to this request.',
+        message: {
+          physicalAddress: issue?.physicalAddress,
+          branchName: issue?.branchName,
+          vendorName: issue?.vendorName,
+          atmFaults: issue?.atmFaults ?? [],
+          branchLogger: issue?.branchLogger,
+          loggerPhone: issue?.loggerPhoneNo,
+          dateLogged: issue?.logDate,
+          otherFaultDesc: issue?.otherFaultDesc,
+        },
+        mEnd: 'Thanks.',
+      };
+      this.emailIssues.push(emailIssue);
+    }
+    return this.emailIssues;
+  }*/
+  generateEmailIssue(atmIssues: AtmIssue[]): EmailIssue[] {
+  return atmIssues.map((issue) => {
+    const faultSummary = (issue.atmFaults ?? [])
+      .map((f) => f.natureOfFault)
       .join(', ');
 
-    let emailIssue: EmailIssue = {
-      fromEmail: atmIssue?.userEmail,
-      toEmail: atmIssue?.contact,
-      cc:
-        atmIssue.supportEmail + ';' +
-        atmIssue.loggerEmail + ';' +
-        atmIssue.branchEmail,
+    return {
+      fromEmail: issue.userEmail,
+      toEmail: issue.contact,
+      cc: [issue.supportEmail, issue.loggerEmail, issue.branchEmail]
+        .filter(Boolean)
+        .join(';'),
       subject:
-        'FIDELITY BANK: ' +
-        atmIssue?.terminalId + ' ' + atmIssue?.atmName +
-        (faultSummary ? ': ' + faultSummary : ''),
+        `FIDELITY BANK: ${issue.terminalId} ${issue.atmName}` +
+        (faultSummary ? `: ${faultSummary}` : ''),
       mIntro: 'Dear all, kindly attend to this request.',
       message: {
-        physicalAddress: atmIssue?.physicalAddress,
-        branchName: atmIssue?.branchName,
-        vendorName: atmIssue?.vendorName,
-        atmFaults: atmIssue?.atmFaults ?? [],
-        branchLogger: atmIssue?.branchLogger,
-        loggerPhone: atmIssue?.loggerPhoneNo,
-        dateLogged: atmIssue?.logDate,
+        physicalAddress: issue.physicalAddress,
+        branchName: issue.branchName,
+        vendorName: issue.vendorName,
+        atmFaults: issue.atmFaults ?? [],
+        otherFaultDesc: issue.otherFaultDesc,
+        branchLogger: issue.branchLogger,
+        loggerPhone: issue.loggerPhoneNo,
+        dateLogged: issue.logDate,
       },
       mEnd: 'Thanks.',
     };
-    return emailIssue;
-  }
+  });
+}
 }

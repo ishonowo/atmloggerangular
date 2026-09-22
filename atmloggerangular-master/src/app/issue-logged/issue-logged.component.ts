@@ -14,7 +14,7 @@ import { AtmFaultService } from '../shared/atm-fault.service';
   styleUrls: ['./issue-logged.component.css'],
 })
 export class IssueLoggedComponent implements OnInit {
-  atmIssue!: AtmIssue;
+  atmIssues!: AtmIssue[];
   protected isClicked: boolean = false;
   protected sName: string | undefined;
 
@@ -84,7 +84,7 @@ export class IssueLoggedComponent implements OnInit {
     });
   }
 
-  loadAtmFaults() {
+  loadAtmFaults(){
     this.faultsLoading = true;
     this.faultService.getAllFaults().subscribe({
       next: (faults: AtmFault[]) => {
@@ -131,7 +131,7 @@ export class IssueLoggedComponent implements OnInit {
     return true;
   }
 
-  submitLoggedIssue() {
+  async submitLoggedIssue() {
     if (this.issueForm.invalid || !this.canSubmit) {
       this.issueForm.markAllAsTouched();
       return;
@@ -157,14 +157,11 @@ export class IssueLoggedComponent implements OnInit {
       issueLogged.otherFaultDesc = this.otherFaultText;
     }
 
-    console.log(issueLogged);
-
+    
     this.atmService.postIssueLogged(issueLogged).subscribe({
       next: async (data) => {
-        console.log('The issue has been successfully logged.');
-        this.atmIssue = data;
-        this.atmService.atmIssue = this.atmIssue;
-        console.log(this.atmIssue);
+        this.atmIssues = data;
+        this.atmService.atmIssues = data;
         await this.router.navigate(['email']);
       },
       error: (err) => {

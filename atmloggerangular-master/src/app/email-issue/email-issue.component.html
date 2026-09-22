@@ -1,96 +1,102 @@
 <div class="container-fluid">
   <h1>ATM Issue Email Form</h1>
-  <form [formGroup]="emailForm" (ngSubmit)="sendEmailMessage()">
-    <div *ngIf="isLoading" class="loading">
-      <p>This page is still loading...</p>
-    </div>
-    <div *ngIf="emailIssue && !isLoading">
+
+  <div *ngIf="isLoading" class="loading">
+    <p>This page is still loading...</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <p class="issue-progress">
+      {{ sentCount }} of {{ emailForms.length }} email(s) sent
+    </p>
+
+    <!-- One form (and one Send button) per email:
+         all POWER faults in one, all other fault types in the other. -->
+    <form
+      *ngFor="let form of emailForms; let i = index"
+      [formGroup]="form"
+      (ngSubmit)="sendEmailMessage(i)"
+      class="issue-card"
+    >
+      <div class="issue-card-header">
+        <h2>
+          Email {{ i + 1 }} of {{ emailForms.length }}
+          <small
+            class="kind-badge"
+            [class.kind-power]="emailKinds[i] === 'Power'"
+            >{{ emailKinds[i] }} faults</small
+          >
+        </h2>
+        <span *ngIf="sent[i]" class="sent-badge">&#10003; Sent</span>
+      </div>
+
       <!-- Email Header Section -->
       <div class="form-row">
-        <label for="fromEmail"><b>From:</b></label>
+        <label [attr.for]="'fromEmail-' + i"><b>From:</b></label>
         <input
-          id="fromEmail"
+          [id]="'fromEmail-' + i"
           formControlName="fromEmail"
           placeholder="Enter sender email"
           title="From Email"
           type="email"
         />
-        <small
-          *ngIf="
-            emailForm.get('fromEmail')?.invalid &&
-            emailForm.get('fromEmail')?.touched
-          "
+        <small *ngIf="showError(form, 'fromEmail')"
           >*The Sender's email is required.</small
         >
       </div>
 
       <div class="form-row">
-        <label for="toEmail"><b>To:</b></label>
+        <label [attr.for]="'toEmail-' + i"><b>To:</b></label>
         <textarea
-          id="toEmail"
+          [id]="'toEmail-' + i"
           formControlName="toEmail"
           placeholder="Enter recipient email"
           title="To Email"
           rows="2"
         ></textarea>
-        <small
-          *ngIf="
-            emailForm.get('toEmail')?.invalid &&
-            emailForm.get('toEmail')?.touched
-          "
+        <small *ngIf="showError(form, 'toEmail')"
           >*The Recipient's email is required.</small
         >
       </div>
 
       <div class="form-row">
-        <label for="cc"><b>Cc:</b></label>
+        <label [attr.for]="'cc-' + i"><b>Cc:</b></label>
         <textarea
-          id="cc"
+          [id]="'cc-' + i"
           formControlName="cc"
           placeholder="Enter CC email"
           title="CC Email"
           rows="2"
         ></textarea>
-        <small
-          *ngIf="
-            emailForm.get('cc')?.invalid && emailForm.get('cc')?.touched
-          "
+        <small *ngIf="showError(form, 'cc')"
           >*The Carbon copy email is required.</small
         >
       </div>
 
       <div class="form-row">
-        <label for="subject"><b>Subject:</b></label>
+        <label [attr.for]="'subject-' + i"><b>Subject:</b></label>
         <textarea
-          id="subject"
+          [id]="'subject-' + i"
           formControlName="subject"
           placeholder="Enter email subject"
           title="Subject"
           rows="2"
         ></textarea>
-        <small
-          *ngIf="
-            emailForm.get('subject')?.invalid &&
-            emailForm.get('subject')?.touched
-          "
+        <small *ngIf="showError(form, 'subject')"
           >*The Subject is required.</small
         >
       </div>
 
       <div class="form-row">
-        <label for="mIntro"><b>Message Introduction:</b></label>
+        <label [attr.for]="'mIntro-' + i"><b>Message Introduction:</b></label>
         <textarea
-          id="mIntro"
+          [id]="'mIntro-' + i"
           formControlName="mIntro"
           placeholder="Enter message introduction"
           title="Message Introduction"
           rows="3"
         ></textarea>
-        <small
-          *ngIf="
-            emailForm.get('mIntro')?.invalid &&
-            emailForm.get('mIntro')?.touched
-          "
+        <small *ngIf="showError(form, 'mIntro')"
           >*The message introduction is required.</small
         >
       </div>
@@ -100,177 +106,166 @@
         <h2>ATM Issue Details</h2>
 
         <div class="form-row">
-          <label for="physicalAddress"><b>ATM LOCATION</b></label>
+          <label [attr.for]="'physicalAddress-' + i"><b>ATM LOCATION</b></label>
           <input
-            id="physicalAddress"
+            [id]="'physicalAddress-' + i"
             formControlName="physicalAddress"
             type="text"
             placeholder="Enter the ATM's location"
             title="Physical Address"
           />
-          <small
-            *ngIf="
-              emailForm.get('message')?.get('physicalAddress')?.invalid &&
-              emailForm.get('message')?.get('physicalAddress')?.touched
-            "
+          <small *ngIf="showError(form, 'message.physicalAddress')"
             >*The location of the ATM is required.</small
           >
         </div>
 
         <div class="form-row">
-          <label for="branchName"><b>BRANCH IN CHARGE</b></label>
+          <label [attr.for]="'branchName-' + i"><b>BRANCH IN CHARGE</b></label>
           <input
-            id="branchName"
+            [id]="'branchName-' + i"
             formControlName="branchName"
             type="text"
             placeholder="Enter the branch name for the ATM"
             title="Branch Name"
           />
-          <small
-            *ngIf="
-              emailForm.get('message')?.get('branchName')?.invalid &&
-              emailForm.get('message')?.get('branchName')?.touched
-            "
+          <small *ngIf="showError(form, 'message.branchName')"
             >*The name of the branch is required.</small
           >
         </div>
 
         <div class="form-row">
-          <label for="vendorName"><b>VENDOR</b></label>
+          <label [attr.for]="'vendorName-' + i"><b>VENDOR</b></label>
           <input
-            id="vendorName"
+            [id]="'vendorName-' + i"
             formControlName="vendorName"
             type="text"
             placeholder="Enter the vendor name"
             title="Vendor Name"
           />
-          <small
-            *ngIf="
-              emailForm.get('message')?.get('vendorName')?.invalid &&
-              emailForm.get('message')?.get('vendorName')?.touched
-            "
+          <small *ngIf="showError(form, 'message.vendorName')"
             >*The Vendor's name is required.</small
           >
         </div>
 
-        <!-- Editable list of faults tied to this issue. The nature/type stay
+        <!-- Editable list of the faults in THIS email. The nature/type stay
              fixed, but the description can be edited before the email is sent. -->
         <div class="form-row" formArrayName="faults">
           <label><b>ISSUE(S)</b></label>
           <div
-            *ngFor="let faultGroup of faultsArray.controls; let i = index"
-            [formGroupName]="i"
+            *ngFor="let faultGroup of faultsOf(form).controls; let j = index"
+            [formGroupName]="j"
             class="fault-edit-row"
           >
             <div class="fault-edit-header">
-              <strong>{{ faultGroup.get('displayLabel')?.value }}</strong>
-              <small class="text-muted">({{ faultGroup.get('faultType')?.value }})</small>
+              <strong>{{ faultGroup.get("displayLabel")?.value }}</strong>
+              <small class="text-muted"
+                >({{ faultGroup.get("faultType")?.value }})</small
+              >
             </div>
             <textarea
               formControlName="description"
               rows="1"
-              [class.is-invalid]="faultGroup.get('description')?.invalid && faultGroup.get('description')?.touched"
+              [class.is-invalid]="
+                faultGroup.get('description')?.invalid &&
+                faultGroup.get('description')?.touched
+              "
               title="Fault description"
               placeholder="Describe this fault"
             ></textarea>
             <small
               class="text-danger"
-              *ngIf="faultGroup.get('description')?.errors && faultGroup.get('description')?.touched"
+              *ngIf="
+                faultGroup.get('description')?.errors &&
+                faultGroup.get('description')?.touched
+              "
               >*A description of at least 5 characters is required.</small
             >
           </div>
-          <small *ngIf="faultsArray.length === 0"
+          <small *ngIf="faultsOf(form).length === 0"
             >*No faults were found for this issue.</small
           >
         </div>
 
         <div class="form-row">
-          <label for="branchLogger"><b>BRANCH CONTACT</b></label>
+          <label [attr.for]="'branchLogger-' + i"><b>BRANCH CONTACT</b></label>
           <input
-            id="branchLogger"
+            [id]="'branchLogger-' + i"
             formControlName="branchLogger"
             type="text"
             placeholder="Enter the branch contact person"
             title="Branch Contact"
           />
-          <small
-            *ngIf="
-              emailForm.get('message')?.get('branchLogger')?.invalid &&
-              emailForm.get('message')?.get('branchLogger')?.touched
-            "
+          <small *ngIf="showError(form, 'message.branchLogger')"
             >*The branch contact is required.</small
           >
         </div>
 
         <div class="form-row">
-          <label for="loggerPhone"><b>CONTACT PHONE NUMBER</b></label>
+          <label [attr.for]="'loggerPhone-' + i"
+            ><b>CONTACT PHONE NUMBER</b></label
+          >
           <input
-            id="loggerPhone"
+            [id]="'loggerPhone-' + i"
             formControlName="loggerPhone"
             type="tel"
             placeholder="Enter the contact phone number"
             title="Contact Phone Number"
           />
-          <small
-            *ngIf="
-              emailForm.get('message')?.get('loggerPhone')?.invalid &&
-              emailForm.get('message')?.get('loggerPhone')?.touched
-            "
+          <small *ngIf="showError(form, 'message.loggerPhone')"
             >*The personnel's phone number is required (11-14 digits).</small
           >
         </div>
 
         <div class="form-row">
-          <label for="dateLogged"><b>DATE AND TIME LOGGED</b></label>
+          <label [attr.for]="'dateLogged-' + i"
+            ><b>DATE AND TIME LOGGED</b></label
+          >
           <input
-            id="dateLogged"
+            [id]="'dateLogged-' + i"
             type="text"
-            [value]="emailForm.get('message.dateLogged')?.value?.replace('Z', '')"
+            [value]="form.get('message.dateLogged')?.value?.replace('Z', '')"
             placeholder="Enter the date and time logged"
             title="Date and Time Logged"
             readonly
           />
           <input type="hidden" formControlName="dateLogged" />
-          <small
-            *ngIf="
-              emailForm.get('message')?.get('dateLogged')?.invalid &&
-              emailForm.get('message')?.get('dateLogged')?.touched
-            "
+          <small *ngIf="showError(form, 'message.dateLogged')"
             >*The date and time this incident is logged is required.</small
           >
         </div>
       </div>
 
       <div class="form-row">
-        <label for="mEnd"><b>MESSAGE END</b></label>
+        <label [attr.for]="'mEnd-' + i"><b>MESSAGE END</b></label>
         <textarea
-          id="mEnd"
+          [id]="'mEnd-' + i"
           formControlName="mEnd"
           placeholder="Enter message end"
           title="Message End"
           rows="2"
         ></textarea>
-        <small
-          *ngIf="
-            emailForm.get('mEnd')?.invalid && emailForm.get('mEnd')?.touched
-          "
+        <small *ngIf="showError(form, 'mEnd')"
           >*The message ending is required.</small
         >
       </div>
 
       <div class="display">
         <button
-          [disabled]="emailForm.invalid || isClicked"
+          [disabled]="form.invalid || sending[i] || sent[i]"
           type="submit"
           class="btn btn-success"
         >
           <i class="fa fa-envelope-o"></i>
-          <span>Send Email</span>
-        </button>
-        <button type="button" class="btn btn-danger" routerLink="/issue-log">
-          Re-log issue
+          <span>{{
+            sent[i] ? "Sent" : sending[i] ? "Sending..." : "Send Email"
+          }}</span>
         </button>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
+  <div class="display">
+    <button type="button" class="btn btn-danger" (click)="relogIssue()">
+      Re-log issue
+    </button>
+  </div>
 </div>

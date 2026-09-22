@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, InteropObservable } from 'rxjs';
 import { IssueLogged } from '../model/issuelogged';
 import { AtmIssue } from '../model/atmissue';
-import { AtmFault } from '../model/atmfault';
+//import { AtmFault } from '../model/atmfault';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +12,8 @@ export class AtmService {
   //private BASE_URL = window['cfgAtmBaseUrl'];
   private baseUrl: string = 'https://localhost:9442/atm';
   private log: string = '/issue';
-  private DELETE_ISSUE_URL = '\\atm\\delete\\';
-  public atmIssue: AtmIssue | undefined;
+  //private DELETE_ISSUE_URL = '\\atm\\delete\\';
+  public atmIssues: AtmIssue[]=[];
 
   constructor(private http: HttpClient) {}
 
@@ -21,11 +21,11 @@ export class AtmService {
     return this.http.post(this.baseUrl + this.log, issueLogged);
   }
 
-  deleteIssueLogged(id: number | undefined): Observable<any> {
+  /*deleteIssueLogged(id: number | undefined): Observable<any> {
     return this.http.delete(this.DELETE_ISSUE_URL + id);
   }
 
-  /*getAtmFaults() {
+  getAtmFaults() {
     return this.http.get<AtmFault[]>(`${this.baseUrl}/atm-faults`);
   }*/
 }

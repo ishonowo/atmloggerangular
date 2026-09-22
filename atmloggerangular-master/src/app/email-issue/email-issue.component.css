@@ -121,3 +121,9 @@ button i {
   padding: 50px 0;
   color: #666;
 }
+
+.issue-card { margin-bottom: 2rem; padding: 1rem; border: 1px solid #444; border-radius: 6px; }
+.issue-card-header { display: flex; justify-content: space-between; align-items: center; }
+.sent-badge { color: #28a745; font-weight: bold; }
+.kind-badge { margin-left: .5rem; padding: 2px 8px; border-radius: 10px; background: #495057; font-size: .7rem; }
+.kind-badge.kind-power { background: #b8860b; }

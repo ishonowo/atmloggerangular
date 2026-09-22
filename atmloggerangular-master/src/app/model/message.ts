@@ -6,5 +6,6 @@ export interface Message {
     branchLogger: string;
     loggerPhone: string;
     dateLogged: Date;
+    
   }
   
