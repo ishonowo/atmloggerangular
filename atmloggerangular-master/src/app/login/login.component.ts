@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public isUserLoggedIn: boolean=false;
   public sName: string|undefined;
 
-  constructor(private router: Router,private authService:AuthService
+  constructor(private router: Router,protected authService:AuthService
   ) {}
 
   ngOnInit() { }
@@ -20,15 +20,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}  
   
   getName(): string|undefined {
-  const token = this.authService.getToken();
-  if (!token) {
+  const fullName = this.authService.getFullName();
+  if (!fullName) {
     this.isUserLoggedIn = false;
     return this.errorMessage;
   }
 
   try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const email = payload.email;
+    const email = this.authService.getEmail();
 
     if (email) {
       this.isUserLoggedIn = true;

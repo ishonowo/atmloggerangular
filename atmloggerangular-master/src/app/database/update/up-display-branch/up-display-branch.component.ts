@@ -39,7 +39,7 @@ export class UpDisplayBranchComponent implements OnInit {
       },
       complete: () => {
         console.log('Finished with all branches with names.');
-        this.loadBranchesWithNames();
+        //this.loadBranchesWithNames();
       },
     });
   }

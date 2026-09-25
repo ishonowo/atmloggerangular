@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-display',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./display.component.css']
 })
 export class DisplayComponent {
-
+constructor(protected authService: AuthService){}
 }

@@ -14,7 +14,10 @@ export class AuthComponent {
     private router: Router
   ) {}
 
-  username: string = '';
+  // Renamed from "username": this LDAP directory's person entries have a cn
+  // attribute (e.g. "lola"), not a uid attribute, so "username" implied an
+  // attribute that doesn't exist here.
+  cn: string = '';
   password: string = '';
   errorMessage: string | null = null;
   isSubmitting: boolean = false;
@@ -23,11 +26,11 @@ export class AuthComponent {
     this.errorMessage = null;
     this.isSubmitting = true;
 
-    this.authService.login(this.username, this.password).subscribe({
+    this.authService.login(this.cn, this.password).subscribe({
       next: () => {
         this.isSubmitting = false;
-        // Token is stored by AuthService; redirect into the app
-        this.router.navigate(['/issue-log']);
+        // Token (and roles) are stored by AuthService; redirect into the app
+        this.router.navigate(['/login']);
       },
       error: (err: HttpErrorResponse) => {
         this.isSubmitting = false;

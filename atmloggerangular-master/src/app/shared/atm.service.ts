@@ -10,15 +10,15 @@ import { AtmIssue } from '../model/atmissue';
 })
 export class AtmService {
   //private BASE_URL = window['cfgAtmBaseUrl'];
-  private baseUrl: string = 'https://localhost:9442/atm';
-  private log: string = '/issue';
+  private baseUrl: string = 'https://localhost:9442/atm/issue';
+  //private log: string = '/issue';
   //private DELETE_ISSUE_URL = '\\atm\\delete\\';
   public atmIssues: AtmIssue[]=[];
 
   constructor(private http: HttpClient) {}
 
   postIssueLogged(issueLogged: IssueLogged): Observable<any> {
-    return this.http.post(this.baseUrl + this.log, issueLogged);
+    return this.http.post(this.baseUrl, issueLogged);
   }
 
   /*deleteIssueLogged(id: number | undefined): Observable<any> {

@@ -3,7 +3,7 @@
     <a routerLink="/database">Return</a>
   </p>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="authService.hasRole('DISPLAY')">
   <p>
     <a routerLink="/display-branch">Display all branches.</a>
   </p>

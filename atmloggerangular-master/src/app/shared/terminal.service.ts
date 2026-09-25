@@ -10,7 +10,7 @@ import { TerminalWithName } from '../model/terminalWithName';
   providedIn: 'root'
 })
 export class TerminalService {
-  private baseUrl: string = 'https://localhost:9442/api/terminals';
+  private baseUrl: string = 'https://localhost:9442/atm/database/api/terminals';
 
   constructor(private http: HttpClient) {}
 

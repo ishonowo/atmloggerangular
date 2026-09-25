@@ -48,7 +48,7 @@ export class IssueLoggedComponent implements OnInit {
     private faultService: AtmFaultService,
     private atmService: AtmService,
     private router: Router,
-    private authService: AuthService,
+    protected authService: AuthService,
     private fb: FormBuilder
   ) {}
 

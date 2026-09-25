@@ -16,12 +16,15 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="navbar-nav" *ngIf="isLoggedIn()">
+    <div class="collapse navbar-collapse" id="navbarNav" *ngIf="isLoggedIn()" >
+      <div class="navbar-nav" *ngIf="authService.hasRole('LOG_ISSUE')">
         <a routerLink="/issue-log" routerLinkActive="active" class="nav-link"
           >Log an Issue</a
         >
-        <div class="nav-item dropdown">
+        <div
+          class="nav-item dropdown"
+          *ngIf="authService.hasAnyRole(['DISPLAY', 'INSERT', 'UPDATE'])"
+        >
           <a
             routerLink="/database"
             routerLinkActive="active"
@@ -34,18 +37,22 @@
           >
             Use Application Backend
           </a>
-          <div class="dropdown-menu" aria-labelledby="databaseDropdown">
+          <div class="dropdown-menu" aria-labelledby="databaseDropdown" x>
             <a class="dropdown-item" routerLink="/db-display">Display</a>
             <a class="dropdown-item" routerLink="/db-insert">Insert</a>
             <a class="dropdown-item" routerLink="/db-update">Update</a>
           </div>
         </div>
 
-        <a routerLink="/logged-call" routerLinkActive="active" class="nav-link"
+        <a
+          routerLink="/logged-call"
+          routerLinkActive="active"
+          class="nav-link"
+          *ngIf="authService.hasRole('LOGGED_CALLS')"
           >Logged Calls</a
         >
 
-<!--<a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>-->
+        <!--<a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>-->
       </div>
 
       <div class="navbar-nav">

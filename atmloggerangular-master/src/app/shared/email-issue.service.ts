@@ -10,8 +10,8 @@ import { EmailIssueMessage } from '../model/emailIssueMessage';
   providedIn: 'root',
 })
 export class EmailIssueService {
-  private BASE_URL = 'https:\\localhost:9442';
-  private SEND_EMAIL_URL = 'https://localhost:9442/email/sendEmail';
+  private BASE_URL = 'https://localhost:9442';
+  private SEND_EMAIL_URL = 'https://localhost:9442/atm/email/sendEmail';
   private emailIssues: EmailIssue[] = [];
   //private groupSupportEmail: string = 'ATMSupport@fidelitybank.ng';
 
@@ -21,47 +21,6 @@ export class EmailIssueService {
     return this.http.post(this.SEND_EMAIL_URL, emailIssueMessage);
   }
 
-  /*generateEmailIssue(atmIssues: AtmIssue[]): EmailIssue[] {
-    for (const issue of atmIssues) {
-      // Build a readable summary of the selected faults for the subject line,
-      // e.g. "Cash Jam, Network Issue" - replaces the old single issueDesc string.
-
-      const faultSummary = (issue.atmFaults || [])
-        .map((f: { natureOfFault: string }) => f.natureOfFault)
-        .join(', ');
-
-      let emailIssue: EmailIssue = {
-        fromEmail: issue?.userEmail,
-        toEmail: issue?.contact,
-        cc:
-          issue.supportEmail +
-          ';' +
-          issue.loggerEmail +
-          ';' +
-          issue.branchEmail,
-        subject:
-          'FIDELITY BANK: ' +
-          issue?.terminalId +
-          ' ' +
-          issue?.atmName +
-          (faultSummary ? ': ' + faultSummary : ''),
-        mIntro: 'Dear all, kindly attend to this request.',
-        message: {
-          physicalAddress: issue?.physicalAddress,
-          branchName: issue?.branchName,
-          vendorName: issue?.vendorName,
-          atmFaults: issue?.atmFaults ?? [],
-          branchLogger: issue?.branchLogger,
-          loggerPhone: issue?.loggerPhoneNo,
-          dateLogged: issue?.logDate,
-          otherFaultDesc: issue?.otherFaultDesc,
-        },
-        mEnd: 'Thanks.',
-      };
-      this.emailIssues.push(emailIssue);
-    }
-    return this.emailIssues;
-  }*/
   generateEmailIssue(atmIssues: AtmIssue[]): EmailIssue[] {
   return atmIssues.map((issue) => {
     const faultSummary = (issue.atmFaults ?? [])

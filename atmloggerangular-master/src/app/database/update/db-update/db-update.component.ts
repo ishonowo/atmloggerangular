@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../../validators/custom.validators';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-db-update',
@@ -16,9 +17,8 @@ export class DbUpdateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    //private atmService: AtmService,
-    //private emailIssueService: EmailIssueService,
-    protected router: Router
+    protected router: Router,
+    protected authService: AuthService
   ) {
     this.dbUpdateForm = this.fb.group({
       branchInfo: this.fb.group({

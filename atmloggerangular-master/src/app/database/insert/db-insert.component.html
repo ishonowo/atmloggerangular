@@ -3,7 +3,7 @@
     <a routerLink="/database">Return</a>
   </p>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="authService.hasRole('INSERT')">
   <p>
     <a routerLink="/insert-branch">Insert a new branch.</a>
   </p>

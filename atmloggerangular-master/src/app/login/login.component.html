@@ -1,28 +1,19 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-    </style>
-  </head>
-
-  <body>
-    <h3>Welcome {{ getName() }} to the ATM Issue Logger</h3>
-  <div>
+<div>
+  <h3>Welcome {{ getName() }} to the ATM Issue Logger</h3>
+  <div *ngIf="authService.hasRole('LOG_ISSUE')">
     <p>
-      Click <a routerLink="/issue-log" class="nav-link"><b>here</b></a> to log an ATM
-      issue.
-    </p> 
+      Click <a routerLink="/issue-log" class="nav-link"><b>here</b></a> to log
+      an ATM issue.
+    </p>
   </div>
-    <!--<p>
+  <div *ngIf="authService.hasAnyRole(['DISPLAY','INSERT','UPDATE'])">
+    <p>
       Click <a routerLink="/database" class="nav-link"><b>here</b></a> to see
       this application's backend.
-    </p>-->
-  </body>
-</html>
+    </p>
+  </div>
+  <div *ngIf="authService.hasRole('LOGGED_CALLS')">
+    Click <a routerLink="/logged-call" class="nav-link"><b>here</b></a> to see
+    all previously logged calls.
+  </div>
+</div>

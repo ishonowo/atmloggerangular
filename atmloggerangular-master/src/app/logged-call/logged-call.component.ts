@@ -4,6 +4,7 @@ import { LoggedCallObj } from '../model/loggedCallObj';
 import { Router } from '@angular/router';
 import { LoggedCallService } from '../shared/logged-call.service';
 import { HttpResponse } from '@angular/common/http';
+import { AuthService } from '../shared/auth.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class LoggedCallComponent implements OnInit {
   constructor(
     protected router: Router,
     private loggedCallService: LoggedCallService,
+    protected authService: AuthService
   ) {}
 
   ngOnInit(): void {

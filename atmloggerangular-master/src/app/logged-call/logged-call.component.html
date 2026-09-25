@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="authService.hasRole('LOGGED_CALLS')">
   <h2>Logged Calls</h2>
 
   <!-- Loading spinner -->

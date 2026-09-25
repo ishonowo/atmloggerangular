@@ -9,7 +9,7 @@ import { AuthService } from '../shared/auth.service';
 })
 export class MenuComponent {
   constructor(
-    private authService: AuthService,
+    protected authService: AuthService,
     private router: Router
   ) {}
 

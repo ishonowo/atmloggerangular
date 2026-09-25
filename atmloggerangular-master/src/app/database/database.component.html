@@ -1,18 +1,18 @@
 <div>
-  <div>
+  <div *ngIf="authService.hasRole('DISPLAY')">
     <p>
       Click
       <a routerLink="/db-display" class="nav-link"><b>here</b></a> to see
       current information.
     </p>
   </div>
-  <div>
+  <div *ngIf="authService.hasRole('INSERT')">
     <p>
       Click <a routerLink="/db-insert" class="nav-link"><b>here</b></a> to add
       information.
     </p>
   </div>
-  <div>
+  <div *ngIf="authService.hasRole('UPDATE')">
     <p>
       Click <a routerLink="/db-update" class="nav-link"><b>here</b></a> to
       update information.

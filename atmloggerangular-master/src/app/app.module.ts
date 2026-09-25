@@ -46,7 +46,7 @@ import { UpdateBranchComponent } from './database/update/up-display-branch/updat
 import { LoggedCallComponent } from './logged-call/logged-call.component';
 import { UpdateCallComponent } from './logged-call/update-call/update-call.component';
 import { AuthComponent } from './auth/auth.component';
-import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { authInterceptor } from './interceptor/auth.interceptor';
 import { InsertFaultComponent } from './database/insert/insert-fault/insert-fault.component';
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
 import { UpdateFaultComponent } from './database/update/up-display-fault/update-fault/update-fault.component';
@@ -102,10 +102,9 @@ import { UpdateFaultComponent } from './database/update/up-display-fault/update-
     AppRoutingModule, // Handles all application routing
     FormsModule,
     ReactiveFormsModule,
-    CommonModule,
-    HttpClientModule   
+    CommonModule
   ],
-  providers: [provideHttpClient(withInterceptors([AuthInterceptor]))],
+  providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   bootstrap: [AppComponent], // ONLY AppComponent belongs here
 })
 export class AppModule {}
