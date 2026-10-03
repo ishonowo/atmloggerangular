@@ -16,49 +16,53 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav" *ngIf="isLoggedIn()" >
+    <div class="collapse navbar-collapse" id="navbarNav" *ngIf="isLoggedIn()">
       <div class="navbar-nav" *ngIf="authService.hasRole('LOG_ISSUE')">
         <a routerLink="/issue-log" routerLinkActive="active" class="nav-link"
-          >Log an Issue</a
-        >
-        <div
-          class="nav-item dropdown"
-          *ngIf="authService.hasAnyRole(['DISPLAY', 'INSERT', 'UPDATE'])"
-        >
-          <a
-            routerLink="/database"
-            routerLinkActive="active"
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="databaseDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Use Application Backend
-          </a>
-          <div class="dropdown-menu" aria-labelledby="databaseDropdown" x>
-            <a class="dropdown-item" routerLink="/db-display">Display</a>
-            <a class="dropdown-item" routerLink="/db-insert">Insert</a>
-            <a class="dropdown-item" routerLink="/db-update">Update</a>
-          </div>
-        </div>
-
+          >Log an Issue</a>
+      </div>
+      <div
+        class="nav-item dropdown"
+        *ngIf="authService.hasAnyRole(['DISPLAY', 'INSERT', 'UPDATE'])"
+      >
         <a
-          routerLink="/logged-call"
+          routerLink="/database"
           routerLinkActive="active"
-          class="nav-link"
-          *ngIf="authService.hasRole('LOGGED_CALLS')"
-          >Logged Calls</a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="databaseDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
-
-        <!--<a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>-->
+          Use Application Backend
+        </a>
+        <div class="dropdown-menu" aria-labelledby="databaseDropdown" x>
+          <a class="dropdown-item" routerLink="/db-display">Display</a>
+          <a class="dropdown-item" routerLink="/db-insert">Insert</a>
+          <a class="dropdown-item" routerLink="/db-update">Update</a>
+        </div>
       </div>
 
-      <div class="navbar-nav">
-        <div>
-          <a *ngIf="!isLoggedIn()" routerLink="/auth" class="nav-link">Home</a>
-        </div>
+      <a
+        routerLink="/logged-call"
+        routerLinkActive="active"
+        class="nav-link"
+        *ngIf="authService.hasRole('LOGGED_CALLS')"
+        >Logged Calls</a
+      >
+
+      <div class="navbar-nav" *ngIf="authService.hasRole('ADMIN')">
+        <a routerLink="/users" routerLinkActive="active" class="nav-link"
+          >Create a User</a
+        >
+      </div>
+      <!--<a routerLink="/report" routerLinkActive="active" class="nav-link">Reports</a>-->
+    </div>
+
+    <div class="navbar-nav">
+      <div>
+        <a *ngIf="!isLoggedIn()" routerLink="/auth" class="nav-link">Home</a>
       </div>
     </div>
 

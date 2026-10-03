@@ -6,14 +6,19 @@
       an ATM issue.
     </p>
   </div>
-  <div *ngIf="authService.hasAnyRole(['DISPLAY','INSERT','UPDATE'])">
+  <div *ngIf="authService.hasAnyRole(['DISPLAY', 'INSERT', 'UPDATE'])">
     <p>
       Click <a routerLink="/database" class="nav-link"><b>here</b></a> to see
       this application's backend.
     </p>
   </div>
   <div *ngIf="authService.hasRole('LOGGED_CALLS')">
-    Click <a routerLink="/logged-call" class="nav-link"><b>here</b></a> to see
-    all previously logged calls.
+    <p>
+      Click <a routerLink="/users" class="nav-link"><b>here</b></a> to see calls
+      logged.
+    </p>
+  </div>
+  <div *ngIf="authService.hasRole('ADMIN')">
+    Click <a routerLink="/users" class="nav-link"><b>here</b></a> create users.
   </div>
 </div>

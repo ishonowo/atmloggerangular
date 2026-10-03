@@ -31,6 +31,7 @@ import { UpDisplayBranchComponent } from './database/update/up-display-branch/up
 import { LoggedCallComponent } from './logged-call/logged-call.component';
 import { DisplayFaultComponent } from './database/display/display-fault/display-fault.component';
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
+import { UsersComponent } from './users/users.component';
 
 
 
@@ -167,6 +168,11 @@ const routes: Routes = [
   {
     path: 'email',
     component: EmailIssueComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
     canActivate: [authGuard]
   },
   { path: 'login', component: LoginComponent },

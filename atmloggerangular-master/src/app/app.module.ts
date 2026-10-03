@@ -50,6 +50,7 @@ import { authInterceptor } from './interceptor/auth.interceptor';
 import { InsertFaultComponent } from './database/insert/insert-fault/insert-fault.component';
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
 import { UpdateFaultComponent } from './database/update/up-display-fault/update-fault/update-fault.component';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import { UpdateFaultComponent } from './database/update/up-display-fault/update-
     InsertFaultComponent,
     UpDisplayFaultComponent,
     UpdateFaultComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
