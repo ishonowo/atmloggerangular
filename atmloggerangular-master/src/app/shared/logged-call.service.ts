@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient,  HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoggedCall } from '../model/loggedCall';
 import { Observable } from 'rxjs';
@@ -12,8 +12,12 @@ export class LoggedCallService {
 
   constructor(private http: HttpClient) {}
 
-  findAllLoggedCalls(): Observable<LoggedCallObj[]> {
-    return this.http.get<LoggedCallObj[]>(this.baseUrl);
+  findAllLoggedCalls(terminalId?: string): Observable<LoggedCallObj[]> {
+    let params = new HttpParams();
+    if (terminalId && terminalId.trim()){
+      params=params.set('terminalId',terminalId.trim());
+    }
+    return this.http.get<LoggedCallObj[]>(this.baseUrl,{params});
   }
 
   insertLoggedCall(loggedCall: LoggedCall): Observable<any> {
@@ -32,8 +36,13 @@ export class LoggedCallService {
     return this.http.put<void>(`${this.baseUrl}/${logId}/resume`, { holdEnd });
   }
 
-  exportToExcel(): Observable<HttpResponse<Blob>> {
+  exportToExcel(terminalId?: string): Observable<HttpResponse<Blob>> {
+    let params= new HttpParams();
+    if (terminalId && terminalId.trim()){
+      params=params.set('terminalId',terminalId.trim());
+    }
     return this.http.get(`${this.baseUrl}/export`, {
+      params,
       responseType: 'blob',
       observe: 'response',
     });

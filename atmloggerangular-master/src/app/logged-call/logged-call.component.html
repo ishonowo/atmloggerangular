@@ -1,4 +1,16 @@
 <div class="container mt-4" *ngIf="authService.hasRole('LOGGED_CALLS')">
+        <div class="searchByTerminalId">
+        <label for="searchByTerminalId"><b>Terminal ID</b></label>
+        <input
+          id="searchByTerminalId"
+          [formControl]="searchByTerminalId"
+          placeholder="Enter a terminal ID to search for."
+          title="searchByTerminalId"
+          type="text"
+        />
+        <button type="button" (click)="clear()" [disabled]="!searchByTerminalId.value">Clear</button>
+      </div>
+
   <h2>Logged Calls</h2>
 
   <!-- Loading spinner -->

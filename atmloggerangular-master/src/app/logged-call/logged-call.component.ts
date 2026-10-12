@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { LoggedCallObj } from '../model/loggedCallObj';
 import { Router } from '@angular/router';
 import { LoggedCallService } from '../shared/logged-call.service';
 import { HttpResponse } from '@angular/common/http';
 import { AuthService } from '../shared/auth.service';
-
+import { of, Subject } from 'rxjs';
+import {
+  catchError, debounceTime, distinctUntilChanged, map, switchMap, takeUntil, tap,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-logged-call',
   templateUrl: './logged-call.component.html',
   styleUrls: ['./logged-call.component.css'],
 })
-export class LoggedCallComponent implements OnInit {
+export class LoggedCallComponent implements OnInit, OnDestroy {
   public loggedCallDisplayForm!: FormGroup;
   protected isClicked: boolean = false;
   public loading: boolean = true;
@@ -29,20 +32,54 @@ export class LoggedCallComponent implements OnInit {
 
   activeResumeLogId: number | null = null;
   resumeDateTimeValue = '';
+  protected loggedCalls!: LoggedCallObj[];
+  protected searchByTerminalId = new FormControl('', { nonNullable: true });
+  private destroy$=new Subject<void>();
 
+
+  
   constructor(
     protected router: Router,
     private loggedCallService: LoggedCallService,
     protected authService: AuthService
   ) {}
 
+  ngOnDestroy(): void {
+      this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   ngOnInit(): void {
     this.loadLoggedCallObjs();
+     this.searchByTerminalId.valueChanges
+      .pipe(
+        debounceTime(400),
+        map((v) => v.trim()),
+        distinctUntilChanged(),
+        tap(() => {
+          this.loading = true;
+          this.error = '';
+        }),
+        switchMap((term) =>
+          this.loggedCallService.findAllLoggedCalls(term).pipe(
+            catchError((err) => {
+              console.error('Error:', err);
+              this.error = 'Error loading calls.';
+              return of([] as LoggedCallObj[]);
+            })
+          )
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((data) => {
+        this.calls = data;
+        this.loading = false;
+      });
   }
 
   loadLoggedCallObjs(): void {
     this.loading = true;
-    this.loggedCallService.findAllLoggedCalls().subscribe({
+    this.loggedCallService.findAllLoggedCalls(this.searchByTerminalId.value ).subscribe({
       next: (data) => {
         this.calls = data;
         //console.log(this.calls);
@@ -59,6 +96,7 @@ export class LoggedCallComponent implements OnInit {
     });
   }
 
+
   onSelect(call: LoggedCallObj): void {
     this.selectedCall = call;
   }
@@ -73,7 +111,6 @@ export class LoggedCallComponent implements OnInit {
 
   isOnHold(call: LoggedCallObj): boolean {
     return !!call.holdStart && !call.holdEnd;
-    //return call.holdStart && !call.holdEnd;
   }
 
   openHoldPicker(call: LoggedCallObj): void {
@@ -165,9 +202,10 @@ export class LoggedCallComponent implements OnInit {
       // This will format the date according to Nigerian English format in WAT timezone
     } else return '';
   }
+  
   exportToExcel(): void {
     this.exporting = true;
-    this.loggedCallService.exportToExcel().subscribe({
+    this.loggedCallService.exportToExcel(this.searchByTerminalId.value).subscribe({
       next: (response: HttpResponse<Blob>) => {
         const blob = response.body as Blob;
         const url = window.URL.createObjectURL(blob);
@@ -196,5 +234,8 @@ export class LoggedCallComponent implements OnInit {
         this.exporting = false;
       },
     });
+  }
+  clear(): void {
+    this.searchByTerminalId.setValue('');
   }
 }
