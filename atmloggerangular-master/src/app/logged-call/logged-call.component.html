@@ -1,15 +1,57 @@
 <div class="container mt-4" *ngIf="authService.hasRole('LOGGED_CALLS')">
-        <div class="searchByTerminalId">
-        <label for="searchByTerminalId"><b>Terminal ID</b></label>
-        <input
-          id="searchByTerminalId"
-          [formControl]="searchByTerminalId"
-          placeholder="Enter a terminal ID to search for."
-          title="searchByTerminalId"
-          type="text"
-        />
-        <button type="button" (click)="clear()" [disabled]="!searchByTerminalId.value">Clear</button>
-      </div>
+  <div class="searchByTerminalId">
+    <label for="searchByTerminalId"><b>Terminal ID</b></label>
+    <input
+      id="searchByTerminalId"
+      [formControl]="searchByTerminalId"
+      placeholder="Search terminal info"
+      title="searchByTerminalId"
+      type="text"
+    />
+  </div>
+
+  <div class="startDateLogged">
+    <label for="startDateLogged"><b>Date Logged: From</b></label>
+    <input
+      id="startDateLogged"
+      [formControl]="startDateLogged"
+      [max]="endDateLogged.value || null"
+      title="Start date and time logged"
+      type="datetime-local"
+    />
+
+    <label for="endDateLogged"><b>To</b></label>
+    <input
+      id="endDateLogged"
+      [formControl]="endDateLogged"
+      [min]="startDateLogged.value || null"
+      title="End date and time logged"
+      type="datetime-local"
+    />
+    <br/>
+    <label for="startDateLogged"><b>Date Completed: From</b></label>
+    <input
+      id="startDateCompleted"
+      [formControl]="startDateCompleted"
+      [max]="startDateCompleted.value || null"
+      title="Start date and time logged"
+      type="datetime-local"
+    />
+
+    <label for="endDateCompleted"><b>To</b></label>
+    <input
+      id="endDateCompleted"
+      [formControl]="endDateCompleted"
+      [min]="endDateCompleted.value || null"
+      title="End date and time logged"
+      type="datetime-local"
+    />
+    
+
+    <button type="button" (click)="clear()" [disabled]="!hasFilters">
+      Clear
+    </button>
+  </div>
 
   <h2>Logged Calls</h2>
 
@@ -37,7 +79,8 @@
               <th>Terminal ID</th>
               <th>Terminal Name</th>
               <th>Vendor</th>
-              <th>Fault/Date and Time Logged</th>
+              <th>Fault</th>
+              <th>Date and Time Logged</th>
               <th>Contact Person</th>
               <th>Starting Date</th>
               <th>Date Completed</th>
@@ -61,7 +104,8 @@
                 <td>{{ call.terminalId }}</td>
                 <td>{{ call.terminalName }}</td>
                 <td>{{ call.vendorName }}</td>
-                <td>{{ call.issueDesc + " " + formatDateTime(call.dateLogged) }}</td>
+                <td>{{ call.issueDesc }}</td>
+                <td>{{ formatDateTime(call.dateLogged) }}</td>
                 <td>{{ call.branchLogger + " " + call.loggerPhone }}</td>
                 <td>{{ formatDate(call.startingDate) }}</td>
                 <td>{{ formatDateTime(call.dateCompleted) }}</td>
@@ -69,15 +113,26 @@
                 <td>{{ call.allowedHours }}</td>
                 <td>{{ formatDateTime(call.slaDeadline) }}</td>
                 <td>
-                  <span *ngIf="call.slaBreached" class="badge bg-danger">Yes</span>
-                  <span *ngIf="!call.slaBreached" class="badge bg-success">No</span>
+                  <span *ngIf="call.slaBreached" class="badge bg-danger"
+                    >Yes</span
+                  >
+                  <span *ngIf="!call.slaBreached" class="badge bg-success"
+                    >No</span
+                  >
                 </td>
                 <td>
-                  <span *ngIf="isOnHold(call)" class="badge bg-warning text-dark">
+                  <span
+                    *ngIf="isOnHold(call)"
+                    class="badge bg-warning text-dark"
+                  >
                     On hold since {{ formatDateTime(call.holdStart!) }}
                   </span>
-                  <span *ngIf="!isOnHold(call) && call.holdStart && call.holdEnd" class="badge bg-secondary">
-                    Held {{ formatDateTime(call.holdStart) }} &ndash; {{ formatDateTime(call.holdEnd) }}
+                  <span
+                    *ngIf="!isOnHold(call) && call.holdStart && call.holdEnd"
+                    class="badge bg-secondary"
+                  >
+                    Held {{ formatDateTime(call.holdStart) }} &ndash;
+                    {{ formatDateTime(call.holdEnd) }}
                   </span>
                   <span *ngIf="!call.holdStart">&ndash;</span>
                 </td>
@@ -107,27 +162,53 @@
                     </button>
 
                     <!-- Inline hold date-time picker -->
-                    <div *ngIf="activeHoldLogId === call.logId" class="hold-picker mt-1">
+                    <div
+                      *ngIf="activeHoldLogId === call.logId"
+                      class="hold-picker mt-1"
+                    >
                       <input
                         type="datetime-local"
                         [(ngModel)]="holdDateTimeValue"
                         class="form-control form-control-sm mb-1"
                         title="Hold start date and time"
                       />
-                      <button class="btn btn-sm btn-primary" (click)="confirmHold(call)">Confirm</button>
-                      <button class="btn btn-sm btn-outline-secondary" (click)="cancelHoldPicker()">Cancel</button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="confirmHold(call)"
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        class="btn btn-sm btn-outline-secondary"
+                        (click)="cancelHoldPicker()"
+                      >
+                        Cancel
+                      </button>
                     </div>
 
                     <!-- Inline resume date-time picker -->
-                    <div *ngIf="activeResumeLogId === call.logId" class="resume-picker mt-1">
+                    <div
+                      *ngIf="activeResumeLogId === call.logId"
+                      class="resume-picker mt-1"
+                    >
                       <input
                         type="datetime-local"
                         [(ngModel)]="resumeDateTimeValue"
                         class="form-control form-control-sm mb-1"
                         title="Hold end date and time"
                       />
-                      <button class="btn btn-sm btn-primary" (click)="confirmResume(call)">Confirm</button>
-                      <button class="btn btn-sm btn-outline-secondary" (click)="cancelResumePicker()">Cancel</button>
+                      <button
+                        class="btn btn-sm btn-primary"
+                        (click)="confirmResume(call)"
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        class="btn btn-sm btn-outline-secondary"
+                        (click)="cancelResumePicker()"
+                      >
+                        Cancel
+                      </button>
                     </div>
                   </div>
                 </td>
@@ -158,8 +239,12 @@
     </div>
   </div>
   <div class="d-flex justify-content-between align-items-center">
-  <button class="btn btn-outline-light" (click)="exportToExcel()" [disabled]="exporting">
-    {{ exporting ? 'Exporting...' : 'Export to Excel' }}
-  </button>
-</div>
+    <button
+      class="btn btn-outline-light"
+      (click)="exportToExcel()"
+      [disabled]="exporting"
+    >
+      {{ exporting ? "Exporting..." : "Export to Excel" }}
+    </button>
+  </div>
 </div>
