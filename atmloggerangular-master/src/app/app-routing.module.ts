@@ -32,6 +32,8 @@ import { LoggedCallComponent } from './logged-call/logged-call.component';
 import { DisplayFaultComponent } from './database/display/display-fault/display-fault.component';
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
 import { UsersComponent } from './users/users.component';
+import { UpdateUsersComponent } from './users/update-users/update-users.component';
+import { CreateUsersComponent } from './users/create-users/create-users.component';
 
 
 
@@ -173,6 +175,16 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
+    canActivate: [authGuard]
+  },
+    {
+    path: 'create-users',
+    component: CreateUsersComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'update-users',
+    component: UpdateUsersComponent,
     canActivate: [authGuard]
   },
   { path: 'login', component: LoginComponent },

@@ -51,6 +51,8 @@ import { InsertFaultComponent } from './database/insert/insert-fault/insert-faul
 import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-display-fault.component';
 import { UpdateFaultComponent } from './database/update/up-display-fault/update-fault/update-fault.component';
 import { UsersComponent } from './users/users.component';
+import { UpdateUsersComponent } from './users/update-users/update-users.component';
+import { CreateUsersComponent } from './users/create-users/create-users.component';
 
 
 @NgModule({
@@ -98,6 +100,8 @@ import { UsersComponent } from './users/users.component';
     UpDisplayFaultComponent,
     UpdateFaultComponent,
     UsersComponent,
+    UpdateUsersComponent,
+    CreateUsersComponent,
   ],
   imports: [
     BrowserModule,

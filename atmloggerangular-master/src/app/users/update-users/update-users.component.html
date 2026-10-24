@@ -1,0 +1,104 @@
+<div class="container mt-4" *ngIf="authService.hasRole('ADMIN')">
+  <h2>Manage User Roles</h2>
+
+  <div *ngIf="loading" class="text-muted">Loading users...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div class="form-group mb-3" *ngIf="!loading">
+    <label for="userSelect"><b>User</b></label>
+    <select
+      id="userSelect"
+      class="form-control"
+      [ngModel]="selectedUserId"
+      (ngModelChange)="onUserChange($event)"
+    >
+      <option [ngValue]="null">
+        All users (history) / select a user to edit
+      </option>
+      <option *ngFor="let u of users" [ngValue]="u.id">
+        {{ u.fullName }} ({{ u.ldapCn }}){{ u.active ? "" : " - inactive" }}
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="selectedUser">
+    <label>
+      Roles <small class="text-muted">(click to add or remove)</small>
+    </label>
+    <div class="role-button-grid">
+      <button
+        type="button"
+        *ngFor="let role of roles"
+        class="btn btn-outline-primary role-btn"
+        [class.active]="hasRole(role)"
+        [disabled]="busyRoleId !== null"
+        (click)="toggleRole(role)"
+      >
+        <span
+          *ngIf="busyRoleId === role.id"
+          class="spinner-border spinner-border-sm"
+        ></span>
+        {{ role.name }}:- {{ role.description }}
+      </button>
+    </div>
+    <h4>
+      <a routerLink="/login">Return</a>
+    </h4>
+  </div>
+
+  <h4 class="mt-5">Role change history</h4>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>When</th>
+          <th>By</th>
+          <th>Action</th>
+          <th>User</th>
+          <th>Role</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of audit">
+          <td>{{ formatDateTime(a.performedAt) }}</td>
+          <td>{{ a.performedBy }}</td>
+          <td>
+            <span
+              class="badge"
+              [class.bg-success]="a.action === 'ADDED'"
+              [class.bg-warning]="a.action === 'REMOVED'"
+              [class.text-dark]="a.action === 'REMOVED'"
+              [class.bg-danger]="a.action === 'REMOVE_DENIED'"
+              >{{ a.action }}</span
+            >
+          </td>
+          <td>{{ a.targetLdapCn }}</td>
+          <td>{{ a.roleName }}</td>
+          <td>{{ a.detail }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="audit.length === 0" class="alert alert-info">
+      No changes recorded.
+    </div>
+  </div>
+
+  <div class="d-flex gap-2 align-items-center" *ngIf="auditTotalPages > 1">
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [disabled]="auditPage === 0"
+      (click)="loadAudit(auditPage - 1)"
+    >
+      Previous
+    </button>
+    <span>Page {{ auditPage + 1 }} of {{ auditTotalPages }}</span>
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [disabled]="auditPage + 1 >= auditTotalPages"
+      (click)="loadAudit(auditPage + 1)"
+    >
+      Next
+    </button>
+  </div>
+</div>

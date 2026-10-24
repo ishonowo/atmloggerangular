@@ -1,57 +1,84 @@
 <div class="container mt-4" *ngIf="authService.hasRole('LOGGED_CALLS')">
-  <div class="searchByTerminalId">
-    <label for="searchByTerminalId"><b>Terminal ID</b></label>
+<div class="filter-bar">
+  <!-- Terminal ID -->
+  <div class="filter-group">
+    <label class="filter-label" for="searchByTerminalId">Terminal ID</label>
     <input
       id="searchByTerminalId"
+      class="filter-input"
       [formControl]="searchByTerminalId"
       placeholder="Search terminal info"
-      title="searchByTerminalId"
       type="text"
     />
   </div>
 
-  <div class="startDateLogged">
-    <label for="startDateLogged"><b>Date Logged: From</b></label>
-    <input
-      id="startDateLogged"
-      [formControl]="startDateLogged"
-      [max]="endDateLogged.value || null"
-      title="Start date and time logged"
-      type="datetime-local"
-    />
+  <!-- Date Logged range -->
+  <fieldset class="filter-group filter-range">
+    <legend class="filter-legend">Date Logged</legend>
+    <div class="range-fields">
+      <div class="field">
+        <label class="filter-label" for="startDateLogged">From</label>
+        <input
+          id="startDateLogged"
+          class="filter-input"
+          [formControl]="startDateLogged"
+          [max]="endDateLogged.value || null"
+          type="datetime-local"
+        />
+      </div>
+      <span class="range-sep" aria-hidden="true">&rarr;</span>
+      <div class="field">
+        <label class="filter-label" for="endDateLogged">To</label>
+        <input
+          id="endDateLogged"
+          class="filter-input"
+          [formControl]="endDateLogged"
+          [min]="startDateLogged.value || null"
+          type="datetime-local"
+        />
+      </div>
+    </div>
+  </fieldset>
 
-    <label for="endDateLogged"><b>To</b></label>
-    <input
-      id="endDateLogged"
-      [formControl]="endDateLogged"
-      [min]="startDateLogged.value || null"
-      title="End date and time logged"
-      type="datetime-local"
-    />
-    <br/>
-    <label for="startDateLogged"><b>Date Completed: From</b></label>
-    <input
-      id="startDateCompleted"
-      [formControl]="startDateCompleted"
-      [max]="startDateCompleted.value || null"
-      title="Start date and time logged"
-      type="datetime-local"
-    />
+  <!-- Date Completed range -->
+  <fieldset class="filter-group filter-range">
+    <legend class="filter-legend">Date Completed</legend>
+    <div class="range-fields">
+      <div class="field">
+        <label class="filter-label" for="startDateCompleted">From</label>
+        <input
+          id="startDateCompleted"
+          class="filter-input"
+          [formControl]="startDateCompleted"
+          [max]="endDateCompleted.value || null"
+          type="datetime-local"
+        />
+      </div>
+      <span class="range-sep" aria-hidden="true">&rarr;</span>
+      <div class="field">
+        <label class="filter-label" for="endDateCompleted">To</label>
+        <input
+          id="endDateCompleted"
+          class="filter-input"
+          [formControl]="endDateCompleted"
+          [min]="startDateCompleted.value || null"
+          type="datetime-local"
+        />
+      </div>
+    </div>
+  </fieldset>
 
-    <label for="endDateCompleted"><b>To</b></label>
-    <input
-      id="endDateCompleted"
-      [formControl]="endDateCompleted"
-      [min]="endDateCompleted.value || null"
-      title="End date and time logged"
-      type="datetime-local"
-    />
-    
-
-    <button type="button" (click)="clear()" [disabled]="!hasFilters">
-      Clear
+  <div class="filter-actions">
+    <button
+      type="button"
+      class="btn btn-outline-light btn-sm"
+      (click)="clear()"
+      [disabled]="!hasFilters"
+    >
+      Clear filters
     </button>
   </div>
+</div>
 
   <h2>Logged Calls</h2>
 
