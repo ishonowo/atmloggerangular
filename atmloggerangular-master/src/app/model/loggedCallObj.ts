@@ -6,16 +6,28 @@ export interface LoggedCallObj{
     vendorName: string;
     issueDesc: string;
     dateLogged: Date;
-    fromEmail: string;
     branchLogger: string;
     loggerPhone: string;
     startingDate: Date;
     dateCompleted: Date;
-    browserUsed: string;
-    hostName: string;
-    loggerIP: string;
     statusDesc: string;
     statusId: number;
+
+    loggerEmail: string;
+    loggerBrowserUsed: string;
+    loggerHostName: string;
+    loggerIP: string;
+    
+    closerEmail: string;
+    closerBrowserUsed: string;
+    closerHostName: string;
+    closerIP: string;
+    
+    reopenerEmail: string;
+    reopenerBrowserUsed: string;
+    reopenerHostName: string;
+    reopenerIP: string;
+    
 
     // SLA fields
     holdStart?: Date | null;

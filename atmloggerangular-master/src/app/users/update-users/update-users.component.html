@@ -1,6 +1,8 @@
 <div class="container mt-4" *ngIf="authService.hasRole('ADMIN')">
   <h2>Manage User Roles</h2>
-
+  <h4>
+    <a routerLink="/users">Return</a>
+  </h4>
   <div *ngIf="loading" class="text-muted">Loading users...</div>
   <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
@@ -41,9 +43,7 @@
         {{ role.name }}:- {{ role.description }}
       </button>
     </div>
-    <h4>
-      <a routerLink="/login">Return</a>
-    </h4>
+  
   </div>
 
   <h4 class="mt-5">Role change history</h4>

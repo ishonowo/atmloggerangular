@@ -34,7 +34,7 @@ export class UpdateCallComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private loggedCallService: LoggedCallService,
-    private callStatusService: LogStatusService,
+    private callStatusService: LogStatusService
   ) {
     this.callForm = this.createForm();
   }
@@ -52,11 +52,7 @@ export class UpdateCallComponent implements OnInit, OnChanges {
         this.callStatusService.findAllLogStatus(),
       );
       console.log(this.statusObjs);
-      /*/ Set currentStatus once statusObjs is available
-      this.currentStatus = this.statusObjs.find(
-        (status) => status.statusId === this.call.statusId
-      );
-      console.log(this.currentStatus);*/
+      
 
       // Now that currentStatus is available, populate the form
       this.populateForm();
@@ -117,14 +113,25 @@ export class UpdateCallComponent implements OnInit, OnChanges {
         vendorName: this.call.vendorName,
         issueDesc: this.call.issueDesc,
         dateLogged: this.call.dateLogged,
-        fromEmail: this.call.fromEmail,
+        loggerEmail: this.call.loggerEmail,
+        loggerBrowserUsed: this.call.loggerBrowserUsed,
+        loggerHostName: this.call.loggerHostName,
+        loggerIP: this.call.loggerIP,
+        
+        closerEmail: this.call.closerEmail,
+        closerBrowserUsed: this.call.closerBrowserUsed,
+        closerHostName: this.call.closerHostName,
+        closerIP: this.call.closerIP,
+        
+        reopenerEmail: this.call.reopenerEmail,
+        reopenerBrowserUsed: this.call.reopenerBrowserUsed,
+        reopenerHostName: this.call.reopenerHostName,
+        reopenerIP: this.call.reopenerIP,
+        
         branchLogger: this.call.branchLogger,
         loggerPhone: this.call.loggerPhone,
         startingDate: this.call.startingDate,
         dateCompleted: new Date(this.callForm.get('dateCompleted')?.value),
-        browserUsed: this.call.browserUsed,
-        hostName: this.call.hostName,
-        loggerIP: this.call.loggerIP,
         statusDesc: selectedStatus?.statusDesc as string,
         statusId: selectedStatus?.id as number,
       };

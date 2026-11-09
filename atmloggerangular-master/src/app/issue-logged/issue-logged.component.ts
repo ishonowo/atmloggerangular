@@ -75,7 +75,7 @@ export class IssueLoggedComponent implements OnInit {
       loggerPhoneNo: ['08012345678', [
         Validators.required,
         Validators.minLength(11),
-        Validators.maxLength(14)
+        Validators.maxLength(11)
       ]],
       // Only enabled/required when "Others" is among the selected faults
       otherDesc: [{ value: '', disabled: true }, [

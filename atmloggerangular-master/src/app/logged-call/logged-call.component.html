@@ -117,10 +117,18 @@
               <th>Breached</th>
               <th>Hold</th>
               <th>Actions</th>
-              <th>Backend Staff Email</th>
-              <th>Backend Staff Browser</th>
-              <th>Backend Staff Hostname</th>
-              <th>Backend Staff IP</th>
+              <th>Inputter Staff Email</th>
+              <th>Inputter Staff Browser</th>
+              <th>Inputter Staff Hostname</th>
+              <th>Inputter Staff IP</th>
+              <th>Closer Staff Email</th>
+              <th>Closer Staff Browser</th>
+              <th>Closer Staff Host name</th>
+              <th>Closer Staff IP</th>
+              <th>Reopener Staff Email</th>
+              <th>Reopener Staff Browser</th>
+              <th>Reopener Staff Hostname</th>
+              <th>Reopener Staff IP</th>
             </tr>
           </thead>
           <tbody>
@@ -239,10 +247,18 @@
                     </div>
                   </div>
                 </td>
-                <td>{{ call.fromEmail }}</td>
-                <td>{{ call.browserUsed }}</td>
-                <td>{{ call.hostName }}</td>
+                <td>{{ call.loggerEmail   }}</td>
+                <td>{{ call.loggerBrowserUsed }}</td>
+                <td>{{ call.loggerHostName }}</td>
                 <td>{{ call.loggerIP }}</td>
+                <td>{{ call.closerEmail }}</td>
+                <td>{{ call.closerBrowserUsed }}</td>
+                <td>{{ call.closerHostName }}</td>
+                <td>{{ call.closerIP }}</td>
+                <td>{{ call.reopenerEmail }}</td>
+                <td>{{ call.reopenerBrowserUsed }}</td>
+                <td>{{ call.reopenerHostName }}</td>
+                <td>{{ call.reopenerIP }}</td>
               </tr>
             </ng-container>
           </tbody>

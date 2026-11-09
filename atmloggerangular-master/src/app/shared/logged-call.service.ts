@@ -29,10 +29,14 @@ export class LoggedCallService {
     const endDateTimeCompleted = filters?.endDateTimeCompleted?.trim();
 
     if (terminalId) params = params.set('terminalId', terminalId);
-    if (startDateTimeLogged) params = params.set('startDateTimeLogged', startDateTimeLogged);
-    if (endDateTimeLogged) params = params.set('endDateTimeLogged', endDateTimeLogged);
-    if (startDateTimeCompleted) params = params.set('startDateTimeCompleted', startDateTimeCompleted);
-    if (endDateTimeCompleted) params = params.set('endDateTimeCompleted', endDateTimeCompleted);
+    if (startDateTimeLogged)
+      params = params.set('startDateTimeLogged', startDateTimeLogged);
+    if (endDateTimeLogged)
+      params = params.set('endDateTimeLogged', endDateTimeLogged);
+    if (startDateTimeCompleted)
+      params = params.set('startDateTimeCompleted', startDateTimeCompleted);
+    if (endDateTimeCompleted)
+      params = params.set('endDateTimeCompleted', endDateTimeCompleted);
     return params;
   }
 
@@ -46,7 +50,8 @@ export class LoggedCallService {
     return this.http.post<LoggedCall>(this.baseUrl, loggedCall);
   }
 
-  updateLoggedCall(updatedCall: LoggedCallObj): Observable<any> {
+  updateLoggedCall(
+    updatedCall: LoggedCallObj  ): Observable<any> {
     return this.http.put<void>(this.baseUrl, updatedCall);
   }
 
