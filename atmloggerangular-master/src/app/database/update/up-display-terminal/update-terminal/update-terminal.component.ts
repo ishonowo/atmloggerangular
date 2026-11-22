@@ -28,7 +28,7 @@ export class UpdateTerminalComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private terminalService: TerminalService
+    private terminalService: TerminalService,
   ) {
     this.terminalForm = this.createForm();
   }
@@ -65,8 +65,14 @@ export class UpdateTerminalComponent implements OnInit, OnChanges {
       terminalId: this.terminal.terminalId,
       atmName: this.terminal.atmName,
       offsite: this.terminal.offsite,
-      vendorName: this.terminal.vendorName
+      vendorName: this.terminal.vendorName,
     });
+  }
+
+  onReturn(): void {
+    this.error = '';
+    this.success = '';
+    this.closeForm.emit(); // list page sets selectedBranch = null, so the form closes
   }
 
   onSubmit(): void {
@@ -100,4 +106,3 @@ export class UpdateTerminalComponent implements OnInit, OnChanges {
     }
   }
 }
-

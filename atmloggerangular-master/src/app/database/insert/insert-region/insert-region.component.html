@@ -11,7 +11,7 @@
     <div>
       <br />
       <div class="input">
-        <label for="regionName"><b>Name: </b></label>
+        <label for="regionName"><b>Region Name: </b></label>
         <input
           id="regionName"
           formControlName="regionName"
@@ -30,6 +30,30 @@
             *ngIf="regionInsertForm.get('regionName')?.errors?.['required']"
           >
             *The region name is required.</small
+          >
+        </ng-container>
+      </div>
+      <br />
+      <div class="input">
+        <label for="directoriate"><b>Directoriate: </b></label>
+        <input
+          id="directoriate"
+          formControlName="directoriate"
+          placeholder="Enter the name of the directoriate."
+          title="directoriate"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            regionInsertForm.get('directoriate')?.invalid &&
+            (regionInsertForm.get('directoriate')?.touched ||
+              regionInsertForm.get('directoriate')?.dirty)
+          "
+        >
+          <small
+            *ngIf="regionInsertForm.get('directoriate')?.errors?.['required']"
+          >
+            *The directoriate is required.</small
           >
         </ng-container>
       </div>
@@ -68,12 +92,14 @@
         <tr>
           <th>ID</th>
           <th>Region Name</th>
+          <th>Directoriate</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let region of regions">
           <td>{{ region.id }}</td>
           <td>{{ region.regionName }}</td>
+          <td>{{ region.directoriate }}</td>
         </tr>
       </tbody>
     </table>

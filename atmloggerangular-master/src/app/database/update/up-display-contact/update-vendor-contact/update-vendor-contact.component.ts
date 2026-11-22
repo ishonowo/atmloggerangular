@@ -1,5 +1,13 @@
 // update-vendor-contact.component.ts
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VendorContactService } from '../../../../shared/vendor-contact.service';
 import { VendorService } from '../../../../shared/vendor.service';
@@ -8,7 +16,7 @@ import { Vendor } from '../../../../model/vendor';
 
 @Component({
   selector: 'app-update-vendor-contact',
-  templateUrl: './update-vendor-contact.component.html'
+  templateUrl: './update-vendor-contact.component.html',
 })
 export class UpdateVendorContactComponent implements OnInit, OnChanges {
   @Input() vendorContact!: VendorContact;
@@ -32,8 +40,11 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
     return this.fb.group({
       id: [''],
       vendorId: ['', Validators.required],
-      contact: ['', [Validators.required, Validators.maxLength(200), Validators.email]],
-      status: [true]
+      contact: [
+        '',
+        [Validators.required, Validators.maxLength(200), Validators.email],
+      ],
+      status: [true],
     });
   }
 
@@ -43,16 +54,14 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
     }
   }
 
-
   populateForm(): void {
     this.contactForm.patchValue({
       id: this.vendorContact.id,
       vendorId: this.vendorContact.vendorId,
       contact: this.vendorContact.contact,
-      status: this.vendorContact.status
+      status: this.vendorContact.status,
     });
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['vendorContact'] && this.vendorContact) {
@@ -60,6 +69,11 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
     }
   }
 
+  onReturn(): void {
+    this.error = '';
+    this.success = '';
+    this.closeForm.emit(); // list page sets selectedBranch = null, so the form closes
+  }
 
   onSubmit(): void {
     if (this.contactForm.valid) {
@@ -72,7 +86,7 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
         vendorId: this.contactForm.get('vendorId')?.value,
         contact: this.contactForm.get('contact')?.value,
         status: this.contactForm.get('status')?.value,
-        vendorName: this.contactForm.get('vendorName')?.value
+        vendorName: this.contactForm.get('vendorName')?.value,
       };
 
       this.vendorContactService.updateVendorContact(updatedContact).subscribe({
@@ -86,7 +100,7 @@ export class UpdateVendorContactComponent implements OnInit, OnChanges {
           this.error = 'Error updating vendor contact';
           this.loading = false;
           console.error('Error:', error);
-        }
+        },
       });
     }
   }

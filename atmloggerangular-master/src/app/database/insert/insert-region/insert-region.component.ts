@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Region } from 'src/app/model/region';
+import { RegionObj } from 'src/app/model/regionObj';
+import { Region } from 'src/app/model/region'
 import { RegionService } from 'src/app/shared/region.service';
 import { CustomValidators } from 'src/app/validators/custom.validators';
-//import { CustomValidators } from 'src/app/validators/custom.validators';
 
 @Component({
   selector: 'app-insert-region',
@@ -13,7 +13,10 @@ import { CustomValidators } from 'src/app/validators/custom.validators';
 })
 export class InsertRegionComponent implements OnInit {
   public regionInsertForm!: FormGroup;
-  public regionName: string = '';
+  protected regionObj?: RegionObj={
+    regionName:'',
+    directoriate:''
+  } ;
   protected error: string = '';
   loading: boolean=false;
   protected regions: Region[]=[];
@@ -25,6 +28,7 @@ export class InsertRegionComponent implements OnInit {
   ) {
     this.regionInsertForm = this.fb.group({
       regionName: ['', [Validators.required]],
+      directoriate: ['', [Validators.required]]
     });
   }
 
@@ -53,12 +57,12 @@ export class InsertRegionComponent implements OnInit {
   regionInsert(): void {
     console.log(this.regionInsertForm);
     if (this.regionInsertForm.valid) {
-      // this.region = {
-      //   id: this.regionInsertForm.get('id')?.value,
-      this.regionName = this.regionInsertForm.get('regionName')?.value;
-      //};
+      this.regionObj = {
+      regionName : this.regionInsertForm.get('regionName')?.value,
+      directoriate: this.regionInsertForm.get('directoriate')?.value
+      };
       //console.log(this.region);
-      this.regionService.insertRegion(this.regionName).subscribe({
+      this.regionService.insertRegion(this.regionObj).subscribe({
         next: (response) => {
           console.log('Region inserted successfully', response);
           // Reset form after successful submission

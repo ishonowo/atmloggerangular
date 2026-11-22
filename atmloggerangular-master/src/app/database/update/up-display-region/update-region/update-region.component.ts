@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegionService } from '../../../../shared/region.service';
 import { Region } from '../../../../model/region';
@@ -6,7 +14,7 @@ import { Region } from '../../../../model/region';
 @Component({
   selector: 'app-update-region',
   templateUrl: './update-region.component.html',
-  styleUrls: ['./update-region.component.css']
+  styleUrls: ['./update-region.component.css'],
 })
 export class UpdateRegionComponent implements OnInit, OnChanges {
   @Input() region!: Region;
@@ -20,7 +28,7 @@ export class UpdateRegionComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private regionService: RegionService
+    private regionService: RegionService,
   ) {
     this.regionForm = this.createForm();
   }
@@ -40,17 +48,25 @@ export class UpdateRegionComponent implements OnInit, OnChanges {
   createForm(): FormGroup {
     return this.fb.group({
       id: [''],
-      regionName: ['', [Validators.required, Validators.minLength(2)]]
+      regionName: ['', [Validators.required, Validators.minLength(2)]],
+      directoriate: ['', [Validators.required]]
     });
   }
 
   populateForm(): void {
     this.regionForm.patchValue({
       id: this.region.id,
-      regionName: this.region.regionName
+      regionName: this.region.regionName,
+      directoriate: this.region.directoriate
     });
   }
 
+  onReturn(): void {
+    this.error = '';
+    this.success = '';
+    this.closeForm.emit(); // list page sets selectedBranch = null, so the form closes
+  }
+  
   onSubmit(): void {
     if (this.regionForm.valid) {
       this.loading = true;
@@ -59,7 +75,8 @@ export class UpdateRegionComponent implements OnInit, OnChanges {
 
       const updatedRegion: Region = {
         id: this.regionForm.get('id')?.value,
-        regionName: this.regionForm.get('regionName')?.value
+        regionName: this.regionForm.get('regionName')?.value,
+        directoriate: this.regionForm.get('directoriate')?.value
       };
 
       this.regionService.updateRegion(updatedRegion).subscribe({
@@ -73,7 +90,7 @@ export class UpdateRegionComponent implements OnInit, OnChanges {
           this.error = 'Error updating region';
           this.loading = false;
           console.error('Error:', error);
-        }
+        },
       });
     }
   }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Region } from '../model/region';
+import { RegionObj } from '../model/regionObj';
 
 @Injectable({
     providedIn: 'root'
@@ -30,8 +31,8 @@ export class RegionService {
         return this.http.get<Region[]>(this.baseUrl);
     }
 
-    insertRegion(regionName: string): Observable<any> {
-        return this.http.post(this.baseUrl, regionName);
+    insertRegion(regionObj: RegionObj): Observable<any> {
+        return this.http.post(this.baseUrl, regionObj);
     }
 
     updateRegion(region: Region):Observable<any>{

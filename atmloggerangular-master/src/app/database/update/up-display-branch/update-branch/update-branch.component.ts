@@ -26,7 +26,10 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
   error: string = '';
   success: string = '';
 
-  constructor(private fb: FormBuilder, private branchService: BranchService) {
+  constructor(
+    private fb: FormBuilder,
+    private branchService: BranchService,
+  ) {
     this.branchForm = this.createForm();
   }
 
@@ -44,14 +47,17 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
 
   createForm(): FormGroup {
     return this.fb.group({
-      id: [,Validators.required],
-      solId: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      id: [, Validators.required],
+      solId: [
+        '',
+        [Validators.required, Validators.minLength(3), Validators.maxLength(3)],
+      ],
       regionId: ['', [Validators.required]],
       branchName: ['', [Validators.required, Validators.minLength(5)]],
-      branchEmail: ['', [Validators.required]],//, Validators.email]],
+      branchEmail: ['', [Validators.required]], //, Validators.email]],
       physicalAddress: ['', [Validators.required, Validators.minLength(10)]],
-      state: ['',Validators.required],
-      area: ['',Validators.required],
+      state: ['', Validators.required],
+      area: ['', Validators.required],
     });
   }
 
@@ -63,8 +69,16 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
       regionName: this.branch.regionName,
       branchName: this.branch.branchName,
       branchEmail: this.branch.branchEmail,
-      physicalAddress: this.branch.physicalAddress
+      physicalAddress: this.branch.physicalAddress,
+      state: this.branch.state,
+      area: this.branch.area,
     });
+  }
+
+  onReturn(): void {
+    this.error = '';
+    this.success = '';
+    this.closeForm.emit(); // list page sets selectedBranch = null, so the form closes
   }
 
   onSubmit(): void {
@@ -77,14 +91,14 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
         id: this.branchForm.get('id')?.value,
         solId: this.branchForm.get('solId')?.value,
         regionId: this.branchForm.get('regionId')?.value,
-        regionName: this.branchForm.get('regionName')?.value,
+        regionName: this.branch.regionName,
         branchName: this.branchForm.get('branchName')?.value,
         branchEmail: this.branchForm.get('branchEmail')?.value,
         physicalAddress: this.branchForm.get('physicalAddress')?.value,
         state: this.branchForm.get('state')?.value,
-        area: this.branchForm.get('area')?.value
+        area: this.branchForm.get('area')?.value,
       };
-      
+
       this.branchService.updateBranch(updatedbranch).subscribe({
         next: () => {
           this.success = 'Branch updated successfully';

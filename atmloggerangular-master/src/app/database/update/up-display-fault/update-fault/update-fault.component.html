@@ -1,4 +1,14 @@
 <div class="card">
+  <a
+    class="nav-link return-link"
+    role="button"
+    tabindex="0"
+    style="cursor: pointer"
+    (click)="onReturn()"
+    (keydown.enter)="onReturn()"
+  >
+    <h4>Return</h4>
+  </a>
   <div class="card-header">
     <h3>Update ATM Fault</h3>
   </div>
@@ -90,11 +100,13 @@
           </div>
         </div>
       </div>
-        <button type="submit" 
-                class="btn btn-primary" 
-                [disabled]="!faultForm.valid || loading">
-          Update ATM Fault
-        </button>      
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!faultForm.valid || loading"
+      >
+        Update ATM Fault
+      </button>
     </form>
   </div>
 </div>

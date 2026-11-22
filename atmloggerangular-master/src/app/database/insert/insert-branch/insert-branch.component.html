@@ -188,5 +188,38 @@
   </form>
 </div>
 <br />
-<br />
-<app-up-display-branch></app-up-display-branch>
+  <!-- Data table -->
+  <div *ngIf="!loading && !error" class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>SOL ID</th>
+          <th>Region Name</th>
+          <th>Branch Name</th>
+          <th>Branch Email</th>
+          <th>Branch Address</th>
+          <th>Branch Area</th>
+          <th>Branch State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let branch of branchesWithNames">
+          <td>{{ branch.id }}</td>
+          <td>{{ branch.solId }}</td>
+          <td>{{ branch.regionName }}</td>
+          <td>{{ branch.branchName }}</td>
+          <td>{{ branch.branchEmail }}</td>
+          <td>{{ branch.physicalAddress }}</td>
+          <td>{{ branch.area }}</td>
+          <td>{{ branch.state }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- No data message -->
+    <div *ngIf="branchesWithNames.length === 0" class="alert alert-info">
+      No contact found.
+    </div>
+  </div>
+

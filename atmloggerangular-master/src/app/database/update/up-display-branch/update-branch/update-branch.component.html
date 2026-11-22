@@ -1,5 +1,14 @@
 <div class="card">
-  <a routerLink="/update-branch" class="nav-link return-link"><h4>Return</h4></a>
+  <a
+    class="nav-link return-link"
+    role="button"
+    tabindex="0"
+    style="cursor: pointer"
+    (click)="onReturn()"
+    (keydown.enter)="onReturn()"
+  >
+    <h4>Return</h4>
+  </a>
   <div class="card-header">
     <h3>Update Branch Information</h3>
   </div>
@@ -129,7 +138,9 @@
       </div>
 
       <div class="mb-3">
-        <label for="physicalAddress" class="form-label">Branch Physical Address</label>
+        <label for="physicalAddress" class="form-label"
+          >Branch Physical Address</label
+        >
         <input
           type="text"
           class="form-control"
@@ -166,8 +177,7 @@
         <div
           *ngIf="
             branchForm.get('state')?.invalid &&
-            (branchForm.get('state')?.dirty ||
-              branchForm.get('state')?.touched)
+            (branchForm.get('state')?.dirty || branchForm.get('state')?.touched)
           "
           class="alert alert-danger mt-2"
         >
@@ -192,8 +202,7 @@
         <div
           *ngIf="
             branchForm.get('area')?.invalid &&
-            (branchForm.get('area')?.dirty ||
-              branchForm.get('area')?.touched)
+            (branchForm.get('area')?.dirty || branchForm.get('area')?.touched)
           "
           class="alert alert-danger mt-2"
         >
@@ -205,7 +214,6 @@
           </div>
         </div>
       </div>
-
 
       <button
         type="submit"
