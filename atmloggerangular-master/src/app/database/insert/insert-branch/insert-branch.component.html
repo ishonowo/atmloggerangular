@@ -127,6 +127,54 @@
         </ng-container>
       </div>
       <br />
+      <div class="input">
+        <label for="state"><b>State: </b></label>
+        <input
+          id="state"
+          formControlName="state"
+          placeholder="Enter the state the new branchis in."
+          title="state"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            branchInsertForm.get('state')?.invalid &&
+            (branchInsertForm.get('state')?.touched ||
+              branchInsertForm.get('state')?.dirty)
+          "
+        >
+          <small
+            *ngIf="branchInsertForm.get('state')?.errors?.['required']"
+          >
+            *The state the branch is in is required.</small
+          >
+        </ng-container>
+      </div>
+      <br />
+      <div class="input">
+        <label for="area"><b>Branch Area: </b></label>
+        <input
+          id="area"
+          formControlName="area"
+          placeholder="Enter the area the new branch is in."
+          title="area"
+          type="text"
+        />
+        <ng-container
+          *ngIf="
+            branchInsertForm.get('area')?.invalid &&
+            (branchInsertForm.get('area')?.touched ||
+              branchInsertForm.get('area')?.dirty)
+          "
+        >
+          <small
+            *ngIf="branchInsertForm.get('area')?.errors?.['required']"
+          >
+            *The area the branch is in is required.</small
+          >
+        </ng-container>
+      </div>
+      <br />
     </div>
     <div class="display">
       <button

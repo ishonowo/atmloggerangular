@@ -42,10 +42,12 @@ export class InsertBranchComponent {
         ],
         [CustomValidators.verifySolID(this.solValidationService)],
       ],
-      branchEmail: ['', [Validators.required, Validators.email]],
+      branchEmail: ['', [Validators.required]],//, Validators.email]],
       physicalAddress: ['', Validators.required],
       branchName: ['', Validators.required], // CustomValidators.verifyBranch],
       regionId: ['', [Validators.required]], //,CustomValidators.verifyRegionID]],
+      state: ['',Validators.required],
+      area:['',Validators.required]
     });
   }
 
@@ -97,6 +99,8 @@ export class InsertBranchComponent {
         branchName: this.branchInsertForm.get('branchName')?.value,
         physicalAddress: this.branchInsertForm.get('physicalAddress')?.value,
         solId: this.branchInsertForm.get('solId')?.value,
+        state: this.branchInsertForm.get('state')?.value,
+        area: this.branchInsertForm.get('area')?.value
       };
       this.branchService.insertBranch(this.branchObj).subscribe({
         next: (response) => {

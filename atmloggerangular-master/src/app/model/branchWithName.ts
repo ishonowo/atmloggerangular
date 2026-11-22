@@ -5,5 +5,7 @@ export interface BranchWithName{
     physicalAddress: string,
     branchName: string,     
     regionId: number,       
-    id: number   
+    id: number,
+    state: string,
+    area: string   
 }

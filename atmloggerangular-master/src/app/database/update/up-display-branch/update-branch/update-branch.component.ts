@@ -48,8 +48,10 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
       solId: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       regionId: ['', [Validators.required]],
       branchName: ['', [Validators.required, Validators.minLength(5)]],
-      branchEmail: ['', [Validators.required, Validators.email]],
+      branchEmail: ['', [Validators.required]],//, Validators.email]],
       physicalAddress: ['', [Validators.required, Validators.minLength(10)]],
+      state: ['',Validators.required],
+      area: ['',Validators.required],
     });
   }
 
@@ -79,6 +81,8 @@ export class UpdateBranchComponent implements OnInit, OnChanges {
         branchName: this.branchForm.get('branchName')?.value,
         branchEmail: this.branchForm.get('branchEmail')?.value,
         physicalAddress: this.branchForm.get('physicalAddress')?.value,
+        state: this.branchForm.get('state')?.value,
+        area: this.branchForm.get('area')?.value
       };
       
       this.branchService.updateBranch(updatedbranch).subscribe({

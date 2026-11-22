@@ -1,5 +1,5 @@
 <div class="card">
-  <a routerLink="/db-update" class="nav-link return-link"><h4>Return</h4></a>
+  <a routerLink="/update-branch" class="nav-link return-link"><h4>Return</h4></a>
   <div class="card-header">
     <h3>Update Branch Information</h3>
   </div>
@@ -94,7 +94,7 @@
             The branch's name is required.
           </div>
           <div *ngIf="branchForm.get('branchName')?.errors?.['minlength']">
-            Branch names cannot be less than 5 characters.
+            Branch names cannot be less than 3 characters.
           </div>
         </div>
       </div>
@@ -122,9 +122,9 @@
           <div *ngIf="branchForm.get('branchEmail')?.errors?.['minlength']">
             The branch's email cannot be less than 5 characters.
           </div>
-          <div *ngIf="branchForm.get('branchEmail')?.errors?.['email']">
+          <!--<div *ngIf="branchForm.get('branchEmail')?.errors?.['email']">
             This must be a valid email.
-          </div>
+          </div>-->
         </div>
       </div>
 
@@ -154,12 +154,65 @@
         </div>
       </div>
 
+      <div class="mb-3">
+        <label for="state" class="form-label">State of Location</label>
+        <input
+          type="text"
+          class="form-control"
+          id="state"
+          formControlName="state"
+        />
+
+        <div
+          *ngIf="
+            branchForm.get('state')?.invalid &&
+            (branchForm.get('state')?.dirty ||
+              branchForm.get('state')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="branchForm.get('state')?.errors?.['required']">
+            The state the branch is in is required.
+          </div>
+          <div *ngIf="branchForm.get('state')?.errors?.['minlength']">
+            Branch names cannot be less than 3 characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="area" class="form-label">Area of Location</label>
+        <input
+          type="text"
+          class="form-control"
+          id="area"
+          formControlName="area"
+        />
+
+        <div
+          *ngIf="
+            branchForm.get('area')?.invalid &&
+            (branchForm.get('area')?.dirty ||
+              branchForm.get('area')?.touched)
+          "
+          class="alert alert-danger mt-2"
+        >
+          <div *ngIf="branchForm.get('area')?.errors?.['required']">
+            The area the branch is in is required.
+          </div>
+          <div *ngIf="branchForm.get('area')?.errors?.['minlength']">
+            Branch names cannot be less than 3 characters.
+          </div>
+        </div>
+      </div>
+
+
       <button
         type="submit"
         class="btn btn-primary"
         [disabled]="!branchForm.valid || loading"
       >
-        Update Terminal
+        Update Branch
       </button>
     </form>
   </div>

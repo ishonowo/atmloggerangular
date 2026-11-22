@@ -3,5 +3,7 @@ export interface BranchObject{
     branchName: string,
     physicalAddress: string,
     regionName: string,
-    solId: string
+    solId: string,
+    state: string,
+    area: string
 }
