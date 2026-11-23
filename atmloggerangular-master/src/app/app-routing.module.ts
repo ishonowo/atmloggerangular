@@ -34,6 +34,7 @@ import { UpDisplayFaultComponent } from './database/update/up-display-fault/up-d
 import { UsersComponent } from './users/users.component';
 import { UpdateUsersComponent } from './users/update-users/update-users.component';
 import { CreateUsersComponent } from './users/create-users/create-users.component';
+import { AuditUsersComponent } from './users/audit-users/audit-users.component';
 
 
 
@@ -185,6 +186,11 @@ const routes: Routes = [
   {
     path: 'update-users',
     component: UpdateUsersComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'audit-users',
+    component: AuditUsersComponent,
     canActivate: [authGuard]
   },
   { path: 'login', component: LoginComponent },

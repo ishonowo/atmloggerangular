@@ -36,7 +36,7 @@ export class UpdateUsersComponent implements OnInit {
       error: () => (this.error = 'Unable to load roles.'),
     });
     this.loadUsers();
-    this.loadAudit();
+    //this.loadAudit();
   }
 
   protected get selectedUser(): UserObj | undefined {
@@ -49,7 +49,7 @@ export class UpdateUsersComponent implements OnInit {
 
   protected onUserChange(userId: number | null): void {
     this.selectedUserId = userId;
-    this.loadAudit(0);
+    //this.loadAudit(0);
   }
 
   private loadUsers(): void {
@@ -82,36 +82,14 @@ export class UpdateUsersComponent implements OnInit {
         // Replace the user with the server's authoritative copy
         this.users = this.users.map((u) => (u.id === updated.id ? updated : u));
         this.busyRoleId = null;
-        this.loadAudit(0); // show the new entry immediately
+        //this.loadAudit(0); // show the new entry immediately
       },
       error: (err) => {
         this.error = err?.error?.message || 'Could not update the role.';
         this.busyRoleId = null;
-        this.loadAudit(0); // denied attempts are logged too
+        //this.loadAudit(0); // denied attempts are logged too
       },
     });
   }
 
-  protected loadAudit(page = 0): void {
-    this.userService.getRoleAudit(this.selectedUserId, page).subscribe({
-      next: (p: Page<RoleAuditObj>) => {
-        this.audit = p.content;
-        this.auditPage = p.number;
-        this.auditTotalPages = p.totalPages;
-      },
-      error: () => (this.error = 'Unable to load the audit history.'),
-    });
-  }
-
-  protected formatDateTime(value: string): string {
-    return new Date(value).toLocaleString('en-NG', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZone: 'Africa/Lagos',
-    });
-  }
 }

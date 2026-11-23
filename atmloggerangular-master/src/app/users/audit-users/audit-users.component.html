@@ -1,0 +1,60 @@
+  <div class="container mt-4" *ngIf="authService.hasRole('ADMIN')">
+  <h3 class="mt-5">Role change history</h3>
+  <h4>
+    <a routerLink="/users">Return</a>
+  </h4>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>When</th>
+          <th>By</th>
+          <th>Action</th>
+          <th>User</th>
+          <th>Role</th>
+          <!--<th>Detail</th>-->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of audit">
+          <td>{{ formatDateTime(a.performedAt) }}</td>
+          <td>{{ a.performedBy }}</td>
+          <td>
+            <span
+              class="badge"
+              [class.bg-success]="a.action === 'ADDED'"
+              [class.bg-warning]="a.action === 'REMOVED'"
+              [class.text-dark]="a.action === 'REMOVED'"
+              [class.bg-danger]="a.action === 'REMOVE_DENIED'"
+              >{{ a.action }}</span
+            >
+          </td>
+          <td>{{ a.targetLdapCn }}</td>
+          <td>{{ a.roleName }}</td>
+          <!--<td>{{ a.detail }}</td>-->
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="audit.length === 0" class="alert alert-info">
+      No changes recorded.
+    </div>
+  </div>
+
+  <div class="d-flex gap-2 align-items-center" *ngIf="auditTotalPages > 1">
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [disabled]="auditPage === 0"
+      (click)="loadAudit(auditPage - 1)"
+    >
+      Previous
+    </button>
+    <span>Page {{ auditPage + 1 }} of {{ auditTotalPages }}</span>
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      [disabled]="auditPage + 1 >= auditTotalPages"
+      (click)="loadAudit(auditPage + 1)"
+    >
+      Next
+    </button>
+  </div>
+</div>

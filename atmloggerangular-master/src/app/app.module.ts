@@ -53,6 +53,7 @@ import { UpdateFaultComponent } from './database/update/up-display-fault/update-
 import { UsersComponent } from './users/users.component';
 import { UpdateUsersComponent } from './users/update-users/update-users.component';
 import { CreateUsersComponent } from './users/create-users/create-users.component';
+import { AuditUsersComponent } from './users/audit-users/audit-users.component';
 
 
 @NgModule({
@@ -102,6 +103,7 @@ import { CreateUsersComponent } from './users/create-users/create-users.componen
     UsersComponent,
     UpdateUsersComponent,
     CreateUsersComponent,
+    AuditUsersComponent,
   ],
   imports: [
     BrowserModule,

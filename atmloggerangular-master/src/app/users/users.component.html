@@ -10,4 +10,9 @@
       Click <a routerLink="/update-users" class="nav-link"><b>here</b></a> to update a user.
     </h4>
   </div>
+  <div *ngIf="authService.hasRole('ADMIN')">
+    <h4>
+      Click <a routerLink="/audit-users" class="nav-link"><b>here</b></a> to view user changes.
+    </h4>
+  </div>
 </div>
